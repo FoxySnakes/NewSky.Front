@@ -1,0 +1,291 @@
+#main-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 100px 0;
+
+    #error{
+        background-color: var(--warning);
+        padding: 5px 35px;
+        border-radius: 10px;
+        color: var(--white);
+        position: absolute;
+        font-weight: 500;
+        opacity: 0;
+        top: 100px;
+        transition: all 0s;
+        max-width: 600px;
+        text-align: center;
+
+        &.has-error{
+            top: 30px;
+            opacity: 1;
+            transition: all 0.3s;
+        }
+    }
+
+    #container {
+        display: flex;
+        border-radius: 25px;
+        overflow: hidden;
+        position: relative;
+        justify-content: center;
+
+        #back {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: var(--gray);
+            transition: all 0.2s;
+
+            &:hover {
+                color: var(--white);
+                border-bottom: solid 0.5px var(--white);
+            }
+
+            span{
+                font-size: 14px;
+                font-weight: 300;
+            }
+        }
+
+        #form {
+            width: 600px;
+            background: var(--secondary-color);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+
+            h1 {
+                color: white;
+                font-weight: 600;
+                font-size: 40px;
+                text-align: center;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                gap: 25px;
+
+                .field {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    padding-top: 15px;
+
+                    label {
+                        position: absolute;
+                        color: var(--gray);
+                        left: 20px;
+                        transition: all 0.4s;
+                        cursor: text;
+                        top: 27px;
+                        z-index: 4;
+
+                        span{
+                            transition: all 0.3s;
+                        }
+                    }
+
+                    input {
+                        background: var(--primary-color);
+                        border: none;
+                        border-radius: 100px;
+                        height: 50px;
+                        width: 100%;
+                        padding-inline: 15px;
+                        color: var(--white);
+                        transition: all 0.3s;
+
+                        &:focus+label,
+                        &.not-empty+label {
+                            font-size: 14px;
+                            color: var(--white);
+                            top: -15px;
+                            left: 5px;
+                            font-weight: 500;
+
+                            span{
+                                opacity: 0;
+                            }
+                        }
+
+                        &.ng-invalid.ng-touched{
+                            border: solid 1px var(--warning);
+
+                            +label{
+                                color: var(--warning);
+
+                            }
+                        }
+                    }
+
+
+                    .errors {
+                        position: relative;
+                        height: 0px;
+                        transition: height 0.3s;
+
+                        p {
+                            color: var(--warning);
+                            font-size: 14px;
+                            opacity: 0;
+                            transition: all 0.3s;
+                            position: absolute;
+                            top: -5px;
+                            left: 20px;
+
+                            &.visible {
+                                top: 0px;
+                                opacity: 1;
+                            }
+                        }
+
+                        &.visible {
+                            height: 20px;
+                        }
+
+                    }
+                }
+
+                #options{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding-inline: 15px;
+
+                    #remember-me{
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+
+                        input{
+                            display: none;
+
+                            &:checked + label{
+                                background-color: var(--third-color);
+                                border-color: var(--third-color);
+
+                                span{
+                                    display: initial;
+                                }
+                            }
+                        }
+
+                        label{
+                            width: 20px;
+                            height: 20px;
+                            min-width: 20px;
+                            min-height: 20px;
+                            border-radius: 5px;
+                            border: solid 1px var(--gray);
+                            background-color: var(--secondary-color);
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            span{
+                                display: none;
+                                font-size: 14px;
+                                color: var(--white);
+                            }
+                        }
+                        
+                        p{
+                            color: var(--gray);
+                        }
+                    }
+                    #forgot-password{
+                        color: var(--third-color);
+                        text-decoration: underline;
+                    }
+                }
+                #submit{
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 15px;
+
+                    button{
+                        padding: 10px 50px;
+                        background-color: var(--third-color);
+                        font-weight: 500;
+                        color: var(--white);
+                        border-radius: 100px;
+                        transition: all 0.3s;
+
+                        &:hover:not(:disabled){
+                            box-shadow: 0 0 25px var(--third-color);
+                            transform: scale(1.05);
+                        }
+
+                        &:disabled{
+                            opacity: 0.5;
+                        }
+                    }
+                }
+            }
+
+            #no-account{
+                margin-top: auto;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                padding-inline: 15px;
+
+                p{
+                    color: var(--gray);
+                }
+                
+                a{
+                    color: var(--third-color);
+                    text-decoration: underline;
+                    font-weight: 500;
+                }
+            }
+        }
+
+        #picture-right {
+            width: 300px;
+            display: flex;
+
+            img {
+                height: auto;
+                width: 100%;
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width:1000px) {
+    #form{
+        width: 300px !important;
+        padding: 40px 15px !important;
+        gap: 15px !important;
+        
+    }
+    #no-account{
+        flex-direction: column;
+        align-items: center;
+    }
+    #options{
+        flex-direction: column;
+        gap: 15px
+    }
+}
+
+@media screen and (max-width:700px) {
+    #picture-right{
+        display: none !important
+    }
+    #error{
+        max-width: 300px !important;
+    }
+}

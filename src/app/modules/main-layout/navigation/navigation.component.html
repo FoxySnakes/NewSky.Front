@@ -1,0 +1,41 @@
+<div id="container">
+    <div id="banner-top">
+        <div id="online-player">
+            <div id="number">{{playerNumber}}</div>
+            <p>joueurs en ligne</p>
+        </div>
+        <div id="auth">
+            <a routerLink="/login">Connexion</a>
+            <p>|</p>
+            <a routerLink="/register">Inscription</a>
+        </div>
+    </div>
+    <div id="picture">
+        <img id="menu-background" src="./../../../../assets/pictures/nav-background.png" alt="Photo des farm à mobs">
+        <a routerLink="/home" id="menu-logo"><img src="./../../../../assets/pictures/logo.png" alt="Logo de NewSky" height="175px"></a>
+    </div>
+    <div id="styled-links">
+        <button class="link" id="store" routerLink="boutique">
+            <img src="./../../../../assets/pictures/boutique-icon.png" alt="Icon de coffre" width="55" height="55">
+            <div>
+                <p>BOUTIQUE</p>
+                <p>Besoin de quelque chose ? Achetez tout içi</p>
+            </div>
+        </button>
+        <button class="link" id="vote" routerLink="vote">
+            <img src="./../../../../assets/pictures/vote-icon.png" alt="Icon d'urne" width="55" height="55">
+            <div>
+                <p>VOTER</p>
+                <p>Votez pour recevoir des récompenses</p>
+            </div>
+        </button>
+        <button class="link" id="wiki" routerLink="wiki">
+            <img src="./../../../../assets/pictures/wiki-icon.png" alt="Icon d'encyclopédie numérique" width="55"
+                height="55">
+            <div>
+                <p>WIKI</p>
+                <p>Besoin d'aide ? Toutes les réponses sont içi</p>
+            </div>
+        </button>
+    </div>
+</div>

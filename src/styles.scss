@@ -1,0 +1,80 @@
+@import '../node_modules/angular-notifier/styles.scss';
+@import 'icon.scss';
+
+@font-face {
+    font-family: Poppins;
+    src: url(./assets/fonts/Poppins/Poppins-Light.ttf);
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url(./assets/fonts/Poppins/Poppins-Regular.ttf);
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url(./assets/fonts/Poppins/Poppins-Medium.ttf);
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url(./assets/fonts/Poppins/Poppins-SemiBold.ttf);
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url(./assets/fonts/Poppins/Poppins-Bold.ttf);
+    font-weight: 700;
+    font-display: swap;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
+    text-decoration: none;
+    font-weight: 300;
+    list-style: none;
+}
+
+body{
+    background-color: var(--primary-color);
+}
+
+a, button{
+    cursor: pointer;
+}
+button{
+    border: none;
+}
+p,h1,h2,h3{
+    color: var(--white);
+}
+h2{ //todo retirer tout les styles inutiles - faire meme chose pour h1
+    font-weight: 500;
+    font-size: 24px;
+    text-align: center;
+}
+
+:root{
+    --primary-color : #13151B;
+    --secondary-color : #21222D;
+    --third-color : #3548E5;
+    --discord-color : #7289DA;
+    --mail-color : #DB4437;
+
+    --white : #ffffff;
+    --black : #000000;
+    --gray : #ffffff80;
+
+    --warning : #F94E4E;
+}

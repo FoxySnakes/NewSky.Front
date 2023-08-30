@@ -1,0 +1,43 @@
+<div id="main-container">
+  <div id="error"[class.has-error]="error">{{error}}</div>
+  <div id="container">
+    <a id="back" [routerLink]="callbackUrl"><span class="icon-chevron-left"></span> Retour</a>
+    <div id="form">
+      <h1>Connectez vous</h1>
+      <form [formGroup]="form" (ngSubmit)="login()">
+        <div class="field">
+          <input type="text" name="username" id="username" formControlName="username">
+          <label for="username"><span class="icon-user"></span> Nom d'utilisateur</label>
+          <div class="errors" [class.visible]="!form.controls.username.valid && form.controls.username.touched">
+            <p [class.visible]="form.controls.username.hasError('required') && form.controls.username.touched">Nom d'utilisateur requis</p>
+          </div>
+        </div>
+        <div class="field">
+          <input type="text" name="password" id="password" formControlName="password">
+          <label for="password"><span class="icon-user"></span> Mot de passe</label>
+          <div class="errors" [class.visible]="!form.controls.password.valid && form.controls.password.touched">
+            <p [class.visible]="form.controls.password.hasError('required') && form.controls.password.touched">Mot de passe requis</p>
+          </div>
+        </div>
+        <div id="options">
+          <div id="remember-me">
+            <input type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe">
+            <label for="rememberMe"><span class="icon-user"></span></label>
+            <p>Se souvenir de moi</p>
+          </div>
+          <a id="forgot-password">Mot de passe oublié&nbsp;?</a>
+        </div>
+        <div id="submit">
+          <button type="submit" [disabled]="!form.valid">Se connnecter</button>
+        </div>
+      </form>
+      <div id="no-account">
+        <p>Vous n'avez pas de compte&nbsp;?</p>
+        <a routerLink="/register">S'inscrire</a>
+      </div>
+    </div>
+    <div id="picture-right">
+      <img src="../../../../assets/pictures/login-picture.jpg" alt="">
+    </div>
+  </div>
+</div>

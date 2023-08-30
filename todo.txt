@@ -1,0 +1,2 @@
+faire un carousel pour les nouveautés du home / revoir les séparateurs
+revoir les number du join-us sur la page home

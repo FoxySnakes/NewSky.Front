@@ -1,0 +1,177 @@
+#container{
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    >#content{
+        display: flex;
+        padding: 40px 50px 0 50px;
+        gap: 100px;
+
+        >#description{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 400px;
+            color: var(--gray);
+        }
+        >#links-container{
+            display: flex;
+            gap: 150px;
+
+            >.links-column{
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+
+                >p{
+                    font-weight: 600;
+                    font-size: 20px;
+                    color: var(--third-color);
+                }
+                >.links{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    >a{
+                        font-weight: 400;
+                        color: var(--white);
+                        position: relative;
+                        width: fit-content;
+
+                        &::after{
+                            position: absolute;
+                            content: "";
+                            height: 2px;
+                            bottom: -5px;
+                            left: 0;
+                            background-color: var(--white);
+                            width: 0%;
+                            transition: all 0.5s;
+                            border-radius: 25px;
+                        }
+                        &:hover::after{
+                            width: 100%;
+                        }
+                    }
+                }
+                >#contact{
+                    display: flex;
+                    flex-direction: column ;
+                    gap: 15px;
+
+                    >button{
+                        height: 40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 15px;
+                        padding: 5px 20px;
+                        border-radius: 100px;
+                        border: none;
+                        transition: all 0.3s;
+
+                        >p{
+                            color: var(--white);
+                            font-weight: 600;
+                        }
+                        >span{
+                            color: var(--white);
+                            font-size: 24px;
+                            font-weight: 500;
+                        }
+                        &:hover{
+                            transform: scale(1.05);
+                        }
+                    }
+                    >#discord{
+                        background-color: var(--discord-color);
+
+                        &:hover{
+                            box-shadow: 0 0 25px var(--discord-color);
+                        }
+                    }
+                    >#mail{
+                        background-color: var(--mail-color);
+
+                        &:hover{
+                            box-shadow: 0 0 25px var(--mail-color);
+                        }
+                    }
+                    >p{
+                        text-align: center;
+                        font-weight: 500;
+                        color: var(--white);
+                    }
+                }
+            }
+        }
+    }
+    >#legal-mentions{
+        padding: 10px;
+
+        >p{
+            color: var(--gray);
+            font-size: 14px;
+                    
+            >a{
+                color: var(--white);
+                font-weight: 500;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1400px){
+    #content{
+        gap: 50px !important;
+    }
+    #links-container{
+        gap: 65px !important;
+    }
+}
+
+@media screen and (max-width:1200px){
+    #description{
+        width: 250px !important;
+    }
+}
+
+@media screen and (max-width:1000px){
+    #content{
+        flex-direction: column;
+
+        >#description{
+            align-self: center;
+            width: 600px !important;
+            flex-direction: row !important;
+        }
+
+        >#links-container{
+            justify-content: space-around;
+        }
+    }
+}
+
+@media screen and (max-width:800px){
+    #content>#description{
+        width: 500px !important;
+    }
+}
+
+@media screen and (max-width:600px){
+    #content{
+        padding: 40px 30px !important;
+
+        >#description{
+            width: auto !important;
+            flex-direction: column !important;
+        }
+        >#links-container{
+            flex-direction: column !important;
+        }
+    }
+}

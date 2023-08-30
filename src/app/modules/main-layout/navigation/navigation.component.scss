@@ -1,0 +1,187 @@
+#container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-color);
+
+    >#banner-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #1A1C24E5;
+        height: 60px;
+        padding-inline: 20px;
+
+        >#online-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            >#number {
+                padding: 10px;
+                background-color: var(--white);
+                border-radius: 10px;
+                height: 35px;
+                display: flex;
+                align-items: center;
+                font-weight: 700;
+                color: var(--black);
+            }
+
+            >p {
+                color: var(--white);
+                font-weight: 600;
+            }
+        }
+
+        >#auth {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            >* {
+                font-weight: 600;
+                color: var(--white);
+            }
+            >a{
+                position: relative;
+                width: fit-content;
+
+                &::after{
+                    position: absolute;
+                    content: "";
+                    height: 2px;
+                    bottom: -5px;
+                    left: 0;
+                    background-color: var(--white);
+                    width: 0%;
+                    transition: all 0.5s;
+                    border-radius: 25px;
+                }
+                &:hover::after{
+                    width: 100%;
+                }
+            }
+        }
+    }
+    >#picture {
+        height: 300px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        >#menu-background {
+            width: 100%;
+        }
+        >#menu-logo{
+            position: absolute;
+            animation: 1s ease-in-out infinite alternate flying;
+            transition: all 1s;
+            
+            &:hover{
+                filter: drop-shadow(0px 0px 75px rgb(144, 144, 144));
+            }
+        }
+
+    }
+
+    >#styled-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 70px;
+        position: relative;
+        top: -50px;
+        width: 100%;
+
+        >.link {
+            display: flex;
+            align-items: center;
+            width: 350px;
+            height: 100px;
+            padding: 25px;
+            gap: 25px;
+            background-color: var(--secondary-color);
+            border-radius: 25px;
+            box-shadow: 0 8px 25px rgba($color: #ffffff, $alpha: 0.08);
+            transition: all 0.5s;
+            cursor: pointer;
+            border: none;
+
+            &:hover,
+            &:active {
+                box-shadow: 0 0 40px rgba($color: #5a69f7, $alpha: 0.5);
+                transform: scale(1.1);
+            }
+
+            >img {
+                animation: 1s ease-in-out infinite alternate flying;
+            }
+
+            >div {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                >p {
+                    color: var(--white);
+
+                    &:first-child {
+                        font-weight: 500;
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes flying {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-4px);
+    }
+}
+
+@media screen and (max-width:1200px) {
+    #styled-links>.link {
+        width: 150px !important;
+        height: auto !important;
+        flex-direction: column;
+
+        >div>p:nth-child(2) {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width:800px) {
+    #styled-links {
+        gap: 50px !important;
+    }
+}
+
+@media screen and (max-width:600px) {
+    #picture>#menu-logo{
+        height: 125px;
+    }
+    #styled-links {
+        gap: 0 !important;
+        justify-content: space-around !important;
+
+        >.link {
+            padding: 15px !important;
+            gap: 10px !important;
+            width: 100px !important;
+
+            >img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
+}
