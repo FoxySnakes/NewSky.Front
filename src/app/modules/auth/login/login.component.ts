@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
             this.error = "Nom d'utilisateur ou mot de passe invalide"
           }
         },
-        error : (error) => this.notifService.notify('error',"Erreur de l'API")
+        error : (error) => this.notifService.notify('error',"Erreur lors de la requête")
         
       })
     }
