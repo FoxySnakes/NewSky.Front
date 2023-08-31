@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { LoginDto } from 'src/app/models/AuthModel';
-import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/authService';
 
 @Component({
@@ -46,7 +45,6 @@ export class LoginComponent implements OnInit {
     var formData = this.form.value;
     this.error = null;
 
-    console.log("ok")
     if(formData.username && formData.password && (formData.rememberMe == true || formData.rememberMe == false)){
       const loginData: LoginDto = {
         UserName: formData.username,

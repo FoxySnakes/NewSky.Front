@@ -19,7 +19,6 @@ export class ApiService {
   }
 
   post(endpoints: string, data: any) {
-    console.log(`${environment.apiUrl}/${endpoints}`)
     return this.httpClient.post<any>(`${environment.apiUrl}/${endpoints}`,data)
   }
 }

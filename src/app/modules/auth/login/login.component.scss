@@ -10,18 +10,19 @@
         padding: 5px 35px;
         border-radius: 10px;
         color: var(--white);
-        position: absolute;
+        position: fixed;
         font-weight: 500;
         opacity: 0;
-        top: 100px;
+        top: 0px;
         transition: all 0s;
         max-width: 600px;
         text-align: center;
+        z-index: 500;
 
         &.has-error{
             top: 30px;
             opacity: 1;
-            transition: all 0.3s;
+            transition: all 0.5s;
         }
     }
 
@@ -227,6 +228,10 @@
 
                         &:disabled{
                             opacity: 0.5;
+
+                            &:hover{
+                                animation: invalid 0.3s linear ;
+                            }
                         }
                     }
                 }
@@ -288,4 +293,12 @@
     #error{
         max-width: 300px !important;
     }
+}
+
+@keyframes invalid {
+    0%{transform: translateX(0px);}
+    25%{transform: translateX(-8px);}
+    50%{transform: translateX(8px);}
+    75%{transform: translateX(-4px);}
+    100%{transform: translateX(4px);}
 }

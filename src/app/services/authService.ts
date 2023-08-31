@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
-import { LoginDto } from '../models/AuthModel';
+import { LoginDto, RegisterDto } from '../models/AuthModel';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,20 @@ import { LoginDto } from '../models/AuthModel';
 export class AuthService {
   private apiUrl = 'https://votre-api-url/';
 
-  constructor(private api : ApiService) { }
+  constructor(private api : ApiService,
+              private userService : UserService) { }
 
   login(loginDto : LoginDto): Observable<any> {
     return this.api.post('auth/login', loginDto)
   }
 
+  register(registerDto : RegisterDto) : Observable<any>{
+    return this.api.post('auth/register', registerDto)
+  }
+
   logout(): void {
-    localStorage.removeItem("bearer")
+    localStorage.removeItem("bearer");
+    this.userService.setCurrentUser(null)
   }
 
   setAuthToken(token: string): void {
