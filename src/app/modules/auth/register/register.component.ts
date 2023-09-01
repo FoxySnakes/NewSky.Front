@@ -107,35 +107,6 @@ export class RegisterComponent implements OnInit {
          PhoneNumber: this.additionalForm.value.phonenumber?.toString() ?? ''
        };
        console.log(registerData)
-      this.authService.register(registerData).subscribe({
-        next : (response) => {
-          if(response.isSuccess){
-            this.authService.setAuthToken(response.token)
-            this.notifService.notify('success','Inscription réussie, Redirection dans 3s')
-            setTimeout(() => {
-              this.router.navigate([this.callbackUrl]);
-            }, 3000);
-          }
-          else{
-            if(response.errors[0].code == 102){
-              switch(response.errors[0].entity){
-                case 'UserName':
-                  this.error = `Un utilisateur existe déjà avec ce nom (${response.user.userName})`
-                  break;
-                case 'Email':
-                  this.error = `Un utilisateur existe déjà avec ce mail (${response.user.email})`
-                  break;
-                case 'PhoneNumber':
-                  this.error = `Un utilisateur existe déjà avec ce téléphone (${response.user.phoneNumber})`
-                  break;
-              }
-            }
-            else{
-              this.notifService.notify('error', "Impossible d'enregistrer l'utilisateur")
-            }
-          }
-        },
-        error : () => this.notifService.notify('error',"Erreur lors de la requête")
-      })
+      this.error = this.authService.register(registerData, this.callbackUrl as string)
   }
 }

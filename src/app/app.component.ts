@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from './services/api.service';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/authService';
+import { NotifierService } from 'angular-notifier';
+import { User } from './models/UserModel';
 
 @Component({
   selector: 'app-root',
@@ -13,16 +15,18 @@ export class AppComponent implements OnInit {
 
   constructor(private apiService : ApiService,
               private userService : UserService,
-              private authService : AuthService)
+              private authService : AuthService,
+              private notifyService : NotifierService)
   {}
   
   ngOnInit(): void {
-    console.log(this.authService.isAuthenticated())
+    console.log("Islogged : ",this.authService.isAuthenticated())
     if(this.authService.isAuthenticated()){
       this.apiService.get('user/current').subscribe({
         next: (response) => {
-          this.userService.setCurrentUser(response.user)
-        }
+          this.userService.setCurrentUser(response as User | null)
+        },
+        error: () => this.notifyService.notify('warning', "Impossible de joindre l'API")
       })
     }
   }

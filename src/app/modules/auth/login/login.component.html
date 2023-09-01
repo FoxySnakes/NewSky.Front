@@ -6,14 +6,14 @@
       <h1>Connectez vous</h1>
       <form [formGroup]="form" (ngSubmit)="login()">
         <div class="field">
-          <input type="password" name="username" id="username" formControlName="username">
+          <input type="text" name="username" id="username" formControlName="username">
           <label for="username"><span class="icon-user"></span> Nom d'utilisateur</label>
           <div class="errors" [class.visible]="!form.controls.username.valid && form.controls.username.touched">
             <p [class.visible]="form.controls.username.hasError('required') && form.controls.username.touched">Nom d'utilisateur requis</p>
           </div>
         </div>
         <div class="field">
-          <input type="text" name="password" id="password" formControlName="password">
+          <input type="password" name="password" id="password" formControlName="password">
           <label for="password"><span class="icon-user"></span> Mot de passe</label>
           <div class="errors" [class.visible]="!form.controls.password.valid && form.controls.password.touched">
             <p [class.visible]="form.controls.password.hasError('required') && form.controls.password.touched">Mot de passe requis</p>

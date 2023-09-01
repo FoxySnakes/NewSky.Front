@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,8 +9,10 @@ import { FooterComponent } from './modules/main-layout/footer/footer.component';
 import { NavigationComponent } from './modules/main-layout/navigation/navigation.component';
 import { LayoutComponent } from './modules/main-layout/layout/layout.component';
 import { VoteComponent } from './modules/vote/vote.component';
-import { AuthModule } from './modules/auth/auth.module';
 import { NotifierModule } from 'angular-notifier';
+import { AuthModule } from './modules/auth/auth.module';
+import { JwtInterceptor } from './services/jwt.interceptor';
+import { NotFoundComponent } from './modules/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { NotifierModule } from 'angular-notifier';
     NavigationComponent,
     LayoutComponent,
     VoteComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,13 @@ import { NotifierModule } from 'angular-notifier';
       }
     })
   ],
-  providers: [],
+  providers: [
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi : true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

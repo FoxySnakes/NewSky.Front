@@ -4,11 +4,15 @@
             <div id="number">{{playerNumber}}</div>
             <p>joueurs en ligne</p>
         </div>
-        <div id="auth">
+        <div id="auth-not-connected" *ngIf="!isAuthenticated">
             <a routerLink="/login">Connexion</a>
             <p>|</p>
             <a routerLink="/register">Inscription</a>
         </div>
+        <a routerLink="/user" id="auth-connected" *ngIf="isAuthenticated">
+            <p>{{playerUsername}}</p>
+            <img src="https://minotar.net/helm/{{playerUsername}}/30.png" alt="">
+        </a>
     </div>
     <div id="picture">
         <img id="menu-background" src="./../../../../assets/pictures/nav-background.png" alt="Photo des farm à mobs">

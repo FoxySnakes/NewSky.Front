@@ -9,7 +9,7 @@
         align-items: center;
         background-color: #1A1C24E5;
         height: 60px;
-        padding-inline: 20px;
+        padding-left: 20px;
 
         >#online-player {
             display: flex;
@@ -33,15 +33,21 @@
             }
         }
 
-        >#auth {
+        >#auth-not-connected {
             display: flex;
             align-items: center;
             gap: 10px;
+            padding-right: 2Opx;
 
             >* {
                 font-weight: 600;
                 color: var(--white);
             }
+            // temporary
+            >#logout{
+                cursor: pointer;
+            }
+            //temporary
             >a{
                 position: relative;
                 width: fit-content;
@@ -60,6 +66,31 @@
                 &:hover::after{
                     width: 100%;
                 }
+            }
+        }
+        >#auth-connected{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            cursor: pointer;
+            padding-inline: 20px;
+            height: 100%;
+
+            >* {
+                font-weight: 600;
+                color: var(--white);
+            }
+
+            img{
+                width: 30px;
+                height: 30px;
+                border-radius: 100%;
+                border: solid 1px var(--white);
+            }
+
+            &:hover{
+                background-color: #2E3342;
             }
         }
     }

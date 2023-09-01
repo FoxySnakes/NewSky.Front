@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '../models/UserModel';
+import { Role, User } from '../models/UserModel';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,26 @@ export class UserService {
   constructor(apiService : ApiService) { }
 
   getCurrentUser(){
-    return this.currentUserSubject.value;
+    console.log(this.currentUserSubject)
+    return this.currentUserSubject;
   }
 
   setCurrentUser(user : User | null){
     this.currentUserSubject.next(user);
+  }
+
+  isAdmin() : boolean{
+    this.currentUserSubject.subscribe({
+      next: (user)=>{
+        if(user?.role == Role.Admin || user?.role == Role.Developer)
+            return true;
+          return false
+      },
+      error: () => {
+        return false;
+      }
+    })
+    return false;
   }
 
   getUserBodySkinUrl(size : number){

@@ -103,6 +103,7 @@
                         padding-inline: 15px;
                         color: var(--white);
                         transition: all 0.3s;
+                        color-scheme: dark;
 
                         &:focus+label,
                         &.not-empty+label {

@@ -52,20 +52,7 @@ export class LoginComponent implements OnInit {
         RememberMe: formData.rememberMe
       };
 
-      this.authService.login(loginData).subscribe({
-        next : (response) => {
-          if(response.isSuccess){
-            console.log("success")
-            this.notifService.notify('success','Connexion réussie')
-            
-          }
-          else{
-            this.error = "Nom d'utilisateur ou mot de passe invalide"
-          }
-        },
-        error : (error) => this.notifService.notify('error',"Erreur lors de la requête")
-        
-      })
+      this.error = this.authService.login(loginData, this.callbackUrl as string)
     }
   }
 }
