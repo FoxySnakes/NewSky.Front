@@ -50,16 +50,21 @@ export class RegisterComponent implements OnInit {
               }
 
   ngOnInit(): void {
-    var inputs = document.getElementsByTagName('input');
-    for (let i = 0; i < inputs.length; i++) {
-      inputs[i].addEventListener('change', (event : any) =>{
-        if(event.target.value != null && !event.target.classList.contains("not-empty")){
-          event.target.classList.add("not-empty")
-        }
-        if((event.target.value === null || event.target.value == "") && event.target.classList.contains("not-empty")){
-          event.target.classList.remove("not-empty")
-        }
-      })
+    if(this.authService.isAuthenticated()){
+      this.router.navigate([this.callbackUrl])
+    }
+    else{
+      var inputs = document.getElementsByTagName('input');
+      for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener('change', (event : any) =>{
+          if(event.target.value != null && !event.target.classList.contains("not-empty")){
+            event.target.classList.add("not-empty")
+          }
+          if((event.target.value === null || event.target.value == "") && event.target.classList.contains("not-empty")){
+            event.target.classList.remove("not-empty")
+          }
+        })
+      }
     }
   }
 
