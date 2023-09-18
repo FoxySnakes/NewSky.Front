@@ -10,21 +10,27 @@ import { UserboardComponent } from './modules/dashboard/userboard/userboard.comp
 import { AdminboardComponent } from './modules/dashboard/adminboard/adminboard.component';
 import { NotFoundComponent } from './modules/not-found/not-found.component';
 import { AdminGuard } from './guards/admin.guard';
+import { LoaderComponent } from './modules/loader/loader.component';
 
-const routes: Routes = [{
-  path: '', component: LayoutComponent,
+const routes: Routes = [
+  { path : 'truc', component: LoaderComponent},
+
+  {path: '', component: LayoutComponent,
   children: [
     { path : 'home', redirectTo: '', pathMatch: 'full'},
     { path : '', component: HomeComponent},
     { path : 'not-found', component: NotFoundComponent},
     { path: 'vote', component: VoteComponent },
-    { path: 'test', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'userboard', component: UserboardComponent, canActivate: [AuthGuard] },
     { path: 'adminboard', component: AdminboardComponent, canActivate:[AdminGuard] }
   ]},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '**', redirectTo: 'not-found' }
+  { path: 'store', loadChildren: () => import('./modules/store/store.module').then(x => x.StoreModule)},
+  { path: 'news', loadChildren: () => import('./modules/news/news.module').then(x => x.NewsModule)},
+  { path: 'wiki', loadChildren: () => import('./modules/wiki/wiki.module').then(x => x.WikiModule)},
+
+  { path: '**', redirectTo: 'not-found' },
 ];
 const routerOptions : ExtraOptions = {
   scrollPositionRestoration: 'enabled',

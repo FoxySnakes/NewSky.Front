@@ -30,6 +30,7 @@
                 border-radius: 10px;
                 padding: 25px;
                 width: 100%;
+                position: relative;
 
                 >h2 {
                     font-weight: 500;
@@ -38,19 +39,20 @@
                     margin-bottom: 25px;
                 }
 
-                >#votes {
+                >.votes {
                     display: flex;
                     flex-direction: column;
                     gap: 25px;
                     padding-inline: 25px;
+                    position: relative;
 
                     >.vote {
                         display: flex;
                         align-items: center;
                         justify-content: center;
 
-                        >button {
-                            background: linear-gradient(135deg, rgba(53,72,229,1) 0%, rgba(53,72,229,1) 48%, rgba(250,250,250,1) 50%, rgba(53,72,229,1) 52%, rgba(53,72,229,1) 100%);
+                        >a {
+                            background: linear-gradient(135deg, var(--third-color) 0%, var(--third-color) 48%, rgba(250,250,250,1) 50%, var(--third-color) 52%, var(--third-color) 100%);
                             background-size: 1000% auto;
                             border-radius: 25px;
                             flex: 1;
@@ -71,7 +73,7 @@
                             color: #5BEF58;
                             font-weight: 400;
                         }
-                        &:not(.unavailable)>button{
+                        &:not(.unavailable)>a{
                             animation: 6s ease-in-out infinite glass;
 
                             &:hover{
@@ -80,15 +82,37 @@
                             }
                         }
                         &.unavailable{
-                            >button{
+                            >a{
                                 background: #1d2469;
+                                pointer-events: none;
 
                                 &:hover{
-                                    animation: voteUnavailable 0.3s linear ;
+                                    animation: unvalid 0.3s linear ;
                                 }
                             }
                             >p {
                                 color: #F94E4E
+                            }
+                        }
+                    }
+                    &.not-logged{
+                        align-items: center;
+                        
+                        >a{
+                            background: var(--third-color);
+                            border-radius: 25px;
+                            padding: 10px 25px;
+                            font-weight: 500;
+                            color: var(--white);
+                            transition: all 0.5s;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 16px;
+
+                            &:hover{
+                                box-shadow: 0 0 25px var(--third-color);
+                                transform: scale(1.05);
                             }
                         }
                     }
@@ -107,55 +131,116 @@
                     padding: 25px 0;
                 }
 
-                >.position {
+                >.type{
                     display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    padding: 10px 25px;
+                    position: relative;
+                    border: solid 5px var(--secondary-color);
+                    padding: 5px;
                     border-radius: 25px;
-                    background-color: var(--secondary-color);
 
-                    >p:first-child {
+                    >p{
+                        width: 100%;
                         text-align: center;
-                        font-weight: 500;
-                        width: 60px;
-                        font-size: 18px;
+                        padding: 15px;
+                        z-index: 5;
+                        cursor: pointer;
+                    }
+                    >#selected{
+                        position: absolute;
+                        width: calc(50% - 5px);
+                        height: calc(100% - 10px);
+                        left: 50%;
+                        right: 5px;
+                        border-radius: 15px;
+                        background-color: var((--third-color));
+                        transition: all 0.5s;
+                    }
+                    &.monthOrder>#selected{
+                        left: 5px;
+                        right: 50%;
+                    }
+                }
 
-                        >span {
-                            padding-right: 10px;
+                >.position-container{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+
+                    .position {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        padding: 10px 25px;
+                        border-radius: 25px;
+                        background-color: var(--secondary-color);
+    
+                        >p:first-child {
+                            text-align: center;
+                            font-weight: 500;
+                            width: 60px;
+                            font-size: 18px;
+    
+                            >span {
+                                padding-right: 10px;
+                            }
+    
+                            &#first {
+                                color: #FFCA09;
+                            }
+    
+                            &#second {
+                                color: #838285;
+                            }
+    
+                            &#third {
+                                color: #BF6E50;
+                            }
+                        }
+    
+                        >div {
+                            display: flex;
+                            gap: 15px;
+                            padding: 5px 10px;
+                            align-items: center;
+                            flex: auto;
+    
+                            >img {
+                                width: 32px;
+                                height: 32px;
+                                border-radius: 100%;
+                            }
+    
+                            >p {
+                                max-width: 140px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
                         }
 
-                        &#first {
-                            color: #FFCA09;
-                        }
-
-                        &#second {
-                            color: #838285;
-                        }
-
-                        &#third {
-                            color: #BF6E50;
+                    }
+                    >.no-vote{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                        padding: 10px 50px;
+                        border-radius: 25px;
+                        background-color: var(--secondary-color);
+                        
+                        >p{
+                            font-size: 18px;
+                            font-weight: 500;
                         }
                     }
+                    .self-ranking{
+                        margin-top: 25px;
 
-                    >div {
-                        display: flex;
-                        gap: 15px;
-                        padding: 5px 10px;
-                        align-items: center;
-                        flex: auto;
-
-                        >img {
-                            width: 32px;
-                            height: 32px;
-                            border-radius: 100%;
-                        }
-
-                        >p {
-                            max-width: 140px;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
+                        >h3{
+                            font-weight: 500;
+                            font-size: 20px;
+                            margin-top: 25px;
+                            margin: 0 0 5px 10px;
                         }
                     }
                 }
@@ -188,15 +273,6 @@
                         border-radius: 25px;
                         padding: 15px 10px;
 
-                        >p {
-                            flex: 1;
-                            font-weight: 400;
-
-                            &:first-child {
-                                text-align: end;
-                            }
-                        }
-
                         &:nth-child(1)>p {
                             color: #FFCA09;
                         }
@@ -207,6 +283,21 @@
 
                         &:nth-child(3)>p {
                             color: #BF6E50;
+                        }
+
+                        >p {
+                            flex: 1;
+                            font-weight: 400;
+
+                            &:first-child {
+                                text-align: end;
+                            }
+                            &.no-reward{
+                                text-align: center;
+                                color: var(--white);
+                                font-size: 18px;
+                                font-weight: 500;
+                            }
                         }
                     }
                 }
@@ -258,7 +349,12 @@
                         }
 
                         &#instagram {
-                            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+                            padding-inline: 7px;
+                            background: radial-gradient(circle farthest-corner at 32% 106%, rgb(255, 225, 125) 0%, rgb(255, 205, 105) 10%, rgb(250, 145, 55) 28%, rgb(235, 65, 65) 42%, transparent 82%), linear-gradient(135deg, rgb(35, 75, 215) 12%, rgb(195, 60, 190) 58%);
+                            >img{
+                                width: 27px;
+                                height: 27px;
+                            }
                         }
 
                         &#tiktok {

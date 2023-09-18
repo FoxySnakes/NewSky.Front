@@ -13,6 +13,8 @@ import { NotifierModule } from 'angular-notifier';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtInterceptor } from './services/jwt.interceptor';
 import { NotFoundComponent } from './modules/not-found/not-found.component';
+import { LoaderComponent } from './modules/loader/loader.component';
+import { TimeFormatPipe } from './pipes/timeformat.pipe';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { NotFoundComponent } from './modules/not-found/not-found.component';
     LayoutComponent,
     VoteComponent,
     NotFoundComponent,
+    LoaderComponent,
+    TimeFormatPipe,
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,6 @@ export class UserService {
   constructor(apiService : ApiService) { }
 
   getCurrentUser(){
-    console.log(this.currentUserSubject)
     return this.currentUserSubject;
   }
 

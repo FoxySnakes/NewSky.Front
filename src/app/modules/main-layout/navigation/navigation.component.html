@@ -9,7 +9,7 @@
             <p>|</p>
             <a routerLink="/register">Inscription</a>
         </div>
-        <a routerLink="/user" id="auth-connected" *ngIf="isAuthenticated">
+        <a (click)="logout()" id="auth-connected" *ngIf="isAuthenticated">
             <p>{{playerUsername}}</p>
             <img src="https://minotar.net/helm/{{playerUsername}}/30.png" alt="">
         </a>
@@ -19,7 +19,7 @@
         <a routerLink="/home" id="menu-logo"><img src="./../../../../assets/pictures/logo.png" alt="Logo de NewSky" height="175px"></a>
     </div>
     <div id="styled-links">
-        <button class="link" id="store" routerLink="boutique">
+        <button class="link" id="store" routerLink="store">
             <img src="./../../../../assets/pictures/boutique-icon.png" alt="Icon de coffre" width="55" height="55">
             <div>
                 <p>BOUTIQUE</p>

@@ -80,6 +80,8 @@
                     position: relative;
                     transition: all 0.5s;
                     left: 0px;
+                    height: calc(100% + 5px);
+                    min-height: calc(100% + 5px);
 
                     form {
                         display: flex;
@@ -87,6 +89,7 @@
                         align-items: center;
                         min-width: 545px;
                         width: 545px;
+                        padding: 25px 0;
 
                         .inline-field {
                             display: flex;
@@ -226,12 +229,13 @@
 
                         &#usernameValidation {
                             gap: 25px;
-                            padding: 15px 0 25px 0;
+                            padding-inline: 25px;
                             
                             >p{
                                 color: var(--third-color);
                                 font-size: 24px;
                                 font-weight: 500;
+                                text-align: center;
                             }
 
                             #show{
@@ -248,7 +252,8 @@
                             #verify-skin {
                                 display: flex;
                                 justify-content: space-around;
-                                width: 100%;
+                                width: 100%; 
+                                gap: 15px;
                             }
                             #change-username{
                                 display: flex;
@@ -257,6 +262,48 @@
 
                                 .field{
                                     padding-top: 0;
+                                }
+                            }
+                            #remember-me{
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+        
+                                input{
+                                    display: none;
+        
+                                    &:checked + label{
+                                        background-color: var(--third-color);
+                                        border-color: var(--third-color);
+        
+                                        span{
+                                            display: initial;
+                                        }
+                                    }
+                                }
+        
+                                label{
+                                    width: 20px;
+                                    height: 20px;
+                                    min-width: 20px;
+                                    min-height: 20px;
+                                    border-radius: 5px;
+                                    border: solid 1px var(--gray);
+                                    background-color: var(--secondary-color);
+                                    cursor: pointer;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+        
+                                    span{
+                                        display: none;
+                                        font-size: 14px;
+                                        color: var(--white);
+                                    }
+                                }
+                                
+                                p{
+                                    color: var(--gray);
                                 }
                             }
                             button {
@@ -340,6 +387,10 @@
                 #submit {
                     flex-direction: column;
                     gap: 15px;
+                }
+
+                #verify-skin{
+                    flex-direction: column;
                 }
             }
         }

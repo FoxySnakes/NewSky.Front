@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ApiService } from './api.service';
 import { LoginDto, RegisterDto } from '../models/AuthModel';
 import { UserService } from './user.service';
@@ -10,24 +9,38 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService implements OnInit {
   private apiUrl = 'https://votre-api-url/';
+
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private rememberMe = true;
 
   constructor(private api : ApiService,
               private userService : UserService,
               private notifService : NotifierService,
-              private router : Router) { }
+              private router : Router){
+                this.checkAuthenticationStatus();
+              }
+
+  ngOnInit(): void {
+
+  }
 
   login(loginDto : LoginDto, callbackUrl : string) : string | null {
     this.api.post('auth/login', loginDto).subscribe({
       next : (response) => {
         if(response.isSuccess){
           this.setAuthToken(response.token)
-          this.notifService.notify('success','Connexion réussie, Redirection dans 3s')
-          setTimeout(() => {
-            this.router.navigate([callbackUrl]);
-          }, 3000);
-          return null;
+          this.isAuthenticatedSubject.next(true);
+          this.setRememberBe(loginDto.RememberMe)
+          this.notifService.notify('success','Connexion réussie')
+          if(callbackUrl == "/login " || callbackUrl == "/register"){
+            this.router.navigate(["/"])
+          }
+          else{
+            this.router.navigate([callbackUrl])
+          }
+          return null
         }
         else{
           return "Nom d'utilisateur ou mot de passe invalide"
@@ -42,15 +55,14 @@ export class AuthService {
     return null;
   }
 
-  register(registerDto : RegisterDto, callbackUrl : string) : string | null{
+  register(registerDto : RegisterDto, callbackUrl : string, rememberMe : boolean) : string | null{
     this.api.post('auth/register', registerDto).subscribe({
       next : (response) => {
         if(response.isSuccess){
           this.setAuthToken(response.token)
-          this.notifService.notify('success','Inscription réussie, Redirection dans 3s')
-          setTimeout(() => {
-            this.router.navigate([callbackUrl]);
-          }, 3000);
+          this.isAuthenticatedSubject.next(true);
+          this.notifService.notify('success','Inscription réussie')
+          this.router.navigate([callbackUrl]);
           return null;
         }
         else{
@@ -63,7 +75,7 @@ export class AuthService {
               case 'PhoneNumber':
                 return `Un utilisateur existe déjà avec ce téléphone (${response.user.phoneNumber})`
               default:
-                return null;
+                return 'Erreur inconnue';
             }
           }
           else{
@@ -81,8 +93,9 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem("bearer");
+    this.removeAuthToken()
     this.userService.setCurrentUser(null)
+    this.isAuthenticatedSubject.next(false);
   }
 
   setAuthToken(token: string): void {
@@ -94,11 +107,25 @@ export class AuthService {
     return token;
   }
 
-  isAuthenticated(): boolean {
-    const token = this.getAuthToken();
-    if (token == null)
-      return false;
+  removeAuthToken(): void{
+    localStorage.removeItem("bearer");
+  }
 
-    return true;
+  isAuthenticated(){
+    return this.isAuthenticatedSubject;
+  }
+
+  setRememberBe(value : boolean){
+    this.rememberMe = value;
+  }
+
+  keepConnection(){
+    return this.rememberMe
+  }
+
+  private checkAuthenticationStatus() {
+    const token = this.getAuthToken()
+    const isAuthenticated = !!token;
+    this.isAuthenticatedSubject.next(isAuthenticated);
   }
 }

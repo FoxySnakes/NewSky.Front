@@ -36,7 +36,8 @@ export class RegisterComponent implements OnInit {
   additionalFormValid = false;
 
   usernameValidation = new FormGroup({
-    newUsername : new FormControl(this.newUsername,Validators.required)
+    newUsername : new FormControl(this.newUsername,Validators.required),
+    rememberMe : new FormControl(true)
   })
   changingUserName = false
 
@@ -50,22 +51,29 @@ export class RegisterComponent implements OnInit {
               }
 
   ngOnInit(): void {
-    if(this.authService.isAuthenticated()){
-      this.router.navigate([this.callbackUrl])
-    }
-    else{
-      var inputs = document.getElementsByTagName('input');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener('change', (event : any) =>{
-          if(event.target.value != null && !event.target.classList.contains("not-empty")){
-            event.target.classList.add("not-empty")
-          }
-          if((event.target.value === null || event.target.value == "") && event.target.classList.contains("not-empty")){
-            event.target.classList.remove("not-empty")
-          }
-        })
+    this.authService.isAuthenticated().subscribe((isAuthenticated) =>{
+      if(isAuthenticated){
+        if(this.callbackUrl == "/login " || this.callbackUrl == "/register"){
+          this.router.navigate(["/"])
+        }
+        else{
+          this.router.navigate([this.callbackUrl])
+        }
       }
-    }
+      else{
+        var inputs = document.getElementsByTagName('input');
+        for (let i = 0; i < inputs.length; i++) {
+          inputs[i].addEventListener('change', (event : any) =>{
+            if(event.target.value != null && !event.target.classList.contains("not-empty")){
+              event.target.classList.add("not-empty")
+            }
+            if((event.target.value === null || event.target.value == "") && event.target.classList.contains("not-empty")){
+              event.target.classList.remove("not-empty")
+            }
+          })
+        }
+      }
+    })
   }
 
   validateGlobalForm(){
@@ -112,6 +120,8 @@ export class RegisterComponent implements OnInit {
          PhoneNumber: this.additionalForm.value.phonenumber?.toString() ?? ''
        };
        console.log(registerData)
-      this.error = this.authService.register(registerData, this.callbackUrl as string)
+       var rememberMe = this.usernameValidation.controls.rememberMe.value ?? false
+       console.log(rememberMe)
+      this.error = this.authService.register(registerData, this.callbackUrl as string, rememberMe)
   }
 }

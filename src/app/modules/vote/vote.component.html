@@ -3,103 +3,99 @@
     <div id="content">
         <div id="left-container">
             <div id="player-votes">
+                <div id="result">
+                    <p>{{result}}</p>
+                </div>
                 <h2>Mes votes</h2>
-                <div id="votes">
-                    <div class="vote" id="vote1" [class.unavailable]="!isVote1Available">
-                        <button>Vote 1 - 1h30</button>
-                        <p class="status">Disponible</p>
+                <div class="votes" *ngIf="username != null">
+                    <div class="vote" id="vote1" [class.unavailable]="!vote1Status.isReady">
+                        <a (click)="TryVote(10)" href="https://serveur-prive.net/minecraft/newsky-14339/vote" target="_blank">Vote 1 - 1h30</a>
+                        <p class="status" *ngIf="vote1Status.isReady">Disponible</p>
+                        <p class="status" *ngIf="!vote1Status.isReady">{{vote1Status.timeLeft | timeFormat}}</p>
                     </div>
-                    <div class="vote" id="vote2" [class.unavailable]="!isVote2Available">
-                        <button>Vote 2 - 24h</button>
-                        <p class="status">Disponible</p>
+                    <div class="vote" id="vote2" [class.unavailable]="!vote2Status.isReady">
+                        <a (click)="TryVote(20)" href="https://www.serveursminecraft.org/serveur/6709/" target="_blank">Vote 2 - 24h</a>
+                        <p class="status" *ngIf="vote2Status.isReady">Disponible</p>
+                        <p class="status" *ngIf="!vote2Status.isReady">{{vote2Status.timeLeft | timeFormat}}</p>
                     </div>
-                    <div class="vote" id="vote3" [class.unavailable]="!isVote3Available">
-                        <button>Vote 3 - 1h30</button>
-                        <p class="status">01 : 30 : 18</p>
+                    <div class="vote" id="vote3" [class.unavailable]="!vote3Status.isReady">
+                        <a (click)="TryVote(30)" href="https://top-serveurs.net/minecraft/vote/newsky" target="_blank">Vote 3 - 2h</a>
+                        <p class="status" *ngIf="vote3Status.isReady">Disponible</p>
+                        <p class="status" *ngIf="!vote3Status.isReady">{{vote3Status.timeLeft | timeFormat}}</p>
                     </div>
                 </div>
+                <div class="votes not-logged" *ngIf="username == null">
+                    <p>Connectez-vous pour continuer</p>
+                    <a routerLink="/login">Connectez-vous</a>
+                </div>
+                <app-loader *ngIf="loading" radius="25"></app-loader>
             </div>
             <div id="ranking">
                 <h2>Classement des votes</h2>
-                <div class="position">
-                    <p id="first"><span class="icon-trophy"></span>#1</p>
-                    <div>
-                        <img src="../../../assets/pictures/face.png" alt="">
-                        <p>Slowise</p>
-                    </div>
-                    <p>1578 votes</p>
+                <div class="type" [class.monthOrder]="rankingFilterType == 'month'">
+                    <p (click)="ChangeFilter('month')">Ce mois-ci</p>
+                    <p (click)="ChangeFilter('total')">Total</p>
+                    <div id="selected"></div>
                 </div>
-                <div class="position">
-                    <p id="second"><span class="icon-trophy"></span>#2</p>
-                    <div>
-                        <img src="../../../assets/pictures/face.png" alt="">
-                        <p>Slowise</p>
+                <div class="position-container" *ngIf="rankingFilterType == 'month'">
+                    <div class="position" *ngFor="let item of ranking.monthlyTop; let i = index">
+                        <p *ngIf="i == 0" id="first"><span class="icon-trophy"></span>#1</p>
+                        <p *ngIf="i == 1" id="second"><span class="icon-trophy"></span>#2</p>
+                        <p *ngIf="i == 2" id="third"><span class="icon-trophy"></span>#3</p>
+                        <p *ngIf="i != 0 && i != 1 && i != 2">#{{i + 1}}</p>
+                        <div>
+                            <img src="https://minotar.net/helm/{{item.username}}/30.png" alt="">
+                            <p>{{item.username}}</p>
+                        </div>
+                        <p>{{item.monthlyVotes}} votes</p>
                     </div>
-                    <p>1578 votes</p>
+                    <div *ngIf="ranking.monthlyTop.length == 0" class="no-vote">
+                        <p>Aucun vote ce mois-ci</p>
+                    </div>
+                    <div class="self-ranking" *ngIf="username != null">
+                        <h3>Ma position</h3>
+                        <div class="position">
+                            <p *ngIf="userRanking.monthlyPosition == 1" id="first"><span class="icon-trophy"></span>#1</p>
+                            <p *ngIf="userRanking.monthlyPosition == 2" id="second"><span class="icon-trophy"></span>#2</p>
+                            <p *ngIf="userRanking.monthlyPosition == 3" id="third"><span class="icon-trophy"></span>#3</p>
+                            <p *ngIf="![1,2,3].includes(userRanking.monthlyPosition)">#{{userRanking.monthlyPosition}}</p>
+                            <div>
+                                <img src="https://minotar.net/helm/{{userRanking.username}}/30.png" alt="">
+                                <p>{{userRanking.username}}</p>
+                            </div>
+                            <p>{{userRanking.monthlyVotes}} votes</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="position">
-                    <p id="third"><span class="icon-trophy"></span>#3</p>
-                    <div>
-                        <img src="../../../assets/pictures/face.png" alt="">
-                        <p>Slowise</p>
+                <div class="position-container" *ngIf="rankingFilterType == 'total'">
+                    <div class="position" *ngFor="let item of ranking.totalTop; let i = index">
+                        <p *ngIf="i == 0" id="first"><span class="icon-trophy"></span>#1</p>
+                        <p *ngIf="i == 1" id="second"><span class="icon-trophy"></span>#2</p>
+                        <p *ngIf="i == 2" id="third"><span class="icon-trophy"></span>#3</p>
+                        <p *ngIf="i != 0 && i != 1 && i != 2">#{{i + 1}}</p>
+                        <div>
+                            <img src="https://minotar.net/helm/{{item.username}}/30.png" alt="">
+                            <p>{{item.username}}</p>
+                        </div>
+                        <p>{{item.totalVotes}} votes</p>
                     </div>
-                    <p>1578 votes</p>
-                </div>
-                <div class="position">
-                    <p>#4</p>
-                    <div>
-                        <img src="../../../assets/pictures/face.png" alt="">
-                        <p>Slowise</p>
+                    <div *ngIf="ranking.totalTop.length == 0" class="no-vote">
+                        <p>Aucun vote n'a encoré été réalisé</p>
                     </div>
-                    <p>1578 votes</p>
-                </div>
-                <div class="position">
-                    <p>#5</p>
-                    <div>
-                        <img src="../../../assets/pictures/face.png" alt="">
-                        <p>Slowise</p>
+                    <div class="self-ranking" *ngIf="username != null">
+                        <h3>Ma position</h3>
+                        <div class="position">
+                            <p *ngIf="userRanking.totalPosition == 1" id="first"><span class="icon-trophy"></span>#1</p>
+                            <p *ngIf="userRanking.totalPosition == 2" id="second"><span class="icon-trophy"></span>#2</p>
+                            <p *ngIf="userRanking.totalPosition == 3" id="third"><span class="icon-trophy"></span>#3</p>
+                            <p *ngIf="![1,2,3].includes(userRanking.totalPosition)">#{{userRanking.totalPosition}}</p>
+                            <div>
+                                <img src="https://minotar.net/helm/{{userRanking.username}}/30.png" alt="">
+                                <p>{{userRanking.username}}</p>
+                            </div>
+                            <p>{{userRanking.totalVotes}} votes</p>
+                        </div>
                     </div>
-                    <p>1578 votes</p>
-                </div>
-                <div class="position">
-                    <p>#6</p>
-                    <div>
-                        <img src="../../../assets/pictures/face.png" alt="">
-                        <p>Slowise</p>
-                    </div>
-                    <p>1578 votes</p>
-                </div>
-                <div class="position">
-                    <p>#7</p>
-                    <div>
-                        <img src="../../../assets/pictures/face.png" alt="">
-                        <p>Slowise</p>
-                    </div>
-                    <p>1578 votes</p>
-                </div>
-                <div class="position">
-                    <p>#8</p>
-                    <div>
-                        <img src="../../../assets/pictures/face.png" alt="">
-                        <p>Slowise</p>
-                    </div>
-                    <p>1578 votes</p>
-                </div>
-                <div class="position">
-                    <p>#9</p>
-                    <div>
-                        <img src="../../../assets/pictures/face.png" alt="">
-                        <p>Slowise</p>
-                    </div>
-                    <p>1578 votes</p>
-                </div>
-                <div class="position">
-                    <p>#10</p>
-                    <div>
-                        <img src="../../../assets/pictures/face.png" alt="">
-                        <p>Slowise</p>
-                    </div>
-                    <p>1578 votes</p>
                 </div>
             </div>
         </div>
@@ -107,25 +103,12 @@
             <div id="rewards-container">
                 <h2>Récompense Top Voteur</h2>
                 <div id="rewards">
-                    <div class="reward">
-                        <p>1ère place</p>
-                        <p>1500 tokens</p>
+                    <div class="reward" *ngFor="let reward of rewards">
+                        <p>{{reward.position}}{{reward.position == "1" ? "ère place" : "ème place"}}</p>
+                        <p>{{reward.reward}} crédits</p>
                     </div>
-                    <div class="reward">
-                        <p>2ème place</p>
-                        <p>1000 tokens</p>
-                    </div>
-                    <div class="reward">
-                        <p>3ème place</p>
-                        <p>500 tokens</p>
-                    </div>
-                    <div class="reward">
-                        <p>4-5ème place</p>
-                        <p>250 tokens</p>
-                    </div>
-                    <div class="reward">
-                        <p>6-10ème place</p>
-                        <p>100 tokens</p>
+                    <div class="reward" *ngIf="rewards.length == 0">
+                        <p class="no-reward">Aucune récompense ce mois-ci</p>
                     </div>
                 </div>
             </div>
