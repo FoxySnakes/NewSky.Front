@@ -1,27 +1,17 @@
 export interface User {
-    firstName: string | null;
-    lastName: string | null;
-    fullName: string | null;
-    userName: string;
-    uuid: string,
-    email: string;
-    birthday: Date | null;
-    adressLine1: string;
-    zipCode: string;
-    city: string;
-    country: string;
-    phoneNumber: string | null;
-    profilePictureUrl: string;
-    role: Role;
-    isEnabled: boolean;
-    dateCreated: Date;
+    UserName : string,
+    Uuid : string,
+    Email : string,
+    EmailConfirmed : boolean,
+    Role : string
   }
   
-  export enum Role {
-    None = 0,
-    Admin = 10,
-    Moderator = 20,
-    Helper = 30,
-    Developer = 40,
+  export class Role {
+    None = "None";
+    Helper = "Helper";
+    Moderator = "Moderator";
+    Admin = "Admin";
+    SuperAdmin = "SuperAdmin";
+    Developer = "Developer";
   }
   

@@ -22,7 +22,7 @@ export class UserService {
   isAdmin() : boolean{
     this.currentUserSubject.subscribe({
       next: (user)=>{
-        if(user?.role == Role.Admin || user?.role == Role.Developer)
+        if(user?.Role == "Admin" || user?.Role == "Developer")
             return true;
           return false
       },
@@ -34,6 +34,6 @@ export class UserService {
   }
 
   getUserBodySkinUrl(size : number){
-    return `https://minotar.net/armor/body/${this.currentUserSubject.value?.uuid}/${size}.png`
+    return `https://minotar.net/armor/body/${this.currentUserSubject.value?.Uuid}/${size}.png`
   }
 }

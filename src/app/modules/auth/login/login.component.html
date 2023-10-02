@@ -6,10 +6,10 @@
       <h1>Connectez vous</h1>
       <form [formGroup]="form" (ngSubmit)="login()">
         <div class="field">
-          <input type="text" name="username" id="username" formControlName="username">
-          <label for="username"><span class="icon-user"></span> Nom d'utilisateur</label>
-          <div class="errors" [class.visible]="!form.controls.username.valid && form.controls.username.touched">
-            <p [class.visible]="form.controls.username.hasError('required') && form.controls.username.touched">Nom d'utilisateur requis</p>
+          <input type="text" name="usernameOrEmail" id="usernameOrEmail" formControlName="usernameOrEmail">
+          <label for="usernameOrEmail"><span class="icon-user"></span> Nom d'utilisateur / E-mail</label>
+          <div class="errors" [class.visible]="!form.controls.usernameOrEmail.valid && form.controls.usernameOrEmail.touched">
+            <p [class.visible]="form.controls.usernameOrEmail.hasError('required') && form.controls.usernameOrEmail.touched">Nom d'utilisateur ou e-mail requis</p>
           </div>
         </div>
         <div class="field">

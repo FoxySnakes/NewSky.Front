@@ -63,7 +63,7 @@ export class VoteComponent implements OnInit {
 
     this.userService.getCurrentUser().subscribe({
       next: (user) => {
-        this.username = user?.userName ?? null
+        this.username = user?.UserName ?? null
 
         if (this.username != null) {
           this.api.get(`vote/ranking/${this.username}`).subscribe({

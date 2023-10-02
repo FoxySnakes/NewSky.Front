@@ -25,7 +25,7 @@ export class NavigationComponent  implements OnInit{
     })
     this.userService.getCurrentUser().subscribe({
       next: (user) =>{
-        this.playerUsername = user?.userName
+        this.playerUsername = user?.UserName
       }
     })
   }

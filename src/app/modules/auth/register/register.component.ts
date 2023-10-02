@@ -37,7 +37,6 @@ export class RegisterComponent implements OnInit {
 
   usernameValidation = new FormGroup({
     newUsername : new FormControl(this.newUsername,Validators.required),
-    rememberMe : new FormControl(true)
   })
   changingUserName = false
 
@@ -120,8 +119,6 @@ export class RegisterComponent implements OnInit {
          PhoneNumber: this.additionalForm.value.phonenumber?.toString() ?? ''
        };
        console.log(registerData)
-       var rememberMe = this.usernameValidation.controls.rememberMe.value ?? false
-       console.log(rememberMe)
-      this.error = this.authService.register(registerData, this.callbackUrl as string, rememberMe)
+      this.error = this.authService.register(registerData, this.callbackUrl as string)
   }
 }

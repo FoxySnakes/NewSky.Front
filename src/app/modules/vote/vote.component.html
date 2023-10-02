@@ -7,7 +7,7 @@
                     <p>{{result}}</p>
                 </div>
                 <h2>Mes votes</h2>
-                <div class="votes" *ngIf="username != null">
+                <div class="votes" *ngIf="username == null">
                     <div class="vote" id="vote1" [class.unavailable]="!vote1Status.isReady">
                         <a (click)="TryVote(10)" href="https://serveur-prive.net/minecraft/newsky-14339/vote" target="_blank">Vote 1 - 1h30</a>
                         <p class="status" *ngIf="vote1Status.isReady">Disponible</p>

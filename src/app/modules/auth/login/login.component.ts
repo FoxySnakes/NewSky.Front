@@ -15,13 +15,12 @@ export class LoginComponent implements OnInit {
   error! : string | null
   callbackUrl :string | undefined = '/'
   form = new FormGroup({
-    username : new FormControl('', [Validators.required]),
+    usernameOrEmail : new FormControl('', [Validators.required]),
     password : new FormControl('', [Validators.required]),
-    rememberMe: new FormControl(true)
+    rememberMe: new FormControl(false)
   })
 
   constructor(private authService : AuthService,
-              private notifService : NotifierService,
               private router : Router){
                 if(this.router.getCurrentNavigation()?.previousNavigation?.finalUrl)
                 this.callbackUrl = this.router.getCurrentNavigation()?.previousNavigation?.finalUrl?.toString()
@@ -57,9 +56,9 @@ export class LoginComponent implements OnInit {
     var formData = this.form.value;
     this.error = null;
 
-    if(formData.username && formData.password && (formData.rememberMe == true || formData.rememberMe == false)){
+    if(formData.usernameOrEmail && formData.password && (formData.rememberMe == true || formData.rememberMe == false)){
       const loginData: LoginDto = {
-        UserName: formData.username,
+        UserNameOrEmail: formData.usernameOrEmail,
         Password: formData.password,
         RememberMe: formData.rememberMe
       };

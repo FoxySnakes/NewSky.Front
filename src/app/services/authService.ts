@@ -13,7 +13,7 @@ export class AuthService implements OnInit {
   private apiUrl = 'https://votre-api-url/';
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  private rememberMe = true;
+  private rememberMe = false;
 
   constructor(private api : ApiService,
               private userService : UserService,
@@ -55,7 +55,7 @@ export class AuthService implements OnInit {
     return null;
   }
 
-  register(registerDto : RegisterDto, callbackUrl : string, rememberMe : boolean) : string | null{
+  register(registerDto : RegisterDto, callbackUrl : string) : string | null{
     this.api.post('auth/register', registerDto).subscribe({
       next : (response) => {
         if(response.isSuccess){
