@@ -1,28 +1,27 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
 import { BehaviorSubject } from 'rxjs';
-import { Role, User } from '../models/UserModel';
+import { User } from '../models/UserModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private currentUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  private currentUserSubject$ = new BehaviorSubject<User | null>(null);
 
-  constructor(apiService : ApiService) { }
+  constructor() { }
 
-  getCurrentUser(){
-    return this.currentUserSubject;
+  getCurrentUserObservable(){
+    return this.currentUserSubject$.asObservable();
   }
 
   setCurrentUser(user : User | null){
-    this.currentUserSubject.next(user);
+    this.currentUserSubject$.next(user);
   }
 
   isAdmin() : boolean{
-    this.currentUserSubject.subscribe({
+    this.currentUserSubject$.subscribe({
       next: (user)=>{
-        if(user?.Role == "Admin" || user?.Role == "Developer")
+        if(user?.role == "Admin" || user?.role == "Developer")
             return true;
           return false
       },
@@ -34,6 +33,6 @@ export class UserService {
   }
 
   getUserBodySkinUrl(size : number){
-    return `https://minotar.net/armor/body/${this.currentUserSubject.value?.Uuid}/${size}.png`
+    return `https://minotar.net/armor/body/${this.currentUserSubject$.value?.uuid}/${size}.png`
   }
 }

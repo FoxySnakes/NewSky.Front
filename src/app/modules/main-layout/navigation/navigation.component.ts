@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/services/authService';
+import { Observable, Subscribable, Subscription, take, takeLast } from 'rxjs';
+import { User } from 'src/app/models/UserModel';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,20 +13,24 @@ export class NavigationComponent  implements OnInit{
   playerNumber = 12;
   isAuthenticated! : boolean
 
-  playerUsername : string | undefined;
+  user! : User | null;
 
   constructor(private authService : AuthService,
               private userService : UserService){}
 
   ngOnInit(): void {
-    this.authService.isAuthenticated().subscribe({
+    this.authService.isAuthenticatedObervable().subscribe({
       next: (isAuthenticated) => {
         this.isAuthenticated = isAuthenticated
-      }
-    })
-    this.userService.getCurrentUser().subscribe({
-      next: (user) =>{
-        this.playerUsername = user?.UserName
+
+        if(isAuthenticated){
+          this.userService.getCurrentUserObservable().subscribe({
+            next: (user) =>{
+              this.user = user
+            },
+            error: (error) => console.log(error)
+          })
+        }
       }
     })
   }

@@ -61,20 +61,20 @@ export class VoteComponent implements OnInit {
       error: () => this.notifService.notify('error', "Impossible de joindre l'API")
     })
 
-    this.userService.getCurrentUser().subscribe({
-      next: (user) => {
-        this.username = user?.UserName ?? null
-
-        if (this.username != null) {
-          this.api.get(`vote/ranking/${this.username}`).subscribe({
-            next: (userRanking) => {
-              this.userRanking = userRanking
-            },
-            error: () => this.notifService.notify('error', "Impossible de joindre l'API")
-          })
-        }
-      }
-    })
+    // this.userService.getCurrentUserObservable().subscribe({
+    //   next: (user) => {
+    //     this.username = user?.username ?? null
+    //     console.log(this.username)
+    //     if (this.username != null) {
+    //       this.api.get(`vote/ranking/${this.username}`).subscribe({
+    //         next: (userRanking) => {
+    //           this.userRanking = userRanking
+    //         },
+    //         error: () => this.notifService.notify('error', "Impossible de joindre l'API")
+    //       })
+    //     }
+    //   }
+    // })
 
     this.timerSubscription = interval(1000).subscribe({
       next: () => {

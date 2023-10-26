@@ -15,6 +15,8 @@ import { JwtInterceptor } from './services/jwt.interceptor';
 import { NotFoundComponent } from './modules/not-found/not-found.component';
 import { LoaderComponent } from './modules/loader/loader.component';
 import { TimeFormatPipe } from './pipes/timeformat.pipe';
+import { AuthService } from './services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [

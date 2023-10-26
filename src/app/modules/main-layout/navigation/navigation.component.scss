@@ -132,7 +132,6 @@
             width: 350px;
             height: 100px;
             padding: 25px;
-            gap: 25px;
             background-color: var(--secondary-color);
             border-radius: 25px;
             box-shadow: 0 8px 25px rgba($color: #ffffff, $alpha: 0.08);
@@ -148,6 +147,16 @@
 
             >img {
                 animation: 1s ease-in-out infinite alternate flying;
+            }
+
+            >span.img-shadow{
+                content: '';
+                background: radial-gradient(circle, rgb(22,22,22) 0%, var(--secondary-color) 80%);
+                width: 80%;
+                height: 50px;
+                transform: rotateX(60deg);
+                border-radius: 100%;
+                margin-top: -5px;
             }
 
             >div {

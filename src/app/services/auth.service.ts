@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService implements OnInit {
-  private apiUrl = 'https://votre-api-url/';
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private rememberMe = false;
@@ -26,12 +25,13 @@ export class AuthService implements OnInit {
 
   }
 
-  login(loginDto : LoginDto, callbackUrl : string) : string | null {
+  login(loginDto : LoginDto, callbackUrl : string) : void {
     this.api.post('auth/login', loginDto).subscribe({
       next : (response) => {
         if(response.isSuccess){
           this.setAuthToken(response.token)
           this.isAuthenticatedSubject.next(true);
+          this.userService.setCurrentUser(response.user)
           this.setRememberBe(loginDto.RememberMe)
           this.notifService.notify('success','Connexion réussie')
           if(callbackUrl == "/login " || callbackUrl == "/register"){
@@ -40,59 +40,62 @@ export class AuthService implements OnInit {
           else{
             this.router.navigate([callbackUrl])
           }
-          return null
+        }
+        else if(response.isBanned){
+          this.notifService.notify('warning', 'Cet utilisateur n\'est pas accepté')
+        }
+        else if(response.isLocked){
+          this.notifService.notify('warning','Compte bloqué, contacter un admin')
+        }
+        else if(response.requiresTwoFactor){
+          this.router.navigate(['/login/mfa'])
         }
         else{
-          return "Nom d'utilisateur ou mot de passe invalide"
+          this.notifService.notify("error", "Nom d'utilisateur ou mot de passe invalide")
         }
       },
       error : (error) => {
         this.notifService.notify('error',"Impossible de joindre l'API")
-        return null;
       }
       
     })
-    return null;
   }
 
-  register(registerDto : RegisterDto, callbackUrl : string) : string | null{
+  register(registerDto : RegisterDto, callbackUrl : string) : void{
     this.api.post('auth/register', registerDto).subscribe({
       next : (response) => {
         if(response.isSuccess){
           this.setAuthToken(response.token)
+          this.userService.setCurrentUser(response.user)
           this.isAuthenticatedSubject.next(true);
           this.notifService.notify('success','Inscription réussie')
-          this.router.navigate([callbackUrl]);
-          return null;
+           if(callbackUrl == "/login " || callbackUrl == "/register"){
+             this.router.navigate(["/"])
+           }
+           else{
+             this.router.navigate([callbackUrl])
+           }
         }
         else{
-          if(response.errors[0].code == 102){
-            switch(response.errors[0].entity){
-              case 'UserName':
-                return `Un utilisateur existe déjà avec ce nom (${response.user.userName})`
-              case 'Email':
-                return `Un utilisateur existe déjà avec ce mail (${response.user.email})`
-              case 'PhoneNumber':
-                return `Un utilisateur existe déjà avec ce téléphone (${response.user.phoneNumber})`
-              default:
-                return 'Erreur inconnue';
-            }
-          }
-          else{
-            this.notifService.notify('error', "Impossible d'enregistrer l'utilisateur")
-            return null;
-          }
+          this.notifService.notify('error', "Impossible d'enregistrer l'utilisateur")
         }
       },
       error : () => {
         this.notifService.notify('error',"Impossible de joindre l'API")
-        return null;
       }
     })
-    return null;
   }
 
   logout(): void {
+    this.api.get("auth/logout").subscribe({
+      next: () => {
+        this.removeAuthToken()
+        this.userService.setCurrentUser(null)
+        this.isAuthenticatedSubject.next(false);
+      },
+      error : () => this.notifService.notify('error',"Impossible de joindre l'API")
+    })
+
     this.removeAuthToken()
     this.userService.setCurrentUser(null)
     this.isAuthenticatedSubject.next(false);
@@ -111,8 +114,12 @@ export class AuthService implements OnInit {
     localStorage.removeItem("bearer");
   }
 
-  isAuthenticated(){
+  isAuthenticatedObervable(){
     return this.isAuthenticatedSubject;
+  }
+
+  isAuthenticated(){
+    return this.isAuthenticatedSubject.value
   }
 
   setRememberBe(value : boolean){

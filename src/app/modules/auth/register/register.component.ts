@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { RegisterDto } from 'src/app/models/AuthModel';
-import { AuthService } from 'src/app/services/authService';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -16,21 +16,21 @@ export class RegisterComponent implements OnInit {
   error! : string | null
   callbackUrl :string | undefined = '/'
   globalForm = new FormGroup({
-    firstname : new FormControl('', [Validators.required]),
-    lastname : new FormControl('', [Validators.required]),
-    username : new FormControl('', [Validators.required]),
-    password : new FormControl('', [Validators.required, Validators.minLength(8)]),
-    email : new FormControl('', [Validators.required, Validators.pattern("^.+@.+\..+$")]),
+    firstname : new FormControl('d', [Validators.required]),
+    lastname : new FormControl('d', [Validators.required]),
+    username : new FormControl('FoxySnake', [Validators.required]),
+    password : new FormControl('dsqdsdqdqdq', [Validators.required, Validators.minLength(8)]),
+    email : new FormControl('d@d.f', [Validators.required, Validators.pattern("^.+@.+\..+$")]),
   })
   globalFormValid = false;
 
   additionalForm = new FormGroup({
-    birthday : new FormControl('', [Validators.required]),
-    address : new FormControl('', [Validators.required]),
-    zipcode : new FormControl('', [Validators.required, Validators.pattern("^[0-9]{5}$")]),
-    city : new FormControl('', [Validators.required]),
-    country : new FormControl('', [Validators.required]),
-    phonenumber : new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
+    birthday : new FormControl('Fri Oct 13 2023 02:00:00 GMT+0200', [Validators.required]),
+    address : new FormControl('T', [Validators.required]),
+    zipcode : new FormControl('45345', [Validators.required, Validators.pattern("^[0-9]{5}$")]),
+    city : new FormControl('t', [Validators.required]),
+    country : new FormControl('T', [Validators.required]),
+    phonenumber : new FormControl('7676767676', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
   })
 
   additionalFormValid = false;
@@ -50,29 +50,27 @@ export class RegisterComponent implements OnInit {
               }
 
   ngOnInit(): void {
-    this.authService.isAuthenticated().subscribe((isAuthenticated) =>{
-      if(isAuthenticated){
-        if(this.callbackUrl == "/login " || this.callbackUrl == "/register"){
-          this.router.navigate(["/"])
-        }
-        else{
-          this.router.navigate([this.callbackUrl])
-        }
+    if(this.authService.isAuthenticated()){
+      if(this.callbackUrl == "/login " || this.callbackUrl == "/register"){
+        this.router.navigate(["/"])
       }
       else{
-        var inputs = document.getElementsByTagName('input');
-        for (let i = 0; i < inputs.length; i++) {
-          inputs[i].addEventListener('change', (event : any) =>{
-            if(event.target.value != null && !event.target.classList.contains("not-empty")){
-              event.target.classList.add("not-empty")
-            }
-            if((event.target.value === null || event.target.value == "") && event.target.classList.contains("not-empty")){
-              event.target.classList.remove("not-empty")
-            }
-          })
-        }
+        this.router.navigate([this.callbackUrl])
       }
-    })
+    }
+    else{
+      var inputs = document.getElementsByTagName('input');
+      for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener('change', (event : any) =>{
+          if(event.target.value != null && !event.target.classList.contains("not-empty")){
+            event.target.classList.add("not-empty")
+          }
+          if((event.target.value === null || event.target.value == "") && event.target.classList.contains("not-empty")){
+            event.target.classList.remove("not-empty")
+          }
+        })
+      }
+    }
   }
 
   validateGlobalForm(){
@@ -118,7 +116,6 @@ export class RegisterComponent implements OnInit {
          Country: this.additionalForm.value.country?.toString() ?? '',
          PhoneNumber: this.additionalForm.value.phonenumber?.toString() ?? ''
        };
-       console.log(registerData)
-      this.error = this.authService.register(registerData, this.callbackUrl as string)
+      this.authService.register(registerData, this.callbackUrl as string)
   }
 }

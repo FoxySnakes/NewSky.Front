@@ -17,3 +17,11 @@ export interface RegisterDto{
   Country: string;
   PhoneNumber: string
 }
+
+export class RegisterResult{
+
+}
+
+export class LoginResult{
+  
+}

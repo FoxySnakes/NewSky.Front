@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiService } from './services/api.service';
 import { UserService } from './services/user.service';
-import { AuthService } from './services/authService';
+import { AuthService } from './services/auth.service';
 import { NotifierService } from 'angular-notifier';
 import { User } from './models/UserModel';
 
@@ -20,16 +20,14 @@ export class AppComponent implements OnInit, OnDestroy {
   {}
   
   ngOnInit(): void {
-    this.authService.isAuthenticated().subscribe((isAuthenticated) => {
-      if(isAuthenticated){
-        this.apiService.get('user/current').subscribe({
-          next: (response) => {
-            this.userService.setCurrentUser(response as User | null)
-          },
-          //error: () => this.notifyService.notify('warning', "Impossible de joindre l'API")
-        })
-      }
-    })
+    if(this.authService.isAuthenticated()){
+       this.apiService.get('user/current').subscribe({
+         next: (response : User | null) => {
+          this.userService.setCurrentUser(response)
+         },
+         error: () => this.notifyService.notify('warning', "Impossible de joindre l'API")
+       })
+    }
   }
   ngOnDestroy(): void {
     if(!this.authService.keepConnection()){

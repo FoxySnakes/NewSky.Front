@@ -1,3 +1,4 @@
 faire un carousel pour les nouveautés du home / revoir les séparateurs
 fix input date sur l'inscription
 faire tout les logos des formulaires inscription / connexion
+faire une page "pourquoi ces données sont demandés à la création du compte"
