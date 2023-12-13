@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../services/api.service';
 import { RankingResult, UserVoteNumber, VoteReward, VoteStatusDto, VoteWebSite } from 'src/app/models/VoteModel';
 import { interval, Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { NotifierService } from 'angular-notifier';
+import { User } from 'src/app/models/UserModel';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-vote',
@@ -19,7 +20,7 @@ export class VoteComponent implements OnInit {
   result!: string
   private timerSubscription!: Subscription
 
-  username!: string | null
+  user!: User | null
 
   ranking = new RankingResult()
   rankingFilterType = "month"
@@ -27,13 +28,13 @@ export class VoteComponent implements OnInit {
 
   rewards : VoteReward[] = []
 
-  constructor(private api: ApiService,
+  constructor(private apiService: ApiService,
     private userService: UserService,
     private notifService: NotifierService) { }
 
   ngOnInit() {
     
-    this.api.get(`vote/status`).subscribe({
+    this.apiService.get(`vote/status`).subscribe({
       next: (statusList: [any]) => {
         var voteStatus1 = statusList.find(x => x.voteWebSite == VoteWebSite.Serveur_Prive)
         this.vote1Status.timeLeft = this.FormatTimeLeft(voteStatus1.timeLeft)
@@ -47,34 +48,32 @@ export class VoteComponent implements OnInit {
       error: () => this.notifService.notify('error', "Impossible de joindre l'API")
     })
 
-    this.api.get("vote/ranking?limit=10").subscribe({
+    this.apiService.get("vote/ranking?limit=10").subscribe({
       next: (response) => {
         this.ranking = response;
       },
       error: () => this.notifService.notify('error', "Impossible de joindre l'API")
     })
 
-    this.api.get("vote/rewards").subscribe({
+    this.apiService.get("vote/rewards").subscribe({
       next: (rewards) => {
         this.ChangeRewardsToDisplay(rewards)
       },
       error: () => this.notifService.notify('error', "Impossible de joindre l'API")
     })
 
-    // this.userService.getCurrentUserObservable().subscribe({
-    //   next: (user) => {
-    //     this.username = user?.username ?? null
-    //     console.log(this.username)
-    //     if (this.username != null) {
-    //       this.api.get(`vote/ranking/${this.username}`).subscribe({
-    //         next: (userRanking) => {
-    //           this.userRanking = userRanking
-    //         },
-    //         error: () => this.notifService.notify('error', "Impossible de joindre l'API")
-    //       })
-    //     }
-    //   }
-    // })
+    this.userService.getCurrentUserObservable().subscribe({
+      next: (user) =>{
+        this.user = user
+
+        if(this.user != null){
+          this.apiService.get(`vote/ranking/${this.user?.userName}`).subscribe({
+            next: (userRanking) => this.userRanking = userRanking
+          })
+        }
+      },
+      error: (error) => console.log(error)
+    })
 
     this.timerSubscription = interval(1000).subscribe({
       next: () => {
@@ -96,28 +95,30 @@ export class VoteComponent implements OnInit {
   }
 
   TryVote(voteWebSite: number) {
-    this.loading = true
-    this.api.get(`vote/${voteWebSite}`).subscribe({
-      next: (result: boolean) => {
-        
-        if (result == true) {
-          this.SyncVoteStatus(voteWebSite)
-          this.notifService.notify('success', "Vote réussi, vos récompense vous attendent en jeu")
+    if(this.loading == false){
+      this.loading = true
+      this.apiService.get(`vote/${voteWebSite}`).subscribe({
+        next: (result: boolean) => {
+          
+          if (result == true) {
+            this.SyncVoteStatus(voteWebSite)
+            this.notifService.notify('success', "Vote réussi, vos récompense vous attendent en jeu")
+          }
+          else {
+            this.notifService.notify('warning', "Temps d'attente écoulé, Veuillez réessayer")
+          }
+          this.loading = false
+        },
+        error: () => {
+          this.notifService.notify("error", "Impossible de joindre l'API")
+          this.loading = false
         }
-        else {
-          this.notifService.notify('warning', "Temps d'attente écoulé, Veuillez réessayer")
-        }
-        this.loading = false
-      },
-      error: () => {
-        this.notifService.notify("error", "Impossible de joindre l'API")
-        this.loading = false
-      }
-    })
+      })
+    }
   }
 
   SyncVoteStatus(voteWebSite: number) {
-    this.api.get(`vote/status/${voteWebSite}`).subscribe({
+    this.apiService.get(`vote/status/${voteWebSite}`).subscribe({
       next: (result: any) => {
         if (result.voteWebSite == VoteWebSite.Serveur_Prive)
           this.vote1Status.timeLeft = this.FormatTimeLeft(result.timeLeft)

@@ -35,4 +35,8 @@ export class UserService {
   getUserBodySkinUrl(size : number){
     return `https://minotar.net/armor/body/${this.currentUserSubject$.value?.uuid}/${size}.png`
   }
+
+  getHeadSkinUrl(size : number){
+    return `https://minotar.net/helm/${this.currentUserSubject$.value?.uuid}/${size}.png`
+  }
 }

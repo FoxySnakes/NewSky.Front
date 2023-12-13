@@ -1,0 +1,34 @@
+<div id="container">
+    <div id="layout">
+        <input type="checkbox" name="user-menu" id="user-menu">
+        <div id="layout-links">
+            <div id="username-mask">
+                <p>{{username}}</p>
+                <img src="{{userHeadSkinUrl}}" alt="">
+            </div>
+            <div class="nav-links">
+                <a routerLink="profile" routerLinkActive="active-link"><span class="icon-user"></span><span>Mes informations personnelles</span></a>
+                <a routerLink="account-security" routerLinkActive="active-link"><span class="icon-lock"></span><span>Sécurité du compte</span></a>
+                <a routerLink="payment-information" routerLinkActive="active-link"><span class="icon-cart"></span><span>Mes informations de paiement</span></a>
+            </div>
+            <label for="user-menu"><span class="icon-chevron-right"></span></label>
+        </div>
+        <div id="layout-content">
+            <div class="header">
+                <ng-container *ngIf="activeRouterLink == '/user/profile'">
+                    <span class="icon-user"></span>
+                    <h1>Mes informations personnelles</h1>
+                </ng-container>
+                <ng-container *ngIf="activeRouterLink == '/user/account-security'">
+                    <span class="icon-lock"></span>
+                    <h1>Sécurité du compte</h1>
+                </ng-container>
+                <ng-container *ngIf="activeRouterLink == '/user/payment-information'">
+                    <span class="icon-cart"></span>
+                    <h1>Mes informations de paiement</h1>
+                </ng-container>
+            </div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,5 @@
+/* FONTS */
+
 @import '../node_modules/angular-notifier/styles.scss';
 @import 'icon.scss';
 
@@ -36,13 +38,14 @@
     font-display: swap;
 }
 
+/* GENERAL STYLES */
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Poppins, sans-serif;
     text-decoration: none;
-    font-weight: 300;
     list-style: none;
 }
 
@@ -53,28 +56,141 @@ body{
 a, button{
     cursor: pointer;
 }
+
+a{
+    text-decoration: none;
+}
+
 button{
     border: none;
 }
-p,h1,h2,h3{
+
+h1,h2,h3,p,a,span{
     color: var(--white);
 }
+
+h1{
+    font-weight: 600;
+    font-size: 40px;
+}
+
 h2{ //todo retirer tout les styles inutiles - faire meme chose pour h1
     font-weight: 500;
     font-size: 24px;
-    text-align: center;
 }
 
+/* VARIABLES */
+
 :root{
-    --primary-color : #13151B;
-    --secondary-color : #21222D;
-    --third-color : #3548E5;
-    --discord-color : #7289DA;
-    --mail-color : #DB4437;
+    --primary-color : #13151B !important;
+    --secondary-color : #21222D !important;
+    --secondary-variant-color: #2B2C39 !important;
+    --third-color : #3548E5 !important;
+    --discord-color : #7289DA !important;
+    --mail-color : #DB4437 !important;
 
-    --white : #ffffff;
-    --black : #000000;
-    --gray : #ffffff80;
+    --white : #ffffff !important;
+    --black : #000000 !important;
+    --grey : #ffffff80 !important;
+    --grey-light: #ffffff50 !important;
 
-    --warning : #F94E4E;
+    --danger : #F94E4E !important;
+    --success: #32b439 !important;
+
+    --font-weight-medium: 400 !important;
+    --font-weight-semibold: 500 !important;
+    --font-weight-bold: 600 !important;
+    --font-weight-extrabold: 700 !important;
+}
+
+/* GENERAL CLASS */
+
+#container{
+    display: flex;
+    padding: 0 200px 100px 200px;
+}
+
+.btn{
+    padding: 10px 15px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    font-weight: 400;
+
+    &-third{
+        background-color: var(--third-color);
+        color: var(--white);
+
+        &.animated{
+            transition: all 0.3s;
+            &:hover{
+                transform: scale(1.05);
+                box-shadow: 0 0 25px var(--third-color);
+            }
+        }
+    }
+    &-danger{
+        background-color: var(--danger);
+        color: var(--white);
+
+        &.animated{
+            transition: all 0.3s;
+            &:hover{
+                transform: scale(1.05);
+                box-shadow: 0 0 25px var(--danger);
+            }
+        }
+    }
+
+    &-outline-third{
+        border: solid 1px var(--third-color);
+        background-color: transparent;
+
+        &:hover{
+            background-color: var(--third-color);
+        }
+    }
+
+    &-discord{
+        background-color: var(--discord-color);
+        color: var(--white);
+
+        &.animated{
+            transition: all 0.3s;
+            &:hover{
+                transform: scale(1.05);
+                box-shadow: 0 0 25px var(--discord-color);
+            }
+        }
+    }
+
+    &-mail{
+        background-color: var(--mail-color);
+        color: var(--white);
+
+        &.animated{
+            transition: all 0.3s;
+            &:hover{
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1199px) {
+    #container{
+        padding: 0 100px 100px 100px;
+    }
+}
+@media screen and (max-width:1199px) {
+    #container{
+        padding: 0 40px 100px 40px;
+    }
+}
+@media screen and (max-width:566px) {
+    #container{
+        padding: 0 15px 100px 15px;
+    }
 }

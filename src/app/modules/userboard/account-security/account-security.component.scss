@@ -1,0 +1,114 @@
+#account-security {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 40px;
+    gap: 40px;
+    background-color: var(--secondary-color);
+    position: relative;
+
+    >div {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        h2 {
+            text-decoration: underline;
+        }
+
+        label {
+            color: var(--white);
+        }
+
+        input {
+            width: 100%;
+            background-color: var(--primary-color);
+            border: none;
+            color: var(--white);
+            padding: 10px 50px 10px 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+
+            &:focus-visible {
+                outline: solid 1px var(--third-color);
+                border: none !important;
+            }
+
+            &:disabled {
+                color: var(--grey-light);
+            }
+
+            &:read-only {
+                color: var(--grey-light);
+
+                &:focus-visible {
+                    outline: none;
+                }
+            }
+
+            &::-ms-reveal {
+                display: none !important;
+            }
+
+            &::-webkit-reaveal {
+                display: none !important;
+            }
+
+            &.ng-touched.ng-invalid{
+                border: solid 1px var(--danger);
+            }
+        }
+
+        h3 {
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .dialog-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--secondary-color);
+            padding: 25px 50px;
+            border-radius: 25px;
+            border: solid 1px;
+            gap: 35px;
+
+            h2 {
+                color: var(--third-color);
+                text-decoration: none;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                width: 350px;
+                gap: 15px;
+
+                .form-button {
+                    display: flex;
+                    justify-content: space-evenly;
+                    padding: 15px 0;
+
+                    >div{
+                        position: relative;
+                    }
+                }
+            }
+        }
+
+        &#actions {
+            >div {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+
+                p:last-of-type,
+                p:last-of-type>span {
+                    margin-top: 5px;
+                    font-size: 12px;
+                    color: var(--danger);
+                }
+            }
+        }
+    }
+}

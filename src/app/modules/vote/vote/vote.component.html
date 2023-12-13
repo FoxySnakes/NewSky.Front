@@ -7,7 +7,7 @@
                     <p>{{result}}</p>
                 </div>
                 <h2>Mes votes</h2>
-                <div class="votes" *ngIf="username != null">
+                <div class="votes" *ngIf="user != null">
                     <div class="vote" id="vote1" [class.unavailable]="!vote1Status.isReady">
                         <a (click)="TryVote(10)" href="https://serveur-prive.net/minecraft/newsky-14339/vote" target="_blank">Vote 1 - 1h30</a>
                         <p class="status" *ngIf="vote1Status.isReady">Disponible</p>
@@ -24,7 +24,7 @@
                         <p class="status" *ngIf="!vote3Status.isReady">{{vote3Status.timeLeft | timeFormat}}</p>
                     </div>
                 </div>
-                <div class="votes not-logged" *ngIf="username == null">
+                <div class="votes not-logged" *ngIf="user == null">
                     <p>Connectez-vous pour continuer</p>
                     <a routerLink="/login">Connectez-vous</a>
                 </div>
@@ -52,7 +52,7 @@
                     <div *ngIf="ranking.monthlyTop.length == 0" class="no-vote">
                         <p>Aucun vote ce mois-ci</p>
                     </div>
-                    <div class="self-ranking" *ngIf="username != null">
+                    <div class="self-ranking" *ngIf="user != null">
                         <h3>Ma position</h3>
                         <div class="position">
                             <p *ngIf="userRanking.monthlyPosition == 1" id="first"><span class="icon-trophy"></span>#1</p>
@@ -82,7 +82,7 @@
                     <div *ngIf="ranking.totalTop.length == 0" class="no-vote">
                         <p>Aucun vote n'a encoré été réalisé</p>
                     </div>
-                    <div class="self-ranking" *ngIf="username != null">
+                    <div class="self-ranking" *ngIf="user != null">
                         <h3>Ma position</h3>
                         <div class="position">
                             <p *ngIf="userRanking.totalPosition == 1" id="first"><span class="icon-trophy"></span>#1</p>

@@ -1,0 +1,84 @@
+<div id="account-security">
+    <div id="change-password">
+        <h2>Mot de passe</h2>
+        <button (click)="dialogChangePasswordVisible = true" class="btn btn-third animated">Modifier mon mot de passe</button>
+        <p-dialog [(visible)]="dialogChangePasswordVisible" [modal]="true" (onHide)="onHide()"
+                  [contentStyle]="{'background': 'transparent', 'max-width': '100vw'}"
+                  [closeOnEscape]="true" [dismissableMask]="true" [showHeader]="false" [closable]="true">
+            <div class="dialog-content">
+                <h2>Changer votre mot de passe</h2>
+                <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePassword()">
+                    <div>
+                        <label for="old-password">Saisissez votre ancien mot de passe</label>
+                        <input type="password" name="oldPassword" id="oldPassword" formControlName="oldPassword">
+                    </div>
+                    <div>
+                        <label for="newPassword">Saisissez votre nouveau mot de passe</label>
+                        <input type="password" name="newPassword" id="newPassword" formControlName="newPassword">
+                    </div>
+                    <div>
+                        <label for="newPasswordConfirm">Confirmer votre nouveau mot de passe</label>
+                        <input type="password" name="newPasswordConfirm" id="newPasswordConfirm" formControlName="newPasswordConfirm">
+                    </div>
+                    <div class="form-button">
+                        <button (click)="dialogChangePasswordVisible = false" class="btn btn-danger animated" type="button">Annuler</button>
+                        <div>
+                            <button class="btn btn-third animated" type="submit">Confirmer</button>
+                            <app-loader *ngIf="loading" radius="25"></app-loader>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </p-dialog>
+    </div>
+    <div id="actions">
+        <h2>Actions sur le compte</h2>
+        <div>
+            <button (click)="dialogDisableAccountVisible = true" class="btn btn-danger animated">Désactiver le compte</button>
+            <p-dialog [(visible)]="dialogDisableAccountVisible" [modal]="true" (onHide)="onHide()"
+                    [contentStyle]="{'background': 'transparent', 'max-width': '100vw', 'padding': '0 5px'}"
+                    [closeOnEscape]="true" [dismissableMask]="true" [showHeader]="false" [closable]="true">
+                <div class="dialog-content" id="disable-account">
+                    <h2>Désactiver votre compte</h2>
+                    <form [formGroup]="accountForm" (ngSubmit)="onDisableAccount()">
+                        <div>
+                            <label for="disable-password">Saisissez votre mot de passe</label>
+                            <input type="password" name="password" id="disablePassword" formControlName="password">
+                        </div>
+                        <p><span class="icon-danger"></span> Attention ! En désactivant votre compte, vous ne pourrez plus y accéder tant qu'un administrateur ne l'aura pas réactivé</p>
+                        <div class="form-button">
+                            <button (click)="dialogDisableAccountVisible = false" class="btn btn-danger animated" type="button">Annuler</button>
+                            <div>
+                                <button class="btn btn-third animated" type="submit">Confirmer</button>
+                                <app-loader *ngIf="loading" radius="25" size="60"></app-loader>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </p-dialog>
+
+            <button (click)="dialogDeleteAccountVisible = true" class="btn btn-danger animated">Supprimer le compte</button>
+            <p-dialog [(visible)]="dialogDeleteAccountVisible" [modal]="true" (onHide)="onHide()"
+                    [contentStyle]="{'background': 'transparent', 'max-width': '100vw', 'padding': '0 5px'}"
+                    [closeOnEscape]="true" [dismissableMask]="true" [showHeader]="false" [closable]="true">
+                <div class="dialog-content" id="delete-account">
+                    <h2>Supprimer votre compte</h2>
+                    <form [formGroup]="accountForm"  (ngSubmit)="onDeleteAccount()">
+                        <div>
+                            <label for="disable-password">Saisissez votre mot de passe</label>
+                            <input type="password" name="password" id="deletePassword" formControlName="password">
+                        </div>
+                        <p><span class="icon-danger"></span> Attention ! Toute suppression de compte est définitive et ne peut être annulée !</p>
+                        <div class="form-button">
+                            <button (click)="dialogDeleteAccountVisible = false" class="btn btn-danger animated" type="button">Annuler</button>
+                            <div>
+                                <button class="btn btn-third animated" type="submit">Confirmer</button>
+                                <app-loader *ngIf="loading" radius="25" size="60"></app-loader>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </p-dialog>
+        </div>
+    </div>
+</div>

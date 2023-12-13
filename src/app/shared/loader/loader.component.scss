@@ -14,7 +14,7 @@
 
     .points-container{
         display: flex;
-        gap: 10px;
+        gap: calc(var(--size) / 10);
         align-items: center;
         justify-content: center;
         width: var(--size);
@@ -24,7 +24,6 @@
             height: calc(var(--size) / 10);
             min-height: calc(var(--size) / 10);
             min-width: calc(var(--size) / 10);
-            margin-top: 10px;
             border-radius: 100%;
             background-color: var(--white);
             animation: animation 0.3s ease-in-out infinite alternate;
@@ -50,9 +49,9 @@
 
 @keyframes animation {
     from{
-        transform: translateY(0px);
+        transform: translateY(-10px);
     }
     to{
-        transform: translateY(20px);
+        transform: translateY(10px);
     }
 }

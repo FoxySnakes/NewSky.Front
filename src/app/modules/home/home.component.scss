@@ -1,8 +1,6 @@
 #container {
-    display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 200px 100px 200px;
     gap: 75px;
 
     >h1 {
@@ -126,7 +124,7 @@
             gap: 15px;
 
             >.separator {
-                border-left: solid 2px var(--gray);
+                border-left: solid 2px var(--grey);
                 height: 250px;
             }
 
@@ -239,11 +237,11 @@
 
                 >#details-1 {
                     >#warning {
-                        color: var(--warning);
+                        color: var(--danger);
                         margin-top: 5px;
 
                         >span {
-                            color: var(--warning);
+                            color: var(--danger);
                             padding-inline: 5px;
                         }
                     }
@@ -297,7 +295,7 @@
         }
 
         >hr {
-            border-color: var(--gray);
+            border-color: var(--grey);
         }
 
         >#issue {
@@ -339,7 +337,7 @@
 }
 @media screen and (max-width:1200px) {
     #container{
-        padding-inline: 100px !important;
+
 
         >#short-description {
             flex-direction: column-reverse;
@@ -385,7 +383,7 @@
 
         >.separator{
             border-left: none;
-            border-bottom: solid 2px var(--gray);
+            border-bottom: solid 2px var(--grey);
             height: auto !important;
             width: 100%;
         }
@@ -398,7 +396,6 @@
 }
 @media screen and (max-width:700px) {
     #container{
-        padding-inline: 50px !important;
 
         #join-buttons{
             flex-direction: column;

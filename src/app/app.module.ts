@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,15 +9,16 @@ import { HomeComponent } from './modules/home/home.component';
 import { FooterComponent } from './modules/main-layout/footer/footer.component';
 import { NavigationComponent } from './modules/main-layout/navigation/navigation.component';
 import { LayoutComponent } from './modules/main-layout/layout/layout.component';
-import { VoteComponent } from './modules/vote/vote.component';
 import { NotifierModule } from 'angular-notifier';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtInterceptor } from './services/jwt.interceptor';
 import { NotFoundComponent } from './modules/not-found/not-found.component';
-import { LoaderComponent } from './modules/loader/loader.component';
-import { TimeFormatPipe } from './pipes/timeformat.pipe';
+import { LoaderComponent } from './shared/loader/loader.component';
 import { AuthService } from './services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
+
 
 @NgModule({
   declarations: [
@@ -25,15 +27,14 @@ import { CookieService } from 'ngx-cookie-service';
     FooterComponent,
     NavigationComponent,
     LayoutComponent,
-    VoteComponent,
     NotFoundComponent,
-    LoaderComponent,
-    TimeFormatPipe,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    SharedModule,
     NotifierModule.withConfig({
       animations:{
         enabled: true,
@@ -73,6 +74,8 @@ import { CookieService } from 'ngx-cookie-service';
       multi : true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    BrowserAnimationsModule  ]
 })
 export class AppModule { }

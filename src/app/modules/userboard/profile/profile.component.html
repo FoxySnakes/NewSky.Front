@@ -1,0 +1,66 @@
+<div id="profile">
+    <div class="user-info">
+        <div>
+            <img src="{{userBodySkinUrl}}" alt="Skin du joueur">
+            <p>{{username}}</p>
+        </div>
+        <button (click)="onEnableEdit()" class="btn btn-third animated" *ngIf="form.disabled"><span class="icon-edit"></span> Editer</button>
+
+    </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <div class="field">
+            <label>Prénom</label>
+            <input type="text" name="firstName" id="firstName" formControlName="firstName">
+            <span *ngIf="!form.controls.firstName.valid && form.controls.firstName.dirty" class="icon-cross"></span>
+            <span *ngIf="form.controls.firstName.valid && form.controls.firstName.dirty" class="icon-check"></span>
+        </div>
+        <div class="field">
+            <label>Nom</label>
+            <input type="text" name="lastName" id="lastName" formControlName="lastName">
+            <span *ngIf="!form.controls.lastName.valid && form.controls.lastName.dirty" class="icon-cross"></span>
+            <span *ngIf="form.controls.lastName.valid && form.controls.lastName.dirty" class="icon-check"></span>
+        </div>
+        <div class="field">
+            <label>E-Mail</label>
+            <input type="text" name="email" id="email" formControlName="email">
+            <span *ngIf="!form.controls.email.valid && form.controls.email.dirty" class="icon-cross"></span>
+            <span *ngIf="form.controls.email.valid && form.controls.email.dirty" class="icon-check"></span>
+        </div>
+        <div class="field">
+            <label>Nom d'utilisateur</label>
+            <input type="text" name="userName" id="userName" formControlName="userName" readonly>
+            <span class="icon-info"></span>
+            <p class="username-info">
+                Si vous souhaitez changer votre nom d'utilisateur, veuillez faire une demander au <a routerLink="contact">Support</a>.
+            </p>
+        </div>
+        <div class="field">
+            <label>Code Postal</label>
+            <input type="text" name="zipCode" id="zipCode" formControlName="zipCode">
+            <span *ngIf="!form.controls.zipCode.valid && form.controls.zipCode.dirty" class="icon-cross"></span>
+            <span *ngIf="form.controls.zipCode.valid && form.controls.zipCode.dirty" class="icon-check"></span>
+        </div>
+        <div class="field">
+            <label>Ville</label>
+            <input type="text" name="city" id="city" formControlName="city">
+            <span *ngIf="!form.controls.city.valid && form.controls.city.dirty" class="icon-cross"></span>
+            <span *ngIf="form.controls.city.valid && form.controls.city.dirty" class="icon-check"></span>
+        </div>
+        <div class="field">
+            <label>Adresse</label>
+            <input type="text" name="address" id="address" formControlName="address">
+            <span *ngIf="!form.controls.address.valid && form.controls.address.dirty" class="icon-cross"></span>
+            <span *ngIf="form.controls.address.valid && form.controls.address.dirty" class="icon-check"></span>
+        </div>
+        <div class="field">
+            <label>Pays</label>
+            <input type="text" name="country" id="country" formControlName="country">
+            <span *ngIf="!form.controls.country.valid && form.controls.country.dirty" class="icon-cross"></span>
+            <span *ngIf="form.controls.country.valid && form.controls.country.dirty" class="icon-check"></span>
+        </div>
+        <div class="button-form" *ngIf="!form.disabled">
+            <button (click)="onReset()" class="btn btn-danger animated" type="button"><span class="icon-cross"></span> Annuler</button>
+            <button class="btn btn-third" type="submit" [class.animated]="!form.valid" [disabled]="!form.valid"><span class="icon-save"></span> Sauvegarder</button>
+        </div>
+    </form>
+</div>

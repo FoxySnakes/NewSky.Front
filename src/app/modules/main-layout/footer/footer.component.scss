@@ -1,4 +1,4 @@
-#container{
+#footer-container{
     background-color: var(--secondary-color);
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@
             flex-direction: column;
             gap: 15px;
             width: 400px;
-            color: var(--gray);
+            color: var(--grey);
         }
         >#links-container{
             display: flex;
@@ -113,7 +113,7 @@
         padding: 10px;
 
         >p{
-            color: var(--gray);
+            color: var(--grey);
             font-size: 14px;
                     
             >a{

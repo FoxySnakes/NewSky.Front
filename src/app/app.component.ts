@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ApiService } from './services/api.service';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
@@ -10,7 +10,7 @@ import { User } from './models/UserModel';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit{
   title = 'NewSky';
 
   constructor(private apiService : ApiService,
@@ -29,9 +29,13 @@ export class AppComponent implements OnInit, OnDestroy {
        })
     }
   }
-  ngOnDestroy(): void {
+
+  @HostListener('window:beforeunload')
+  beforeUnloadHandler() {
+    alert(this.authService.keepConnection())
     if(!this.authService.keepConnection()){
-      this.authService.removeAuthToken()
+      
+      this.authService.removeLocalStorageInfo()
     }
   }
 }

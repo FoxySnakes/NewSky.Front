@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
@@ -11,7 +11,7 @@ export class ApiService {
   constructor(private httpClient: HttpClient) { }
 
   get(endpoints: string) {
-    return this.httpClient.get<any>(`${environment.apiUrl}/${endpoints}`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/${endpoints}`)
   }
 
   getPaged(endpoints: string, pageSize : number, pageNumber : number) {
@@ -21,4 +21,5 @@ export class ApiService {
   post(endpoints: string, data: any) {
     return this.httpClient.post<any>(`${environment.apiUrl}/${endpoints}`,data)
   }
+
 }

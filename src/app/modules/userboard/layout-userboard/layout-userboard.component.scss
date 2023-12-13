@@ -1,0 +1,195 @@
+
+#layout{
+    display: flex;
+    width: 100%;
+    position: relative;
+
+    #user-menu{
+        display: none;
+    }
+
+    #layout-links{
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        height: 100%;
+        background-color: transparent;
+        transition: all 0.5s;
+
+        #username-mask{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            min-width: 55px;
+            width: 55px;
+            background-color: var(--secondary-variant-color);
+            padding: 30px 0 30px 0;
+            transition: all 0.5s;
+
+            p{
+                font-size: 20px;
+                font-weight: var(--font-weight-semibold);
+                opacity: 0;
+                transition: all 0.5s;
+            }
+
+            img{
+                width: 35px;
+                height: 35px;
+                transition: all 0.5s;
+            }
+        }
+
+        .nav-links{
+            display: flex;
+            flex-direction: column;
+            min-width: 55px;
+            width: 55px;
+            background-color: var(--secondary-variant-color);
+            padding-bottom: 30px;
+            height: 100%;
+            transition: all 0.5s;
+
+            a{
+                height: 60px;
+                min-height: 60px;
+                transition: all 0.5s;
+                display: flex;
+                align-items: center;
+                padding-right: 10px;
+                border-left: solid 5px transparent;
+                overflow: hidden;
+
+                &:hover{
+                    background-color: var(--secondary-color);
+                }
+
+                span[class^="icon-"]{
+                    font-size: 20px;
+                    width: 50px;
+                    min-width: 50px;
+                    text-align: center;
+                }
+
+                span:not([class^="icon-"]){
+                    opacity: 0;
+                    transition: all 0.5s;
+                    min-width: max-content;
+                }
+
+                &.active-link{
+                    border-left: solid 5px var(--third-color);
+                    background-color: var(--secondary-color);
+
+                    span{
+                        font-weight: var(--font-weight-semibold);
+                    }
+                }
+            }
+        }
+
+        label{
+            position: absolute;
+            left: 55px;
+            top: 35px;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100%;
+            width: 30px;
+            height: 30px;
+            border: solid 1px var(--grey);
+            background-color: var(--secondary-variant-color);
+            cursor: pointer;
+            transition: all 0.5s;
+
+            span{
+                margin-left: -1px;
+                transition: all 0.5s;
+            }
+        }
+    }
+
+    #layout-content{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .header{
+            height: 70px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-inline: 25px;
+            background-color: var(--secondary-variant-color);
+            border-left: solid 1px var(--grey);
+            position: relative;
+    
+            >span{
+                font-size: 20px;
+                margin-top: 5px;
+            }
+    
+            h1{
+                font-size: 22px;
+            }
+        }
+    }
+
+    #user-menu:checked{
+        ~#layout-links{
+            background-color: #00000080;
+
+            #username-mask{
+                min-width: 325px;
+                width: 325px;
+
+                p{
+                    opacity: 1;
+                }
+                img{
+                    width: 75px;
+                    height: 75px;
+                }
+            }
+
+            .nav-links{
+                min-width: 325px;
+                width: 325px;
+            }
+
+            .nav-links{
+                span:not([class^="icon-"]){
+                    opacity: 1;
+                }
+            }
+
+            label{
+                left: 325px;
+
+                span{
+                    transform: rotate(90deg);
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:991px) {
+    #layout{
+        padding-left: 55px;
+
+        #layout-links{
+            display: flex;
+            position: absolute;
+            left: 0;
+        }
+    }
+
+    #user-menu:checked~#layout-links{
+        width: 100%;
+    }
+}

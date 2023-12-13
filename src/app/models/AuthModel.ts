@@ -18,10 +18,7 @@ export interface RegisterDto{
   PhoneNumber: string
 }
 
-export class RegisterResult{
-
-}
-
-export class LoginResult{
-  
+export interface AccountManageDto{
+  success: boolean;
+  error: string;
 }

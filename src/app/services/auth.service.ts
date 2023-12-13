@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject} from 'rxjs';
 import { ApiService } from './api.service';
 import { LoginDto, RegisterDto } from '../models/AuthModel';
 import { UserService } from './user.service';
@@ -14,7 +14,7 @@ export class AuthService implements OnInit {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private rememberMe = false;
 
-  constructor(private api : ApiService,
+  constructor(private apiService : ApiService,
               private userService : UserService,
               private notifService : NotifierService,
               private router : Router){
@@ -26,13 +26,14 @@ export class AuthService implements OnInit {
   }
 
   login(loginDto : LoginDto, callbackUrl : string) : void {
-    this.api.post('auth/login', loginDto).subscribe({
+    this.apiService.post('auth/login', loginDto).subscribe({
       next : (response) => {
         if(response.isSuccess){
           this.setAuthToken(response.token)
           this.isAuthenticatedSubject.next(true);
           this.userService.setCurrentUser(response.user)
           this.setRememberBe(loginDto.RememberMe)
+          console.log(loginDto.RememberMe)
           this.notifService.notify('success','Connexion réussie')
           if(callbackUrl == "/login " || callbackUrl == "/register"){
             this.router.navigate(["/"])
@@ -62,7 +63,7 @@ export class AuthService implements OnInit {
   }
 
   register(registerDto : RegisterDto, callbackUrl : string) : void{
-    this.api.post('auth/register', registerDto).subscribe({
+    this.apiService.post('auth/register', registerDto).subscribe({
       next : (response) => {
         if(response.isSuccess){
           this.setAuthToken(response.token)
@@ -87,32 +88,47 @@ export class AuthService implements OnInit {
   }
 
   logout(): void {
-    this.api.get("auth/logout").subscribe({
-      next: () => {
-        this.removeAuthToken()
-        this.userService.setCurrentUser(null)
-        this.isAuthenticatedSubject.next(false);
-      },
+    this.apiService.get("auth/logout").subscribe({
+      next: () => this.notifService.notify('success',"Déconnexion réussie"),
       error : () => this.notifService.notify('error',"Impossible de joindre l'API")
     })
 
-    this.removeAuthToken()
+    this.removeLocalStorageInfo()
     this.userService.setCurrentUser(null)
     this.isAuthenticatedSubject.next(false);
+    if(this.router.url.match("/user") || this.router.url.match("/admin")){
+      this.router.navigate(['/'])
+    }
+  }
+  
+  setAuthenticated(value : boolean){
+    this.isAuthenticatedSubject.next(value)
+  }
+
+  setRememberBe(value : boolean){
+    this.rememberMe = value;
+    localStorage.setItem("rememberMe", value.toString());
   }
 
   setAuthToken(token: string): void {
     localStorage.setItem("bearer",token)
   }
 
+
+
   getAuthToken(): string | null {
     var token = localStorage.getItem("bearer")
     return token;
   }
 
-  removeAuthToken(): void{
+
+
+  removeLocalStorageInfo(): void{
     localStorage.removeItem("bearer");
+    localStorage.removeItem("rememberMe")
   }
+
+
 
   isAuthenticatedObervable(){
     return this.isAuthenticatedSubject;
@@ -122,17 +138,21 @@ export class AuthService implements OnInit {
     return this.isAuthenticatedSubject.value
   }
 
-  setRememberBe(value : boolean){
-    this.rememberMe = value;
-  }
-
   keepConnection(){
     return this.rememberMe
   }
 
+
+
   private checkAuthenticationStatus() {
     const token = this.getAuthToken()
     const isAuthenticated = !!token;
+    if(isAuthenticated){
+      const rememberMe = localStorage.getItem("rememberMe")
+      if(rememberMe){
+        this.rememberMe = Boolean(rememberMe)
+      }
+    }
     this.isAuthenticatedSubject.next(isAuthenticated);
   }
 }

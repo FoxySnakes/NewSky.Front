@@ -6,7 +6,7 @@
     padding: 100px 0;
 
     #error {
-        background-color: var(--warning);
+        background-color: var(--danger);
         padding: 5px 35px;
         border-radius: 10px;
         color: var(--white);
@@ -37,7 +37,7 @@
             position: absolute;
             top: 15px;
             left: 15px;
-            color: var(--gray);
+            color: var(--grey);
             transition: all 0.2s;
 
             &:hover {
@@ -107,7 +107,7 @@
 
                             label {
                                 position: absolute;
-                                color: var(--gray);
+                                color: var(--grey);
                                 left: 20px;
                                 transition: all 0.4s;
                                 cursor: text;
@@ -143,10 +143,10 @@
                                 }
 
                                 &.ng-invalid.ng-touched {
-                                    border: solid 1px var(--warning);
+                                    border: solid 1px var(--danger);
 
                                     +label {
-                                        color: var(--warning);
+                                        color: var(--danger);
 
                                     }
                                 }
@@ -171,7 +171,7 @@
                                 transition: height 0.3s;
 
                                 p {
-                                    color: var(--warning);
+                                    color: var(--danger);
                                     font-size: 14px;
                                     opacity: 0;
                                     transition: all 0.3s;
@@ -288,7 +288,7 @@
                                     min-width: 20px;
                                     min-height: 20px;
                                     border-radius: 5px;
-                                    border: solid 1px var(--gray);
+                                    border: solid 1px var(--grey);
                                     background-color: var(--secondary-color);
                                     cursor: pointer;
                                     display: flex;
@@ -303,7 +303,7 @@
                                 }
                                 
                                 p{
-                                    color: var(--gray);
+                                    color: var(--grey);
                                 }
                             }
                             button {
@@ -340,7 +340,7 @@
                 padding-inline: 15px;
 
                 p {
-                    color: var(--gray);
+                    color: var(--grey);
                 }
 
                 a {
