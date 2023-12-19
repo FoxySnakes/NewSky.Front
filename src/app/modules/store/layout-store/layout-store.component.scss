@@ -1,0 +1,34 @@
+#container{
+    flex-direction: column;
+    align-items: center;
+    gap: 75px;
+
+    #store-layout{
+    display: flex;
+
+    .header{
+        display: flex;
+        align-items: center;
+        padding-left: 30px;
+        height: 70px;
+        background-color: var(--secondary-variant-color);
+        gap: 15px;
+        font-size: 28px;
+        font-weight: var(--font-weight-semibold);
+    }
+
+    #store-layout-left{
+        display: flex;
+        flex-direction: column;
+
+        #store-categories{
+            display: flex;
+            flex-direction: column;
+
+            .header[position=left]{
+                border-top-left-radius: 25px;
+            }
+        }
+    }
+}
+}

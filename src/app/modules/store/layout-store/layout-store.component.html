@@ -1,0 +1,21 @@
+<div id="container">
+    <h1>Boutique</h1>
+    <div id="store-layout">
+        <div id="store-layout-left">
+            <div id="store-categories">
+                <div class="header" position="left">
+                    <p>Catégories</p>
+                </div>
+                <div class="store-links" *ngFor="let category of listing.categories">
+                    
+                </div>
+            </div>
+        </div>
+        <div id="store-layout-right">
+            <div class="header" position="right">
+
+            </div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

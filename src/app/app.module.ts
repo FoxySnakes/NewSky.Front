@@ -11,7 +11,7 @@ import { NavigationComponent } from './modules/main-layout/navigation/navigation
 import { LayoutComponent } from './modules/main-layout/layout/layout.component';
 import { NotifierModule } from 'angular-notifier';
 import { AuthModule } from './modules/auth/auth.module';
-import { JwtInterceptor } from './services/jwt.interceptor';
+import { AuthInterceptor } from './interceptors/Auth.interceptor';
 import { NotFoundComponent } from './modules/not-found/not-found.component';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { AuthService } from './services/auth.service';
@@ -70,7 +70,7 @@ import { SharedModule } from './shared/shared.module';
   providers: [
     {
       provide : HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
+      useClass: AuthInterceptor,
       multi : true
     }
   ],
