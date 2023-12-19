@@ -14,5 +14,6 @@ export class LayoutStoreComponent implements OnInit{
 
   ngOnInit(): void {
     this.listing = this.tebexService.getListing()
+    console.log(this.listing)
   }
 }
