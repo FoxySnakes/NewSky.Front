@@ -63,7 +63,7 @@
   content: "\e907";
 }
 .icon-chevron-left {
-  transform: rotate(90deg);
+  transform: rotate(90deg) !important;
   &::before{
     content: "\e907";
   }

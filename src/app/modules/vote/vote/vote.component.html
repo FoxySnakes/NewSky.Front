@@ -3,11 +3,8 @@
     <div id="content">
         <div id="left-container">
             <div id="player-votes">
-                <div id="result">
-                    <p>{{result}}</p>
-                </div>
                 <h2>Mes votes</h2>
-                <div class="votes" *ngIf="user != null">
+                <div class="votes" *ngIf="username != null">
                     <div class="vote" id="vote1" [class.unavailable]="!vote1Status.isReady">
                         <a (click)="TryVote(10)" href="https://serveur-prive.net/minecraft/newsky-14339/vote" target="_blank">Vote 1 - 1h30</a>
                         <p class="status" *ngIf="vote1Status.isReady">Disponible</p>
@@ -24,17 +21,18 @@
                         <p class="status" *ngIf="!vote3Status.isReady">{{vote3Status.timeLeft | timeFormat}}</p>
                     </div>
                 </div>
-                <div class="votes not-logged" *ngIf="user == null">
-                    <p>Connectez-vous pour continuer</p>
-                    <a routerLink="/login">Connectez-vous</a>
-                </div>
+                <form class="votes not-logged" *ngIf="username == null" [formGroup]="usernameForm" (ngSubmit)="SetUserName()">
+                    <p>Veuillez entrer votre peudo pour continuer</p>
+                    <input type="text" placeholder="Pseudo" id="player-username" formControlName="username">
+                    <button class="btn btn-third animated" type="submit">Confirmer</button>
+                </form>
                 <app-loader *ngIf="loading" radius="25"></app-loader>
             </div>
             <div id="ranking">
                 <h2>Classement des votes</h2>
                 <div class="type" [class.monthOrder]="rankingFilterType == 'month'">
-                    <p (click)="ChangeFilter('month')">Ce mois-ci</p>
-                    <p (click)="ChangeFilter('total')">Total</p>
+                    <p (click)="rankingFilterType = 'month' ">Ce mois-ci</p>
+                    <p (click)="rankingFilterType = 'total' ">Total</p>
                     <div id="selected"></div>
                 </div>
                 <div class="position-container" *ngIf="rankingFilterType == 'month'">
@@ -52,7 +50,7 @@
                     <div *ngIf="ranking.monthlyTop.length == 0" class="no-vote">
                         <p>Aucun vote ce mois-ci</p>
                     </div>
-                    <div class="self-ranking" *ngIf="user != null">
+                    <div class="self-ranking" *ngIf="username != null">
                         <h3>Ma position</h3>
                         <div class="position">
                             <p *ngIf="userRanking.monthlyPosition == 1" id="first"><span class="icon-trophy"></span>#1</p>
@@ -82,7 +80,7 @@
                     <div *ngIf="ranking.totalTop.length == 0" class="no-vote">
                         <p>Aucun vote n'a encoré été réalisé</p>
                     </div>
-                    <div class="self-ranking" *ngIf="user != null">
+                    <div class="self-ranking" *ngIf="username != null">
                         <h3>Ma position</h3>
                         <div class="position">
                             <p *ngIf="userRanking.totalPosition == 1" id="first"><span class="icon-trophy"></span>#1</p>

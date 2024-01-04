@@ -16,21 +16,21 @@ export class RegisterComponent implements OnInit {
   error! : string | null
   callbackUrl :string | undefined = '/'
   globalForm = new FormGroup({
-    firstname : new FormControl('d', [Validators.required]),
-    lastname : new FormControl('d', [Validators.required]),
-    username : new FormControl('FoxySnake', [Validators.required]),
-    password : new FormControl('dsqdsdqdqdq', [Validators.required, Validators.minLength(8)]),
-    email : new FormControl('d@d.f', [Validators.required, Validators.pattern("^.+@.+\..+$")]),
+    firstname : new FormControl('', [Validators.required]),
+    lastname : new FormControl('', [Validators.required]),
+    username : new FormControl('', [Validators.required]),
+    password : new FormControl('', [Validators.required, Validators.minLength(8)]),
+    email : new FormControl('', [Validators.required, Validators.pattern("^.+@.+\..+$")]),
   })
   globalFormValid = false;
 
   additionalForm = new FormGroup({
-    birthday : new FormControl('Fri Oct 13 2023 02:00:00 GMT+0200', [Validators.required]),
-    address : new FormControl('T', [Validators.required]),
-    zipcode : new FormControl('45345', [Validators.required, Validators.pattern("^[0-9]{5}$")]),
-    city : new FormControl('t', [Validators.required]),
-    country : new FormControl('T', [Validators.required]),
-    phonenumber : new FormControl('7676767676', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
+    birthday : new FormControl('', [Validators.required]),
+    address : new FormControl('', [Validators.required]),
+    zipcode : new FormControl('', [Validators.required, Validators.pattern("^[0-9]{5}$")]),
+    city : new FormControl('', [Validators.required]),
+    country : new FormControl('', [Validators.required]),
+    phonenumber : new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
   })
 
   additionalFormValid = false;

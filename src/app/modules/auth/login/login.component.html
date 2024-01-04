@@ -1,6 +1,6 @@
 <div id="main-container">
   <div id="error"[class.has-error]="error">{{error}}</div>
-  <div id="container">
+  <div class="container">
     <a id="back" [routerLink]="callbackUrl"><span class="icon-chevron-left"></span> Retour</a>
     <div id="form">
       <h1>Connectez vous</h1>
@@ -22,8 +22,8 @@
         <div id="options">
           <div id="remember-me">
             <input type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe">
-            <label for="rememberMe"><span class="icon-user"></span></label>
-            <p>Se souvenir de moi</p>
+            <label for="rememberMe" class="box"><span class="icon-check"></span></label>
+            <label for="rememberMe" class="text">Se souvenir de moi</label>
           </div>
           <a id="forgot-password">Mot de passe oublié&nbsp;?</a>
         </div>
