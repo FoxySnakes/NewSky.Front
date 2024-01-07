@@ -1,18 +1,15 @@
-export interface User{
+export class User{
   userName: string;
   uuid: string;
   email: string;
   emailConfirmed: boolean;
   role: string;
-}
 
-export interface UserPrivateInfo{
-  firstName: string;
-  lastName: string;
-  email: string;
-  userName: string;
-  zipCode: string;
-  city: string;
-  address: string;
-  country: string;
+  constructor(userName: string, uuid: string, email: string, emailConfirmed: boolean, role: string) {
+    this.userName = userName;
+    this.uuid = uuid;
+    this.email = email;
+    this.emailConfirmed = emailConfirmed;
+    this.role = role;
+  }
 }

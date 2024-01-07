@@ -2,3 +2,21 @@ faire un carousel pour les nouveautés du home / revoir les séparateurs
 fix input date sur l'inscription
 faire tout les logos des formulaires inscription / connexion
 faire une page "pourquoi ces données sont demandés à la création du compte"
+
+
+Revoir la gestion des rôles
+Inclure l'acceptation des CGA et CGU dans la creation de compte et dans
+Revoir la gestion de l'authentification sur le front (si il a changer son nom d'utilisateur, le token est plus et doit etre supprimé)
+Revoir le système de vote pour permettre aux non-utilisateurs de voter
+Trouver un moyen d'encrypter les mots de passe dans les communication de Angular vers l'API
+Changer le NotifyService par le MessagerieService de PrimeNg
+Tester le delete account dans la partie user
+Changer tout les "font-weight" par les variables
+Revoir les informations personnelles
+Revoir le renvoie d'erreur lors des appels à l'api coté front
+
+
+
+
+Comment faire pour vérifier l'utilisateur ? (requete http)
+Comment faire pour envoyer la notif d'un vote pour un joueur (requete http)

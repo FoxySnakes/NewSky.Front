@@ -2,65 +2,51 @@
     <div class="user-info">
         <div>
             <img src="{{userBodySkinUrl}}" alt="Skin du joueur">
-            <p>{{username}}</p>
+            <p>{{form.controls.username.value ? form.controls.username.value : '-'}}</p>
         </div>
-        <button (click)="onEnableEdit()" class="btn btn-third animated" *ngIf="form.disabled"><span class="icon-edit"></span> Editer</button>
-
     </div>
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <div class="field">
-            <label>Prénom</label>
-            <input type="text" name="firstName" id="firstName" formControlName="firstName">
-            <span *ngIf="!form.controls.firstName.valid && form.controls.firstName.dirty" class="icon-cross"></span>
-            <span *ngIf="form.controls.firstName.valid && form.controls.firstName.dirty" class="icon-check"></span>
-        </div>
-        <div class="field">
-            <label>Nom</label>
-            <input type="text" name="lastName" id="lastName" formControlName="lastName">
-            <span *ngIf="!form.controls.lastName.valid && form.controls.lastName.dirty" class="icon-cross"></span>
-            <span *ngIf="form.controls.lastName.valid && form.controls.lastName.dirty" class="icon-check"></span>
-        </div>
-        <div class="field">
+    <div class="field-container" [formGroup]="form">
+        <div class="field email">
             <label>E-Mail</label>
-            <input type="text" name="email" id="email" formControlName="email">
-            <span *ngIf="!form.controls.email.valid && form.controls.email.dirty" class="icon-cross"></span>
-            <span *ngIf="form.controls.email.valid && form.controls.email.dirty" class="icon-check"></span>
+            <input type="text" name="email" id="email" formControlName="email" readonly>
+            <button class="btn btn-third animated" (click)="dialogChangeEmailVisible = true">Modifier mon email</button>
         </div>
         <div class="field">
             <label>Nom d'utilisateur</label>
-            <input type="text" name="userName" id="userName" formControlName="userName" readonly>
+            <input type="text" name="username" id="username" formControlName="username" readonly>
             <span class="icon-info"></span>
             <p class="username-info">
-                Si vous souhaitez changer votre nom d'utilisateur, veuillez faire une demander au <a routerLink="contact">Support</a>.
+                Si vous souhaitez changer votre nom d'utilisateur, veuillez faire une demander au <a
+                    routerLink="contact">Support</a>.
             </p>
         </div>
-        <div class="field">
-            <label>Code Postal</label>
-            <input type="text" name="zipCode" id="zipCode" formControlName="zipCode">
-            <span *ngIf="!form.controls.zipCode.valid && form.controls.zipCode.dirty" class="icon-cross"></span>
-            <span *ngIf="form.controls.zipCode.valid && form.controls.zipCode.dirty" class="icon-check"></span>
-        </div>
-        <div class="field">
-            <label>Ville</label>
-            <input type="text" name="city" id="city" formControlName="city">
-            <span *ngIf="!form.controls.city.valid && form.controls.city.dirty" class="icon-cross"></span>
-            <span *ngIf="form.controls.city.valid && form.controls.city.dirty" class="icon-check"></span>
-        </div>
-        <div class="field">
-            <label>Adresse</label>
-            <input type="text" name="address" id="address" formControlName="address">
-            <span *ngIf="!form.controls.address.valid && form.controls.address.dirty" class="icon-cross"></span>
-            <span *ngIf="form.controls.address.valid && form.controls.address.dirty" class="icon-check"></span>
-        </div>
-        <div class="field">
-            <label>Pays</label>
-            <input type="text" name="country" id="country" formControlName="country">
-            <span *ngIf="!form.controls.country.valid && form.controls.country.dirty" class="icon-cross"></span>
-            <span *ngIf="form.controls.country.valid && form.controls.country.dirty" class="icon-check"></span>
-        </div>
-        <div class="button-form" *ngIf="!form.disabled">
-            <button (click)="onReset()" class="btn btn-danger animated" type="button"><span class="icon-cross"></span> Annuler</button>
-            <button class="btn btn-third" type="submit" [class.animated]="!form.valid" [disabled]="!form.valid"><span class="icon-save"></span> Sauvegarder</button>
-        </div>
-    </form>
+
+        <p-dialog [(visible)]="dialogChangeEmailVisible" [modal]="true"
+            [contentStyle]="{'background': 'transparent', 'max-width': '100vw'}" [closeOnEscape]="true"
+            [dismissableMask]="true" [showHeader]="false" [closable]="true">
+            <div class="dialog-content">
+                <h2>Changer votre Email</h2>
+                <form [formGroup]="changeEmailForm" (ngSubmit)="onChangeEmail()">
+                    <div>
+                        <label for="newEmailConfirm">Saisissez votre nouveau email</label>
+                        <input type="email" name="newEmail" id="newEmail" formControlName="newEmail">
+                        <div class="errors">
+                            <p
+                            [class.visible]="changeEmailForm.controls.newEmail.hasError('required') && changeEmailForm.controls.newEmail.touched">
+                            Champ requis</p>
+                        </div>
+                    </div>
+                    <div class="form-button">
+                        <button (click)="dialogChangeEmailVisible = false" class="btn btn-danger animated"
+                            type="button">Annuler</button>
+                        <div>
+                            <button class="btn btn-third animated" type="submit">Confirmer</button>
+                            <app-loader *ngIf="loading" radius="25"></app-loader>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </p-dialog>
+
+    </div>
 </div>

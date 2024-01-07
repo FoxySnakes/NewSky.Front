@@ -1,36 +1,15 @@
 <div id="main-container">
     <div id="error" [class.has-error]="error">{{error}}</div>
     <div class="container">
+        <app-loader radius="25" *ngIf="loading"></app-loader>
         <a id="back" [routerLink]="callbackUrl"><span class="icon-chevron-left"></span> Retour</a>
         <div id="form">
             <h1>Créer un compte</h1>
             <div id="forms-container">
-                <div [class.globalForm-valid]="globalFormValid" [class.additionalForm-valid]="additionalFormValid" id="forms-slider">
+                <div [class.globalForm-valid]="globalFormValid" id="forms-slider">
                     <form id="global" [formGroup]="globalForm" (ngSubmit)="validateGlobalForm()">
-                        <div class="inline-field">
-                            <div class="field">
-                                <input type="text" name="firstname" id="firstname" formControlName="firstname">
-                                <label for="firstname"><span class="icon-user"></span> Prénom</label>
-                                <div class="errors"
-                                    [class.visible]="!globalForm.controls.firstname.valid && globalForm.controls.firstname.touched">
-                                    <p
-                                        [class.visible]="globalForm.controls.firstname.hasError('required') && globalForm.controls.firstname.touched">
-                                        Champ requis</p>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <input type="text" name="lastname" id="lastname" formControlName="lastname">
-                                <label for="lastname"><span class="icon-user"></span> Nom de famille</label>
-                                <div class="errors"
-                                    [class.visible]="!globalForm.controls.lastname.valid && globalForm.controls.lastname.touched">
-                                    <p
-                                        [class.visible]="globalForm.controls.lastname.hasError('required') && globalForm.controls.lastname.touched">
-                                        Champ requis</p>
-                                </div>
-                            </div>
-                        </div>
                         <div class="field">
-                            <input type="text" name="username" id="username" formControlName="username">
+                            <input type="text" name="username" id="username" formControlName="username" [class.not-empty]="globalForm.controls.username.value != null && globalForm.controls.username.value != ''">
                             <label for="username"><span class="icon-user"></span> Nom d'utilisateur</label>
                             <div class="errors"
                                 [class.visible]="!globalForm.controls.username.valid && globalForm.controls.username.touched">
@@ -40,8 +19,8 @@
                             </div>
                         </div>
                         <div class="field">
-                            <input type="password" name="password" id="password" formControlName="password">
-                            <label for="password"><span class="icon-user"></span> Mot de passe</label>
+                            <input type="password" name="password" id="password" formControlName="password" [class.not-empty]="globalForm.controls.password.value != null && globalForm.controls.password.value != ''">
+                            <label for="password"><span class="icon-lock"></span> Mot de passe</label>
                             <div class="errors"
                                 [class.visible]="!globalForm.controls.password.valid && globalForm.controls.password.touched">
                                 <p
@@ -53,8 +32,8 @@
                             </div>
                         </div>
                         <div class="field">
-                            <input type="email" name="email" id="email" formControlName="email">
-                            <label for="email"><span class="icon-user"></span> Email</label>
+                            <input type="email" name="email" id="email" formControlName="email" [class.not-empty]="globalForm.controls.email.value != null && globalForm.controls.email.value != ''">
+                            <label for="email"><span class="icon-mail"></span> Email</label>
                             <div class="errors"
                                 [class.visible]="!globalForm.controls.email.valid && globalForm.controls.email.touched">
                                 <p
@@ -62,110 +41,40 @@
                                     Champ requis</p>
                                 <p
                                     [class.visible]="globalForm.controls.email.hasError('pattern') && globalForm.controls.email.touched">
-                                    Champ invalide</p>
+                                    Champ invalid</p>
                             </div>
                         </div>
                         <div id="submit">
-                            <button type="submit" [disabled]="!globalForm.valid">Suivant</button>
+                            <button type="submit" [disabled]="!globalForm.valid">Créer le compte</button>
                         </div>
                     </form>
-                    <form id="additional" [formGroup]="additionalForm" (ngSubmit)="validateAddtionalForm()">
-                        <div class="inline-field">
-                            <div class="field">
-                                <input type="date" name="birthday" id="birthday" formControlName="birthday">
-                                <label for="birthday"><span class="icon-user"></span> Date de naissance</label>
-                                <div class="errors"
-                                    [class.visible]="!additionalForm.controls.birthday.valid && additionalForm.controls.birthday.touched">
-                                    <p
-                                        [class.visible]="additionalForm.controls.birthday.hasError('required') && additionalForm.controls.birthday.touched">
-                                        Champ requis</p>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <input type="texte" name="phonenumber" id="phonenumber" formControlName="phonenumber">
-                                <label for="phonenumber"><span class="icon-user"></span> Numéro de téléphone</label>
-                                <div class="errors"
-                                    [class.visible]="!additionalForm.controls.phonenumber.valid && additionalForm.controls.phonenumber.touched">
-                                    <p
-                                        [class.visible]="additionalForm.controls.phonenumber.hasError('required') && additionalForm.controls.phonenumber.touched">
-                                        Champ requis</p>
-                                    <p
-                                        [class.visible]="additionalForm.controls.phonenumber.hasError('pattern') && additionalForm.controls.phonenumber.touched">
-                                        Champ invalide</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inline-field">
-                            <div class="field">
-                                <input type="text" name="zipcode" id="zipcode" formControlName="zipcode">
-                                <label for="zipcode"><span class="icon-user"></span> Code Postal</label>
-                                <div class="errors"
-                                    [class.visible]="!additionalForm.controls.zipcode.valid && additionalForm.controls.zipcode.touched">
-                                    <p
-                                        [class.visible]="additionalForm.controls.zipcode.hasError('required') && additionalForm.controls.zipcode.touched">
-                                        Champ requis</p>
-                                    <p
-                                        [class.visible]="additionalForm.controls.zipcode.hasError('pattern') && additionalForm.controls.zipcode.touched">
-                                        Champ invalide</p>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <input type="text" name="country" id="country" formControlName="country">
-                                <label for="country"><span class="icon-user"></span> Pays</label>
-                                <div class="errors"
-                                    [class.visible]="!additionalForm.controls.country.valid && additionalForm.controls.country.touched">
-                                    <p
-                                        [class.visible]="additionalForm.controls.country.hasError('required') && additionalForm.controls.country.touched">
-                                        Champ requis</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <input type="text" name="address" id="address" formControlName="address">
-                            <label for="address"><span class="icon-user"></span> Adresse</label>
-                            <div class="errors"
-                                [class.visible]="!additionalForm.controls.address.valid && additionalForm.controls.address.touched">
-                                <p
-                                    [class.visible]="additionalForm.controls.address.hasError('required') && additionalForm.controls.address.touched">
-                                    Champ requis</p>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <input type="text" name="city" id="city" formControlName="city">
-                            <label for="city"><span class="icon-user"></span> Ville</label>
-                            <div class="errors"
-                                [class.visible]="!additionalForm.controls.city.valid && additionalForm.controls.city.touched">
-                                <p
-                                    [class.visible]="additionalForm.controls.city.hasError('required') && additionalForm.controls.city.touched">
-                                    Champ requis</p>
-                            </div>
-                        </div>
-                        <div id="submit">
-                            <button (click)="globalFormValid = !globalFormValid" >Précédent</button>
-                            <button type="submit" [disabled]="!additionalForm.valid">Créer le compte</button>
-                        </div>
-                    </form>
-                    <form id="usernameValidation" [formGroup]="usernameValidation" (ngSubmit)="register()">
+                    <form id="usernameValidation" [formGroup]="globalForm" (ngSubmit)="register()">
                         <p>Est ce bien vous&nbsp;?</p>
                         <div id="show">
-                            <img src="https://minotar.net/armor/body/{{newUsername}}/150.png" alt="">
-                            <p>{{newUsername}}</p>
+                            <img src="{{newUserSkinUrl}}" alt="">
+                            <p *ngIf="!changingUserName">{{globalForm.controls.username.value}}</p>
                         </div>
                         <div *ngIf="!changingUserName" id="verify-skin">
                             <button type="submit" id="yes">Oui</button>
                             <button (click)="changingUserName = !changingUserName" id="no">Non</button>
                         </div>
-                        <div *ngIf="changingUserName" id="change-username">
+                        <div id="remember-me" *ngIf="!changingUserName">
+                            <input type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe">
+                            <label for="rememberMe" class="box"><span class="icon-check"></span></label>
+                            <label for="rememberMe" class="text">Se souvenir de moi</label>
+                          </div>
+                        <div *ngIf="changingUserName" id="change-username" onshow="verifyEmptyInput()">
                             <div class="field">
-                                <input type="text" name="newUsername" id="newUsername" formControlName="newUsername">
+                                <input type="text" name="newUsername" id="newUsername" formControlName="username" [class.not-empty]="globalForm.controls.username.value != null && globalForm.controls.username.value != ''">
+                                <label for="newUsername"><span class="icon-user"></span> Nouveau pseudo</label>
                                 <div class="errors"
-                                    [class.visible]="!usernameValidation.controls.newUsername.valid && usernameValidation.controls.newUsername.touched">
-                                    <p
-                                        [class.visible]="usernameValidation.controls.newUsername.hasError('required') && usernameValidation.controls.newUsername.touched">
-                                        Champ requis</p>
-                                </div>
+                                [class.visible]="!globalForm.controls.username.valid && globalForm.controls.username.touched">
+                                <p
+                                    [class.visible]="globalForm.controls.username.hasError('required') && globalForm.controls.username.touched">
+                                    Champ requis</p>
                             </div>
-                            <button (click)="changeUsername()">Valider</button>
+                            </div>
+                            <button class="btn btn-third animated" [disabled]="!globalForm.controls.username.valid" (click)="changeUsername()">Valider</button>
                         </div>
                     </form>
                 </div>

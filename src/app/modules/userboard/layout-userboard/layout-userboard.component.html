@@ -9,7 +9,6 @@
             <div class="nav-links">
                 <a routerLink="profile" routerLinkActive="active-link"><span class="icon-user"></span><span>Mes informations personnelles</span></a>
                 <a routerLink="account-security" routerLinkActive="active-link"><span class="icon-lock"></span><span>Sécurité du compte</span></a>
-                <a routerLink="payment-information" routerLinkActive="active-link"><span class="icon-cart"></span><span>Mes informations de paiement</span></a>
             </div>
             <label for="user-menu"><span class="icon-chevron-right"></span></label>
         </div>
@@ -22,10 +21,6 @@
                 <ng-container *ngIf="activeRouterLink == '/user/account-security'">
                     <span class="icon-lock"></span>
                     <h1>Sécurité du compte</h1>
-                </ng-container>
-                <ng-container *ngIf="activeRouterLink == '/user/payment-information'">
-                    <span class="icon-cart"></span>
-                    <h1>Mes informations de paiement</h1>
                 </ng-container>
             </div>
             <router-outlet></router-outlet>

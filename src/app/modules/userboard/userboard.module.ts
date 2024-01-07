@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { UserboardRoutingModule } from './userboard-routing.module';
 import { ProfileComponent } from './profile/profile.component';
-import { PaymentInformationComponent } from './payment-information/payment-information.component';
 import { AccountSecurityComponent } from './account-security/account-security.component';
 import { LayoutUserboardComponent } from './layout-userboard/layout-userboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,7 +14,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     ProfileComponent,
-    PaymentInformationComponent,
     AccountSecurityComponent,
     LayoutUserboardComponent,
   ],

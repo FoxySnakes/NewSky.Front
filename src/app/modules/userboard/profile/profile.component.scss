@@ -23,7 +23,7 @@
         }
     }
 
-    form {
+    .field-container {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
@@ -31,8 +31,13 @@
         position: relative;
         padding-top: 25px;
 
+        .line {
+            display: flex;
+        }
+
         .field {
             width: calc(50% - 10px);
+            height: fit-content;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -51,26 +56,27 @@
                 color: var(--white);
                 padding: 10px 50px 10px 10px;
                 border-radius: 5px;
-                margin-top: auto;
 
                 &:focus-visible {
                     outline: solid 1px var(--third-color);
                 }
-                &:disabled{
+
+                &:disabled {
                     color: var(--grey-light);
                 }
-                &:read-only{
+
+                &:read-only {
                     color: var(--grey-light);
 
-                    &:focus-visible{
+                    &:focus-visible {
                         outline: none;
                     }
                 }
             }
 
-            span{
+            span {
                 position: absolute;
-                right:10px;
+                right: 10px;
                 bottom: 20px;
                 transform: translateY(50%);
                 border-radius: 25px;
@@ -80,19 +86,19 @@
                 align-items: center;
                 justify-content: center;
 
-                &.icon-check{
+                &.icon-check {
                     background-color: var(--success);
                 }
 
-                &.icon-cross{
+                &.icon-cross {
                     font-size: 10px;
                     background-color: var(--danger);
                 }
 
-                &.icon-info{
+                &.icon-info {
                     cursor: pointer;
 
-                    &:hover~p{
+                    &:hover~p {
                         opacity: 1;
                         z-index: 10;
                     }
@@ -100,7 +106,7 @@
 
             }
 
-            p{
+            p {
                 border-radius: 5px;
                 background-color: #939292;
                 font-size: 12px;
@@ -113,19 +119,23 @@
                 opacity: 0;
                 transition: all 0.3s;
 
-                a{
+                a {
                     color: var(--third-color);
                     font-weight: 600;
                 }
 
-                &:hover{
+                &:hover {
                     opacity: 1;
                     z-index: 10;
                 }
             }
+
+            &.email>button {
+                margin-top: 15px;
+            }
         }
 
-        .button-form{
+        .button-form {
             display: flex;
             position: absolute;
             top: -30px;
@@ -135,14 +145,78 @@
     }
 }
 
+p-dialog .dialog-content {
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 350px;
+        gap: 25px;
+
+        >div:first-child {
+            display: flex;
+            flex-direction: column;
+            color: var(--white);
+
+
+            input {
+                width: 100%;
+                background-color: var(--primary-color);
+                border: none;
+                color: var(--white);
+                padding: 10px 50px 10px 10px;
+                border-radius: 5px;
+                margin-top: 5px;
+
+                &:focus-visible {
+                    outline: solid 1px var(--third-color);
+                    border: none !important;
+                }
+
+                &:disabled {
+                    color: var(--grey-light);
+                }
+
+                &.ng-touched.ng-invalid {
+                    border: solid 1px var(--danger);
+                }
+            }
+
+            .errors {
+                position: relative;
+                height: 0px;
+                transition: height 0.3s;
+
+                p {
+                    color: var(--danger);
+                    font-size: 14px;
+                    opacity: 0;
+                    transition: all 0.3s;
+                    position: absolute;
+                    top: -5px;
+
+                    &.visible {
+                        top: 0px;
+                        opacity: 1;
+                    }
+                }
+
+                &.visible {
+                    height: 20px;
+                }
+
+            }
+        }
+    }
+}
+
 @media screen and (max-width:767px) {
-    .field{
+    .field {
         width: 100% !important;
     }
 }
 
 @media screen and (max-width:575px) {
-    #profile{
+    #profile {
         flex-direction: column;
     }
 }

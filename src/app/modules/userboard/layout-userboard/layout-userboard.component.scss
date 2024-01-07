@@ -20,7 +20,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
             min-width: 55px;
             width: 55px;
             background-color: var(--secondary-variant-color);
@@ -47,7 +47,6 @@
             min-width: 55px;
             width: 55px;
             background-color: var(--secondary-variant-color);
-            padding-bottom: 30px;
             height: 100%;
             transition: all 0.5s;
 
@@ -117,6 +116,8 @@
         width: 100%;
         display: flex;
         flex-direction: column;
+        min-height: 330px;
+        background-color: var(--secondary-color);
 
         .header{
             height: 70px;

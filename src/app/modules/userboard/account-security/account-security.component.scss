@@ -64,35 +64,11 @@
         }
 
         .dialog-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: var(--secondary-color);
-            padding: 25px 50px;
-            border-radius: 25px;
-            border: solid 1px;
-            gap: 35px;
-
-            h2 {
-                color: var(--third-color);
-                text-decoration: none;
-            }
-
             form {
                 display: flex;
                 flex-direction: column;
                 width: 350px;
                 gap: 15px;
-
-                .form-button {
-                    display: flex;
-                    justify-content: space-evenly;
-                    padding: 15px 0;
-
-                    >div{
-                        position: relative;
-                    }
-                }
             }
         }
 

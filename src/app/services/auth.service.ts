@@ -33,7 +33,6 @@ export class AuthService implements OnInit {
           this.isAuthenticatedSubject.next(true);
           this.userService.setCurrentUser(response.user)
           this.setRememberBe(loginDto.RememberMe)
-          console.log(loginDto.RememberMe)
           this.notifService.notify('success','Connexion réussie')
           if(callbackUrl == "/login " || callbackUrl == "/register"){
             this.router.navigate(["/"])
@@ -65,10 +64,12 @@ export class AuthService implements OnInit {
   register(registerDto : RegisterDto, callbackUrl : string) : void{
     this.apiService.post('auth/register', registerDto).subscribe({
       next : (response) => {
+        console.log(response)
         if(response.isSuccess){
           this.setAuthToken(response.token)
           this.userService.setCurrentUser(response.user)
           this.isAuthenticatedSubject.next(true);
+          this.setRememberBe(registerDto.RememberMe)
           this.notifService.notify('success','Inscription réussie')
            if(callbackUrl == "/login " || callbackUrl == "/register"){
              this.router.navigate(["/"])
@@ -78,10 +79,19 @@ export class AuthService implements OnInit {
            }
         }
         else{
-          this.notifService.notify('error', "Impossible d'enregistrer l'utilisateur")
+          if(response.errors[0].code == "400"){
+            this.notifService.notify('error', response.errors[0].description)
+          }
+          else if(response.errors[0].code = "DuplicateUserName"){
+            this.notifService.notify('error', "Compte déjà existant")
+          }
+          else{
+            this.notifService.notify('error', "Impossible d'enregistrer l'utilisateur")
+          }
         }
       },
-      error : () => {
+      error : (error) => {
+        console.log(error)
         this.notifService.notify('error',"Impossible de joindre l'API")
       }
     })

@@ -91,12 +91,6 @@
                         width: 545px;
                         padding: 25px 0;
 
-                        .inline-field {
-                            display: flex;
-                            gap: 15px;
-                            width: 100%;
-                        }
-
                         .field {
                             position: relative;
                             display: flex;
@@ -104,6 +98,7 @@
                             gap: 5px;
                             padding-top: 40px;
                             width: 100%;
+                            padding-inline: 2px;
 
                             label {
                                 position: absolute;
@@ -143,20 +138,15 @@
                                 }
 
                                 &.ng-invalid.ng-touched {
-                                    border: solid 1px var(--danger);
+                                    border: solid 1px var(--danger) !important;
+                                    outline: solid 1px var(--danger) !important;
 
                                     +label {
                                         color: var(--danger);
 
-                                    }
-                                }
-
-                                &#birthday {
-                                    color: transparent;
-                                    color-scheme: dark;
-
-                                    &:focus {
-                                        color: var(--white);
+                                        >span{
+                                            color: var(--danger);
+                                        }
                                     }
                                 }
 
@@ -258,10 +248,11 @@
                             #change-username{
                                 display: flex;
                                 justify-content: space-around;
+                                align-items: center;
                                 gap: 15px;
 
                                 .field{
-                                    padding-top: 0;
+                                    padding-bottom: 40px;
                                 }
                             }
                             #remember-me{
@@ -272,7 +263,7 @@
                                 input{
                                     display: none;
         
-                                    &:checked + label{
+                                    &:checked + label.box{
                                         background-color: var(--third-color);
                                         border-color: var(--third-color);
         
@@ -282,7 +273,7 @@
                                     }
                                 }
         
-                                label{
+                                label.box{
                                     width: 20px;
                                     height: 20px;
                                     min-width: 20px;
@@ -302,8 +293,13 @@
                                     }
                                 }
                                 
-                                p{
+                                label.text{
                                     color: var(--grey);
+        
+                                    &:hover{
+                                        cursor: pointer;
+                                        text-decoration: underline;
+                                    }
                                 }
                             }
                             button {
