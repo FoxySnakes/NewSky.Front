@@ -1,36 +1,51 @@
-export class Listing{
-    categories: Category[] = [];
-    products: Product[] = [];
-}
+export class TebexListing {
+    categories: TebexCategory[];
 
-export class Category{
-    id: number
-    name: string
-
-    constructor(id: number, name: string){
-        this.id = id
-        this.name = name
+    constructor() {
+        this.categories = [];
     }
 }
 
-export class Product{
-    id: number
-    name: string
-    priceHt: number
-    priceTtc: number
-    image: string
-    order: number
+export class TebexCategory {
+    id: number;
+    name: string;
+    description?: string;
+    packages: TebexPackage[];
+    order: number;
 
-    constructor(id: number, 
-                name: string, 
-                priceHt: number, 
-                image: string,
-                order: number){
-        this.id = id
-        this.name = name
-        this.priceHt = priceHt
-        this.priceTtc = Math.round(priceHt * 1.2)
-        this.image = image
-        this.order = order
+    constructor() {
+        this.id = 0;
+        this.name = '';
+        this.packages = [];
+        this.order = 0;
+    }
+}
+
+export class TebexPackage {
+    id: number;
+    name: string;
+    description: string;
+    imageUrl?: string | null;
+    basePrice: number;
+    salesPrice: number;
+    totalPrice: number;
+    currency: string;
+    discount: number;
+    giftingEnable: boolean;
+    expirationDate: Date | null;
+    creationDate?: Date | null;
+
+    constructor() {
+        this.id = 0;
+        this.name = '';
+        this.description = '';
+        this.basePrice = 0;
+        this.salesPrice = 0;
+        this.totalPrice = 0;
+        this.currency = '';
+        this.discount = 0;
+        this.giftingEnable = false;
+        this.creationDate = undefined
+        this.expirationDate = new Date('9999-12-31T23:59:59')
     }
 }

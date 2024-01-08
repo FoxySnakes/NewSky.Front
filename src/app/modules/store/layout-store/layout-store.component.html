@@ -4,16 +4,26 @@
         <div id="store-layout-left">
             <div id="store-categories">
                 <div class="header" position="left">
-                    <p>Catégories</p>
+                    <h3>Catégories</h3>
                 </div>
-                <div class="store-links" *ngFor="let category of listing.categories">
-                    
+                <ng-container *ngFor="let category of tebexListing.categories">
+                    <a class="store-links" routerLink="/store/product/{{normalizeCategoryName(category.name)}}" 
+                    [class.selected]="categoryName == normalizeCategoryName(category.name)">{{category.name}}</a>
+                </ng-container>
+            </div>
+            <div class="buyer">
+                <div class="header" position="left">
+                    <h3>Dernier Achat du mois</h3>
+                </div>
+                <div class="player">
+                    <img src="" alt="">
                 </div>
             </div>
+
         </div>
         <div id="store-layout-right">
-            <div class="header" position="right">
-
+            <div class="header" position="">
+                <h3>{{currentCategory != undefined ? currentCategory.name : "d"}}</h3>
             </div>
             <router-outlet></router-outlet>
         </div>

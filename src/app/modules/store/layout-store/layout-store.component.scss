@@ -1,34 +1,60 @@
-#container{
+#container {
     flex-direction: column;
     align-items: center;
     gap: 75px;
 
-    #store-layout{
-    display: flex;
-
-    .header{
+    #store-layout {
         display: flex;
-        align-items: center;
-        padding-left: 30px;
-        height: 70px;
-        background-color: var(--secondary-variant-color);
-        gap: 15px;
-        font-size: 28px;
-        font-weight: var(--font-weight-semibold);
-    }
+        width: 100%;
 
-    #store-layout-left{
-        display: flex;
-        flex-direction: column;
-
-        #store-categories{
+        .header {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            padding-left: 30px;
+            height: 70px;
+            background-color: var(--secondary-variant-color);
+            gap: 15px;
+            font-weight: var(--font-weight-semibold);
+            position: relative;
 
-            .header[position=left]{
-                border-top-left-radius: 25px;
+            h3{
+                font-weight: var(--font-weight-medium);
             }
         }
+
+        #store-layout-left {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            gap: 25px;
+
+            .header {
+                border-top-left-radius: 25px;
+                box-shadow: inset -10px 0 5px -5px #00000080;
+            }
+
+            #store-categories {
+                display: flex;
+                flex-direction: column;
+
+                .store-links{
+                    background-color: var(--secondary-color);
+                    padding: 15px 35px;
+                    box-shadow: inset -10px 0 5px -5px #00000080;
+
+                    &.selected{
+                        background-color: var(--third-color);
+                    }
+                }
+
+                .store-links:not(:last-child){
+                    border-bottom: solid 1px var(--grey-light);
+                }
+            }
+        }
+
+        #store-layout-right{
+            width: 100%;
+        }
     }
-}
 }

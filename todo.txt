@@ -14,6 +14,7 @@ Tester le delete account dans la partie user
 Changer tout les "font-weight" par les variables
 Revoir les informations personnelles
 Revoir le renvoie d'erreur lors des appels à l'api coté front
+Se reconnecter après le changement de pseudo
 
 
 
