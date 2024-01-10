@@ -1,0 +1,34 @@
+.list-product-container{
+    background-color: var(--secondary-color);
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 35px;
+    padding: 25px 50px;
+
+    .package{
+        padding: 10px 25px;
+        background-color: var(--secondary-variant-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 25px;
+        gap: 20px;
+
+        p{
+            font-size: 22px;
+            font-weight: var(--font-weight-medium);
+        }
+
+        img{
+            max-width: 150px;
+            width: 100%;
+        }
+
+        span{
+            font-size: 60px;
+            color: var(--grey-light);
+        }
+        
+    }
+}

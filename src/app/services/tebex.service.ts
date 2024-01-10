@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { TebexCategory, TebexListing, TebexPackage } from '../models/StoreModel';
 import { ApiService } from './api.service';
 import { NotifierService } from 'angular-notifier';
-import { Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,7 @@ export class TebexService {
 
   private urlHeadlessApi = "https://headless.tebex.io"
   private webStoreIdentifier = "rrx1-9e82a64dc20135a1c070e4602c5c8176c0e945a0"
+  private selectedCategory = new BehaviorSubject<TebexCategory | undefined>(undefined);
 
   constructor(private http: HttpClient) { }
 
@@ -156,5 +157,13 @@ export class TebexService {
           }
       ]
   })
+  }
+
+  setSelectedCategory(category: TebexCategory | undefined) {
+    this.selectedCategory.next(category);
+  }
+
+  getSelectedCategory() {
+    return this.selectedCategory.asObservable();
   }
 }

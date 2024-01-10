@@ -15,6 +15,7 @@ Changer tout les "font-weight" par les variables
 Revoir les informations personnelles
 Revoir le renvoie d'erreur lors des appels à l'api coté front
 Se reconnecter après le changement de pseudo
+Voir pour récupérer les achats de Tebex
 
 
 

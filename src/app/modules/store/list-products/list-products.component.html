@@ -1,1 +1,13 @@
-<p>list-products works!</p>
+<div class="list-product-container">
+    <ng-container *ngIf="category">
+        <div *ngFor="let package of category.packages" class="package">
+            <p class="name">{{package.name}}</p>
+            <img *ngIf="package.imageUrl" src="{{package.imageUrl}}" alt="">
+            <span *ngIf="!package.imageUrl" class="icon-image-not-found"></span>
+            <p class="price">{{package.totalPrice}} {{package.currency == "EUR" ? "€" : "$"}}</p>
+        </div>
+    </ng-container>
+    <div *ngIf="!category" id="empty-category">
+
+    </div>
+</div>
