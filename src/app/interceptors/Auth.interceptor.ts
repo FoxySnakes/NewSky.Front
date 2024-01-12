@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     var urlWithoutParams = new URL(request.url).origin;
-    
+
     if(urlWithoutParams == environment.apiUrl){
       var token = this.authService.getAuthToken();
       if (token) {
@@ -33,7 +33,6 @@ export class AuthInterceptor implements HttpInterceptor {
           "Access-Control-Allow-Origin": "*"
         }
       })
-      console.log(request)
 
     }
 

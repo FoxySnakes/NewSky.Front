@@ -46,14 +46,14 @@ export class VoteComponent implements OnInit {
       }
     })
 
-    this.authService.isAuthenticatedObervable().subscribe({
+    this.authService.isAuthenticatedObservable().subscribe({
       next: (isAuthenticated) => {
         if(isAuthenticated){
       }
     }
     })
 
-    this.apiService.get("vote/ranking?limit=10").subscribe({
+    this.apiService.get("vote/server-ranking?limit=10").subscribe({
       next: (response) => {
         this.ranking = response;
       },
@@ -83,11 +83,11 @@ export class VoteComponent implements OnInit {
   UpdatePlayerData(){
 
     if(this.username != null){
-      this.apiService.get(`vote/ranking/${this.username}`).subscribe({
+      this.apiService.get(`vote/user-ranking?username=${this.username}`).subscribe({
         next: (userRanking) => this.userRanking = userRanking
       })
   
-      this.apiService.get(`vote/status/${this.username}`).subscribe({
+      this.apiService.get(`vote/status?username=${this.username}`).subscribe({
         next: (statusList: [any]) => {
           var voteStatus1 = statusList.find(x => x.voteWebSite == VoteWebSite.Serveur_Prive)
           this.vote1Status.timeLeft = this.FormatTimeLeft(voteStatus1.timeLeft)
@@ -106,7 +106,7 @@ export class VoteComponent implements OnInit {
   TryVote(voteWebSite: number) {
     if (this.loading == false) {
       this.loading = true
-      this.apiService.get(`vote/${voteWebSite}`).subscribe({
+      this.apiService.get(`vote/${voteWebSite}?username=${this.username}`).subscribe({
         next: (result: boolean) => {
 
           if (result == true) {

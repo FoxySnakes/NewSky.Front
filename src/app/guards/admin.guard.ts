@@ -1,27 +1,35 @@
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Observable, catchError, map, of, switchMap, tap } from 'rxjs';
+import { ApiService } from '../services/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-  constructor(private userService: UserService,
-              private router: Router,
-              private authService: AuthService) { }
+  constructor(private router: Router,
+              private authService: AuthService,
+              private userService: UserService,
+              private apiService: ApiService) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-    if (this.authService.isAuthenticated()) {
-      if(this.userService.isAdmin())
-        return true;
-      return false
-    } 
-    else {
-      this.router.navigate(['/login']);
-      return false;
-    }
+    state: RouterStateSnapshot): Observable<boolean> {
+      return this.apiService.get("auth/admin").pipe(
+        map((isAdmin: boolean) => {
+          if (isAdmin) {
+            return true;
+          } else {
+            this.router.navigate(['not-found']);
+            return false;
+          }
+        }),
+        catchError((error) => {
+          this.router.navigate(['not-found']);
+          return of(false)
+        })
+      );
   }
 }

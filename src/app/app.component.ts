@@ -21,12 +21,7 @@ export class AppComponent implements OnInit{
   
   ngOnInit(): void {
     if(this.authService.isAuthenticated()){
-       this.apiService.get('user/current').subscribe({
-         next: (response : User | null) => {
-          this.userService.setCurrentUser(response)
-         },
-         error: () => this.notifyService.notify('warning', "Impossible de joindre l'API")
-       })
+      this.userService.getUserInformation()
     }
   }
 
@@ -34,7 +29,6 @@ export class AppComponent implements OnInit{
   beforeUnloadHandler() {
     alert(this.authService.keepConnection())
     if(!this.authService.keepConnection()){
-      
       this.authService.removeLocalStorageInfo()
     }
   }

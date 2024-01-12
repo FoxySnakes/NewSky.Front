@@ -1,0 +1,28 @@
+<div id="content-container">
+    <div id="filter">
+        <div id="search">
+            <form [formGroup]="userSearchForm">
+                <input type="text" name="userSearch" id="userSearch" formControlName="search"
+                    placeholder="Rechercher un joueur">
+            </form>
+            <span class="icon-search"></span>
+        </div>
+        <div id="sort">
+            <form [formGroup]="sortByForm">
+                <p>Trier par</p>
+                <p-dropdown formControlName="sortBy" [options]="sortByValues" optionLabel="label"
+                    [autoDisplayFirst]="true"></p-dropdown>
+            </form>
+            <div [class.asc]="filter.direction == 'asc'"
+                 [class.desc]="filter.direction == 'desc'"
+                 (click)="filter.direction == 'asc' ? filter.direction = 'desc' : filter.direction = 'asc' ">
+                 <span class="icon-arrow"></span></div>
+        </div>
+    </div>
+    <div id="list-user">
+        <div *ngFor="let user of usersResult.items">
+        {{user.userName}}
+        </div>
+    </div>
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="usersResult.pageNumber" [rows]="usersResult.pageSize" [totalRecords]="usersResult.totalPageCount" [rowsPerPageOptions]="usersResult.pageSizeOptions"></p-paginator>
+</div>

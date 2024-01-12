@@ -1,0 +1,109 @@
+#content-container{
+    padding: 50px;
+
+    #filter{
+        display: flex;
+        justify-content: space-between;
+
+        #search{
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            input{
+                background-color: var(--secondary-variant-color);
+                border: none;
+                border-radius: 5px;
+                padding: 10px 15px 10px 50px;
+                width: 300px;
+                color: var(--white);
+            }
+
+            span{
+                position: absolute;
+                left: 15px;
+                font-size: 20px;
+            }
+
+        }
+
+        #sort{
+            display: flex;
+            gap: 15px;
+
+            form{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            div{
+                border-radius: 5px;
+                border: solid 1px var(--grey-light);
+                width: 44px;
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s;
+
+                &.asc{
+                    transform: rotate(-90deg);
+                }
+                &.desc{
+                    transform: rotate(90deg);
+                }
+
+                &:hover{
+                    background-color: var(--third-color);
+                    border-color: var(--third-color);
+                }
+            }
+        }
+    }
+
+    #list-user{
+        display: grid;
+        grid-template-columns: repeat(2, 50%);
+        gap: 25px;
+    }
+}
+
+
+::ng-deep p-dropdown{
+
+    .p-dropdown{
+        background-color: var(--secondary-variant-color);
+        border: none;
+        padding: 10px;
+        width: 150px;
+
+         &.p-focus{
+             box-shadow: none;
+             outline: solid 2px var(--third-color);
+         }
+    }
+
+    .p-dropdown-item{
+        background-color: var(--secondary-variant-color);
+        padding: 5px;
+
+        &:hover{
+            background-color: #2B2C39CC
+        }
+    }
+
+    .p-dropdown-panel{
+        border-radius: 0px !important;
+    }
+
+    .p-dropdown-trigger{
+        width: auto;
+        padding-left: 10px;
+    }
+
+    p-overlay>.p-overlay{
+        transform: translateY(2px);
+    }
+}

@@ -98,17 +98,13 @@ export class AuthService implements OnInit {
   }
 
   logout(): void {
-    this.apiService.get("auth/logout").subscribe({
-      next: () => this.notifService.notify('success',"Déconnexion réussie"),
-      error : () => this.notifService.notify('error',"Impossible de joindre l'API")
-    })
-
     this.removeLocalStorageInfo()
     this.userService.setCurrentUser(null)
     this.isAuthenticatedSubject.next(false);
     if(this.router.url.match("/user") || this.router.url.match("/admin")){
       this.router.navigate(['/'])
     }
+    this.notifService.notify('success',"Déconnexion réussie")
   }
   
   setAuthenticated(value : boolean){
@@ -140,7 +136,7 @@ export class AuthService implements OnInit {
 
 
 
-  isAuthenticatedObervable(){
+  isAuthenticatedObservable(){
     return this.isAuthenticatedSubject;
   }
 

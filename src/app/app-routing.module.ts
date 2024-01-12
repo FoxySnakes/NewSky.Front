@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './modules/auth/login/login.component';
 import { RegisterComponent } from './modules/auth/register/register.component';
 import { NotFoundComponent } from './modules/not-found/not-found.component';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   {path: '', component: LayoutComponent,
@@ -22,7 +23,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'wiki', loadChildren: () => import('./modules/wiki/wiki.module').then(x => x.WikiModule)},
-  { path: 'admin', loadChildren: () => import('./modules/adminboard/adminboard.module').then(x => x.AdminboardModule)},
+  { path: 'admin', loadChildren: () => import('./modules/adminboard/adminboard.module').then(x => x.AdminboardModule), canActivate:[AdminGuard]},
 
   { path: '**', redirectTo: 'not-found' },
 ];

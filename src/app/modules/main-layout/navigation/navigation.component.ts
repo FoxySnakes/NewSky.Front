@@ -19,7 +19,7 @@ export class NavigationComponent  implements OnInit{
               private userService : UserService){}
 
   ngOnInit(): void {
-    this.authService.isAuthenticatedObervable().subscribe({
+    this.authService.isAuthenticatedObservable().subscribe({
       next: (isAuthenticated) => {
         this.isAuthenticated = isAuthenticated
 

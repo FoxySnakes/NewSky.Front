@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, defer, interval, map, take } from 'rxjs';
 import { User } from '../models/UserModel';
 import { ApiService } from './api.service';
 import { NotifierService } from 'angular-notifier';
@@ -9,12 +9,27 @@ import { NotifierService } from 'angular-notifier';
 })
 export class UserService {
   private currentUserSubject$ = new BehaviorSubject<User | null>(null);
+  private fetchingUserInformation = false
 
   constructor(private apiService : ApiService,
               private notifyService : NotifierService) { }
 
   getCurrentUserObservable(){
     return this.currentUserSubject$.asObservable();
+  }
+
+  getUserInformation(){
+    this.fetchingUserInformation = true
+    this.apiService.get('user/current').subscribe({
+      next: (response : User | null) => {
+       this.setCurrentUser(response)
+       this.fetchingUserInformation = false
+      },
+      error: () => {
+        this.fetchingUserInformation = false
+        this.notifyService.notify('warning', "Impossible de joindre l'API")
+      }
+    })
   }
 
   setCurrentUser(user : User | null){
@@ -54,18 +69,17 @@ export class UserService {
     });
   }
 
-  isAdmin() : boolean{
-    this.currentUserSubject$.subscribe({
-      next: (user)=>{
-        if(user?.role == "Admin" || user?.role == "Developer")
-            return true;
-          return false
-      },
-      error: () => {
-        return false;
-      }
-    })
-    return false;
+  isAdmin(): Observable<boolean> {
+    return this.currentUserSubject$.pipe(
+      map((user) => {
+        if (user) {
+          const userRole = user?.role;
+          return ['Admin', 'SuperAdmin', 'Developer'].includes(userRole);
+        } else {
+          return false;
+        }
+      })
+    );
   }
 
   getUserBodySkinUrl(size : number){

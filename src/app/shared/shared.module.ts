@@ -6,7 +6,9 @@ import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CardModule } from 'primeng/card'
-
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { DropdownModule } from 'primeng/dropdown';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -23,7 +25,10 @@ import { CardModule } from 'primeng/card'
     LoaderComponent,
     DialogModule,
     ToastModule,
-    CardModule
+    CardModule,
+    OverlayPanelModule,
+    DropdownModule,
+    PaginatorModule
   ],
   providers: [
     MessageService
