@@ -3,7 +3,6 @@ fix input date sur l'inscription
 faire tout les logos des formulaires inscription / connexion
 faire une page "pourquoi ces données sont demandés à la création du compte"
 
-
 Revoir la gestion des rôles
 Inclure l'acceptation des CGA et CGU dans la creation de compte et dans
 Revoir la gestion de l'authentification sur le front (si il a changer son nom d'utilisateur, le token est plus et doit etre supprimé)
@@ -15,9 +14,9 @@ Changer tout les "font-weight" par les variables
 Revoir les informations personnelles
 Revoir le renvoie d'erreur lors des appels à l'api coté front
 Se reconnecter après le changement de pseudo
-Voir pour récupérer les achats de Tebex
-
-
+Ajouter des loaders
+Ajouter un cache au store pour évoter trop de requetes à tebex. (mettre un bouton refresh dans )
+Ajouter des Array de Subscription pour chaque composant et les unsubscribe() à la déstruction d'un composant
 
 
 Comment faire pour vérifier l'utilisateur ? (requete http)

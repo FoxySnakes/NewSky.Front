@@ -1,13 +1,55 @@
 <div class="list-product-container">
     <ng-container *ngIf="category">
         <div *ngFor="let package of category.packages" class="package">
+            <button class="btn btn-third animated" (click)="openDialogAddProduct(package.id)">
+                <span class="icon-add-cart"></span>
+            </button>
             <p class="name">{{package.name}}</p>
             <img *ngIf="package.imageUrl" src="{{package.imageUrl}}" alt="">
-            <span *ngIf="!package.imageUrl" class="icon-image-not-found"></span>
-            <p class="price">{{package.totalPrice}} {{package.currency == "EUR" ? "€" : "$"}}</p>
+            <img *ngIf="!package.imageUrl" src="../../../../assets/pictures/image-not-found.png" alt="">
+            <p class="price">{{package.totalPrice}} €</p>
         </div>
     </ng-container>
-    <div *ngIf="!category" id="empty-category">
-
+    <p-dialog [(visible)]="dialogAddProductVisible" [modal]="true"
+    [contentStyle]="{'background': 'transparent', 'padding': '0 5px'}"
+    [closeOnEscape]="true" [dismissableMask]="true" [showHeader]="false" [closable]="true" [resizable]="false">
+        <div id="add-product" class="dialog-content">
+            <span (click)="dialogAddProductVisible = false" id="close-dialog" class="icon-cross"></span>
+            <h2>Ajouter un article au panier</h2>
+            <form [formGroup]="productForm" (ngSubmit)="addProductToCart()">
+                <div id="product-info">
+                    <div>
+                        <img src="{{productForm.controls.imageUrl.value}}" alt="">
+                    </div>
+                    <div>
+                        <p class="name">{{productForm.controls.name.value}}</p>
+                        <p class="price">{{productForm.controls.price.value! | priceformat}} / unité</p>
+                    </div>
+                </div>
+                <div id="quantity-price-add">
+                    <div>
+                        <p>Quantité&nbsp;:</p>
+                        <p-inputNumber formControlName="quantity" [showButtons]="true" buttonLayout="horizontal" [min]="1" [max]="100" [step]="1"
+                                       incrementButtonClass="increment-quantity" incrementButtonIcon="icon-add"
+                                       decrementButtonClass="decrement-quantity" decrementButtonIcon="icon-soustract"></p-inputNumber>
+                    </div>
+                    <div>
+                        <p>Prix&nbsp;Total&nbsp;:</p>
+                        <p id="total-price">{{productForm.controls.totalPrice.value! | priceformat}}</p>
+                    </div>
+                    <button class="btn btn-third animated" type="submit"><span class="icon-add-cart"></span> Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </p-dialog>
+    
+    <div *ngIf="category?.packages!.length == 0 && !productLoading" id="empty-category">
+        <p>Aucun produit dans cette catégorie</p>
+        <span class="icon-glass-not-found"></span>
     </div>
+    <div *ngIf="!category && !productLoading" id="empty-category">
+        <p>Aucune catégorie trouvée</p>
+        <span class="icon-glass-not-found"></span>
+    </div>
+    <app-loader *ngIf="productLoading"></app-loader>
 </div>

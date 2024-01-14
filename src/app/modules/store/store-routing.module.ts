@@ -7,9 +7,9 @@ import { LayoutStoreComponent } from './layout-store/layout-store.component';
 const routes: Routes = [
   {
     path: "", component: LayoutStoreComponent, children: [
+      { path: "cart", component: CartComponent },
       { path: "", redirectTo: "product/", pathMatch: "full" },
       { path: "product", redirectTo: "product/", pathMatch: "full" },
-      { path: "cart", component: CartComponent },
       { path: "product/:categoryName", component: ListProductsComponent },
     ]
   }

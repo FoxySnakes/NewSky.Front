@@ -16,7 +16,6 @@ export class LoaderComponent implements OnInit{
 }   
 
   ngOnInit(): void {
-    console.log(this.size)
     if(this.size == undefined || this.size == null){
       this.size = "100"
     }

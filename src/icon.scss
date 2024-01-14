@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('assets/fonts/icomoon/icomoon.eot?n8gpnh');
-  src:  url('assets/fonts/icomoon/icomoon.eot?n8gpnh#iefix') format('embedded-opentype'),
-    url('assets/fonts/icomoon/icomoon.ttf?n8gpnh') format('truetype'),
-    url('assets/fonts/icomoon/icomoon.woff?n8gpnh') format('woff'),
-    url('assets/fonts/icomoon/icomoon.svg?n8gpnh#icomoon') format('svg');
+  src:  url('assets/fonts/icomoon/icomoon.eot?4o0yll');
+  src:  url('assets/fonts/icomoon/icomoon.eot?4o0yll#iefix') format('embedded-opentype'),
+    url('assets/fonts/icomoon/icomoon.ttf?4o0yll') format('truetype'),
+    url('assets/fonts/icomoon/icomoon.woff?4o0yll') format('woff'),
+    url('assets/fonts/icomoon/icomoon.svg?4o0yll#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-credit-card:before {
+  content: "\e920";
+}
+.icon-soustract:before {
+  content: "\e91d";
+}
+.icon-glass-not-found:before {
+  content: "\e91c";
+}
 .icon-search:before {
   content: "\e911";
 }

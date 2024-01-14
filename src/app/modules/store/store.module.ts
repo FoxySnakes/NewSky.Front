@@ -3,23 +3,25 @@ import { CommonModule } from '@angular/common';
 
 import { StoreRoutingModule } from './store-routing.module';
 import { ListProductsComponent } from './list-products/list-products.component';
-import { AddProductsComponent } from './add-products/add-products.component';
 import { CartComponent } from './cart/cart.component';
 import { PaymentConfirmationComponent } from './payment-confirmation/payment-confirmation.component';
 import { LayoutStoreComponent } from './layout-store/layout-store.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     ListProductsComponent,
-    AddProductsComponent,
     CartComponent,
     PaymentConfirmationComponent,
     LayoutStoreComponent
   ],
   imports: [
     CommonModule,
-    StoreRoutingModule
+    StoreRoutingModule,
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class StoreModule { }

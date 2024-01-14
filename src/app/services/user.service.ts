@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, defer, interval, map, take } from 'rxjs';
 import { User } from '../models/UserModel';
 import { ApiService } from './api.service';
 import { NotifierService } from 'angular-notifier';
+import { PackageCart } from '../models/StoreModel';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,19 @@ export class UserService {
     this.currentUserSubject$.next(user);
   }
 
+  updateUserPackages(packages : PackageCart[]){
+    this.currentUserSubject$.next(
+      new User(
+        this.currentUserSubject$.value!.userName,
+        this.currentUserSubject$.value!.uuid,
+        this.currentUserSubject$.value!.email,
+        this.currentUserSubject$.value!.roles,
+        this.currentUserSubject$.value!.permissions,
+        packages
+      )
+    )
+  }
+
   updateUserEmail(email: string): Observable<boolean> {
     return new Observable((observer) => {
       var data = { Email: email }
@@ -48,8 +62,9 @@ export class UserService {
                 this.currentUserSubject$.value!.userName,
                 this.currentUserSubject$.value!.uuid,
                 email,
-                false,
-                this.currentUserSubject$.value!.role,
+                this.currentUserSubject$.value!.roles,
+                this.currentUserSubject$.value!.permissions,
+                this.currentUserSubject$.value!.packages
               )
             )
             observer.next(true);
@@ -67,19 +82,6 @@ export class UserService {
         }
       })
     });
-  }
-
-  isAdmin(): Observable<boolean> {
-    return this.currentUserSubject$.pipe(
-      map((user) => {
-        if (user) {
-          const userRole = user?.role;
-          return ['Admin', 'SuperAdmin', 'Developer'].includes(userRole);
-        } else {
-          return false;
-        }
-      })
-    );
   }
 
   getUserBodySkinUrl(size : number){

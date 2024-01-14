@@ -1,12 +1,13 @@
-.list-product-container{
+.list-product-container {
     background-color: var(--secondary-color);
-    height: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 35px;
     padding: 25px 50px;
+    position: relative;
+    justify-content: space-evenly;
 
-    .package{
+    .package {
         padding: 10px 25px;
         background-color: var(--secondary-variant-color);
         display: flex;
@@ -14,21 +15,195 @@
         align-items: center;
         border-radius: 25px;
         gap: 20px;
+        position: relative;
 
-        p{
+        p {
             font-size: 22px;
             font-weight: var(--font-weight-medium);
         }
 
-        img{
+        img {
             max-width: 150px;
             width: 100%;
         }
 
-        span{
-            font-size: 60px;
-            color: var(--grey-light);
+        button{
+             width: 45px;
+             height: 45px;
+            border-radius: 100%;
+            //background-color: var(--third-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -15px;
+            right: -15px;
+
+            span{
+                font-size: 18px;
+            }
         }
-        
+
     }
+
+    #empty-category {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 25px 0;
+        position: relative;
+
+        >* {
+            color: var(--grey);
+            font-weight: var(--font-weight-medium);
+        }
+
+        p {
+            font-size: 18px;
+            position: absolute;
+            background-color: var(--secondary-color);
+            line-height: 35px;
+            padding: 0 25px;
+            margin: 0 -50px;
+            text-align: center;
+            width: 100%;
+        }
+
+        span {
+            font-size: 250px;
+        }
+    }
+
+    ::ng-deep .p-dialog{
+        box-shadow: none;
+    }
+
+    p-dialog{
+        position: absolute;
+    }
+
+    #add-product {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 700px;
+        max-width: 95vw;
+
+        h2{
+            text-align: center;
+        }
+
+        #close-dialog {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 14px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 20px;
+            justify-content: center;
+
+            #product-info {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+
+                img {
+                    height: 150px;
+                }
+
+                >div:last-child{
+                    width: 100%;
+
+                    .name {
+                        font-weight: var(--font-weight-bold);
+                        font-size: 18px;
+                    }
+                }
+            }
+
+            #quantity-price-add {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+
+                >div {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    width: 100%;
+
+                    #total-price {
+                        text-align: center;
+                        width: 100%;
+                        font-weight: var(--font-weight-bold);
+                        font-size: 18px;
+                    }
+
+
+                    ::ng-deep .increment-quantity {
+                        background: var(--third-color) !important;
+                    }
+
+                    ::ng-deep .decrement-quantity {
+                        background: var(--danger) !important;
+                    }
+
+                    ::ng-deep input {
+                        width: 40px;
+                        text-align: center;
+                    }
+
+                    ::ng-deep p-inputnumber {
+                        max-height: 35px;
+                    }
+
+                    ::ng-deep button {
+                        max-width: 35px;
+                    }
+
+                    ::ng-deep .p-inputtext:focus {
+                        box-shadow: none !important;
+                    }
+                }
+
+                button{
+                    span{
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:700px) {
+    .dialog-content{
+        padding: 25px !important;
+
+        form{
+            flex-direction: column;
+
+            #product-info>div:first-child{
+                width: 100%;
+                text-align: right;
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width) {
+    
 }

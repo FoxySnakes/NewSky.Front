@@ -1,0 +1,133 @@
+.cart-container{
+    background-color: var(--secondary-color);
+    display: flex;
+    padding: 25px 35px;
+
+    #packages{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .package{
+            display: flex;
+            width: 100%;
+            padding: 25px 0;
+
+            &:not(:last-of-type){
+                border-bottom: solid 1px var(--grey-light);
+            }
+
+            .package-info{
+                display: flex;
+                align-items: center;
+                width: 100%;
+                gap: 15px;
+
+                .picture>img{
+                    width: 100px;
+                    max-height: 100px;
+                }
+
+                .text{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+
+                    .name{
+                        font-weight: var(--font-weight-bold);
+                    }
+                }
+            }
+
+            .package-actions{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 15px;
+                
+                button{
+                    width: 100% !important;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}
+
+#add-product {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 700px;
+    max-width: 95vw;
+
+    h2{
+        text-align: center;
+    }
+
+    #close-dialog {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 14px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    form {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 20px;
+        justify-content: center;
+
+        #quantity-modify {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+
+            >div {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                width: 100%;
+
+                #total-price {
+                    text-align: center;
+                    width: 100%;
+                    font-weight: var(--font-weight-bold);
+                    font-size: 18px;
+                }
+
+
+                ::ng-deep .increment-quantity {
+                    background: var(--third-color) !important;
+                }
+
+                ::ng-deep .decrement-quantity {
+                    background: var(--danger) !important;
+                }
+
+                ::ng-deep input {
+                    width: 40px;
+                    text-align: center;
+                }
+
+                ::ng-deep p-inputnumber {
+                    max-height: 35px;
+                }
+
+                ::ng-deep button {
+                    max-width: 35px;
+                }
+
+                ::ng-deep .p-inputtext:focus {
+                    box-shadow: none !important;
+                }
+            }
+        }
+    }
+}

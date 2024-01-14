@@ -1,51 +1,41 @@
-export class TebexListing {
-    categories: TebexCategory[];
-
-    constructor() {
-        this.categories = [];
-    }
-}
-
-export class TebexCategory {
+export interface TebexCategory {
     id: number;
     name: string;
     description?: string;
     packages: TebexPackage[];
     order: number;
-
-    constructor() {
-        this.id = 0;
-        this.name = '';
-        this.packages = [];
-        this.order = 0;
-    }
 }
 
 export class TebexPackage {
-    id: number;
-    name: string;
-    description: string;
-    imageUrl?: string | null;
-    basePrice: number;
-    salesPrice: number;
-    totalPrice: number;
-    currency: string;
-    discount: number;
-    giftingEnable: boolean;
-    expirationDate: Date | null;
-    creationDate?: Date | null;
+    id!: number;
+    name!: string;
+    imageUrl!: string | null;
+    totalPrice!: number;
+    expirationDate!: Date | null;
+    creationDate!: Date | null;
+}
 
-    constructor() {
-        this.id = 0;
-        this.name = '';
-        this.description = '';
-        this.basePrice = 0;
-        this.salesPrice = 0;
-        this.totalPrice = 0;
-        this.currency = '';
-        this.discount = 0;
-        this.giftingEnable = false;
-        this.creationDate = undefined
-        this.expirationDate = new Date('9999-12-31T23:59:59')
+export interface TebexBuyer {
+    id: number;
+    userName: string;
+    uuid: string;
+}
+
+export interface TebexSale {
+    id: number;
+    price: number;
+    status: number;
+    date: Date;
+    packages: TebexPackage[];
+    buyer: TebexBuyer;
+}
+
+export class PackageCart{
+    tebexPackage: TebexPackage;
+    quantity: number;
+
+    constructor(tebexPackage: TebexPackage, quantity: number){
+        this.tebexPackage = tebexPackage,
+        this.quantity = quantity
     }
 }

@@ -2,28 +2,52 @@
     <h1>Boutique</h1>
     <div id="store-layout">
         <div id="store-layout-left">
-            <div id="store-categories">
-                <div class="header" position="left">
+            <div id="store-categories" *ngIf="!cartActive">
+                <input type="checkbox" name="mobile-dropdown-category" id="mobile-dropdown-category">
+                <div class="header">
                     <h3>Catégories</h3>
+                    <label for="mobile-dropdown-category" class="mobile-dropdown"><span class="icon-chevron-bottom"></span></label>
                 </div>
-                <ng-container *ngFor="let category of tebexListing.categories">
-                    <a class="store-links" routerLink="/store/product/{{normalizeCategoryName(category.name)}}" 
+                <div id="store-link">
+                    <a class="store-link" routerLink="/store/product/{{normalizeCategoryName(category.name)}}" *ngFor="let category of categories"
                     [class.selected]="categoryName == normalizeCategoryName(category.name)">{{category.name}}</a>
-                </ng-container>
+                    <app-loader *ngIf="categoriesLoading"></app-loader>
+                    <div id="no-categories" *ngIf="!categoriesLoading && categories.length == 0">
+                        <span class="icon-glass-not-found"></span>
+                        <p>Aucune catégorie trouvée</p>
+                    </div>
+                </div>
             </div>
-            <!-- <div class="buyer">
+            <div *ngIf="cartActive" id="cart-actions">
+                <div class="header">
+                    <a routerLink="/store/product/{{categoryName}}"><span class="icon-arrow"></span> Revenir à la boutique</a>
+                </div>
+                <div class="actions">
+                    <p class="total-price">
+                        <span>Total&nbsp;:</span>&nbsp;{{totalCartPrice | priceformat}}
+                    </p>
+                    <button class="btn btn-third animated"><span class="icon-credit-card"></span> Paiement</button>
+                    <button class="btn btn-danger animated"><span class="icon-delete"></span> Vider le panier</button>
+                </div>
+            </div>
+            <div class="lastSales" *ngIf="lastSales.length > 0">
                 <div class="header" position="left">
-                    <h3>Dernier Achat du mois</h3>
+                    <h3>Derniers Achats</h3>
                 </div>
-                <div class="player">
-                    <img src="" alt="">
+                <div class="sales" *ngFor="let sales of lastSales">
+                    <img src="https://minotar.net/helm/{{sales.buyer.userName}}/30.png" alt="">
+                    <div class="text">
+                        <p>{{sales.buyer.userName}}</p>
+                        <p>{{sales.price | priceformat}}</p>
+                    </div>
                 </div>
-            </div> -->
-
+            </div>
         </div>
         <div id="store-layout-right">
-            <div class="header" position="">
-                <h3>{{currentCategory != undefined ? currentCategory.name : "d"}}</h3>
+            <div class="header">
+                <h3 *ngIf="!cartActive">{{currentCategory != undefined ? currentCategory.name : ""}}</h3>
+                <h3 *ngIf="cartActive">Mon Panier</h3>
+                <a id="cart" routerLink="cart" class="btn btn-third animated"><span class="icon-cart"></span> <span>Mon panier</span></a>
             </div>
             <router-outlet></router-outlet>
         </div>

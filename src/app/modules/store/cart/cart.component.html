@@ -1,1 +1,46 @@
-<p>cart works!</p>
+<div class="cart-container">
+    <div id="packages">
+        <div class="package" *ngFor="let package of cartPackages">
+            <div class="package-info">
+                <div class="picture">
+                    <img *ngIf="package.tebexPackage.imageUrl" src="{{package.tebexPackage.imageUrl}}" alt="">
+                    <img *ngIf="!package.tebexPackage.imageUrl" src="../../../../assets/pictures/image-not-found.png" alt="">
+                </div>
+                <div class="text">
+                    <p class="name">{{package.tebexPackage.name}}</p>
+                    <p>Quantité : {{package.quantity}}</p>
+                    <p>Prix total : {{package.quantity * package.tebexPackage.totalPrice | priceformat}}</p>
+                </div>
+            </div>
+            <div class="package-actions">
+                <button class="btn btn-third animated" (click)="openModifyProductDialog(package.tebexPackage.id,package.quantity, package.tebexPackage.totalPrice)">
+                <span class="icon-edit"></span> Modifier</button>
+
+                <button class="btn btn-danger animated" (click)="deletePackage(package.tebexPackage.id)"><span class="icon-delete"></span> Supprimer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<p-dialog [(visible)]="dialogModifyPackageVisible" [modal]="true"
+[contentStyle]="{'background': 'transparent', 'padding': '0 5px'}"
+[closeOnEscape]="true" [dismissableMask]="true" [showHeader]="false" [closable]="true" [resizable]="false">
+    <div id="add-product" class="dialog-content">
+        <span (click)="dialogModifyPackageVisible = false" id="close-dialog" class="icon-cross"></span>
+        <h2>Modifier l'article</h2>
+        <form [formGroup]="modifyProductForm" (ngSubmit)="updatePackage()">
+            <div id="quantity-modify">
+                <div>
+                    <p>Quantité&nbsp;:</p>
+                    <p-inputNumber formControlName="quantity" [showButtons]="true" buttonLayout="horizontal" [min]="1" [max]="100" [step]="1"
+                                   incrementButtonClass="increment-quantity" incrementButtonIcon="icon-add"
+                                   decrementButtonClass="decrement-quantity" decrementButtonIcon="icon-soustract"></p-inputNumber>
+                </div>
+                <div>
+                    <p>Prix&nbsp;Total&nbsp;:</p>
+                    <p id="total-price">{{modifyProductForm.controls.quantity.value! * modifyProductForm.controls.priceUnit.value! | priceformat}}</p>
+                </div>
+                <button class="btn btn-third animated" type="submit">Sauvegarder <span class="icon-save"></span></button>
+            </div>
+        </form>
+    </div>
+</p-dialog>
