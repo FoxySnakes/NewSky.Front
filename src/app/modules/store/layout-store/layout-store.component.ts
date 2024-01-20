@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
 import { Subscription, filter } from 'rxjs';
 import { TebexCategory, TebexSale } from 'src/app/models/StoreModel';
 import { TebexService } from 'src/app/services/tebex.service';
@@ -25,9 +26,12 @@ export class LayoutStoreComponent implements OnInit, OnDestroy {
   cartActive = false
   totalCartPrice = 0
 
+  isAuthenticated = false
+
   constructor(private tebexService: TebexService,
               private router: Router,
-              private userService : UserService) { }
+              private userService : UserService,
+              private notifyService : NotifierService) { }
 
   ngOnInit(): void {
     this.subs.push(...[
@@ -65,10 +69,15 @@ export class LayoutStoreComponent implements OnInit, OnDestroy {
       this.userService.getCurrentUserObservable().subscribe({
         next: (user) => {
           if(user){
-            this.totalCartPrice = 0;
+            this.isAuthenticated = true;
+            var totalPriceHt = 0;
             user.packages.forEach(x => {
-              this.totalCartPrice += Math.round((x.quantity * x.tebexPackage.totalPrice) * 100) / 100
+              totalPriceHt += Math.round((x.quantity * x.tebexPackage.priceHt) * 100) / 100
+              this.totalCartPrice = Math.round(totalPriceHt * 1.2 * 100) / 100
             })
+          }
+          else{
+            this.isAuthenticated = false
           }
         }
       })
@@ -102,6 +111,48 @@ export class LayoutStoreComponent implements OnInit, OnDestroy {
     categoryName = categoryName.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     categoryName = categoryName.toLowerCase().replace(/\s/g, "-")
     return categoryName
+  }
+
+  startPayment(){
+    if(this.totalCartPrice != 0){
+      this.tebexService.getPaymentLink().subscribe({
+        next : (response) => {
+          this.notifyService.notify("warning", "Redirection vers le paiement dans 3 secondes")
+          setTimeout(() => {
+            window.location.href = response.linkUserCart
+          }, 3000);
+        },
+        error: (error) => {
+          this.notifyService.notify("error", "Erreur pour charger les articles")
+          console.log(error)
+        }
+      })
+    }
+    else{
+      this.notifyService.notify("warning", "Votre panier est vide")
+    }
+  }
+
+  clearCart(){
+    if(this.totalCartPrice != 0){
+      this.tebexService.clearUserCart().subscribe({
+        next: (response) => {
+          this.userService.updateUserPackages(response.packages)
+          if(response.result.success){
+            this.notifyService.notify("success", "Panier vidé")
+          }
+          else{
+            response.error.array.forEach((error : string) => {
+              this.notifyService.notify("warning", error)
+            });
+          }
+        },
+        error: () => this.notifyService.notify("error", "Impossible de vider le panier")
+      })
+    }
+    else{
+      this.notifyService.notify("warning", "Votre panier est vide")
+    }
   }
 
   ngOnDestroy(): void {

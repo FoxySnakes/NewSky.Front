@@ -84,6 +84,9 @@
                             position: absolute;
                             background-color: var(--secondary-color);
                             line-height: 20px;
+                            text-align: center;
+                            padding-inline: 5px;
+                            box-shadow: inset -10px 0 5px -5px #00000080;
                         }
 
                         span {
@@ -254,6 +257,10 @@
                 .sales {
                     box-shadow: none !important;
                 }
+            }
+
+            #cart-actions>.actions{
+                box-shadow: none !important;
             }
         }
 

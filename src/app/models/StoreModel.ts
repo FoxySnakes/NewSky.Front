@@ -10,7 +10,8 @@ export class TebexPackage {
     id!: number;
     name!: string;
     imageUrl!: string | null;
-    totalPrice!: number;
+    priceHt!: number;
+    priceTtc!: number;
     expirationDate!: Date | null;
     creationDate!: Date | null;
 }

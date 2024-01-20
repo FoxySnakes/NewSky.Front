@@ -28,6 +28,7 @@ export class AuthService implements OnInit {
   login(loginDto : LoginDto, callbackUrl : string) : void {
     this.apiService.post('auth/login', loginDto).subscribe({
       next : (response) => {
+        console.log(response)
         if(response.isSuccess){
           this.setAuthToken(response.token)
           this.isAuthenticatedSubject.next(true);
@@ -64,7 +65,6 @@ export class AuthService implements OnInit {
   register(registerDto : RegisterDto, callbackUrl : string) : void{
     this.apiService.post('auth/register', registerDto).subscribe({
       next : (response) => {
-        console.log(response)
         if(response.isSuccess){
           this.setAuthToken(response.token)
           this.userService.setCurrentUser(response.user)
@@ -82,7 +82,7 @@ export class AuthService implements OnInit {
           if(response.errors[0].code == "400"){
             this.notifService.notify('error', response.errors[0].description)
           }
-          else if(response.errors[0].code = "DuplicateUserName"){
+          else if(response.errors[0] == "Duplicated Key"){
             this.notifService.notify('error', "Compte déjà existant")
           }
           else{

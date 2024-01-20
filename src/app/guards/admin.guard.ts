@@ -17,9 +17,10 @@ export class AdminGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
-      return this.apiService.get("auth/admin").pipe(
+      return this.apiService.get("auth/access-admin-panel").pipe(
         map((isAdmin: boolean) => {
           if (isAdmin) {
+            this.userService.setCurrentUserAdminPanelPermissions()
             return true;
           } else {
             this.router.navigate(['not-found']);

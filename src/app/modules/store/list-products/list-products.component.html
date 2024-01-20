@@ -7,7 +7,7 @@
             <p class="name">{{package.name}}</p>
             <img *ngIf="package.imageUrl" src="{{package.imageUrl}}" alt="">
             <img *ngIf="!package.imageUrl" src="../../../../assets/pictures/image-not-found.png" alt="">
-            <p class="price">{{package.totalPrice}} €</p>
+            <p class="price">{{package.priceTtc}} €</p>
         </div>
     </ng-container>
     <p-dialog [(visible)]="dialogAddProductVisible" [modal]="true"
@@ -23,7 +23,7 @@
                     </div>
                     <div>
                         <p class="name">{{productForm.controls.name.value}}</p>
-                        <p class="price">{{productForm.controls.price.value! | priceformat}} / unité</p>
+                        <p class="price">{{productForm.controls.priceHt.value! | priceformat:1.2}} / unité</p>
                     </div>
                 </div>
                 <div id="quantity-price-add">
@@ -35,11 +35,23 @@
                     </div>
                     <div>
                         <p>Prix&nbsp;Total&nbsp;:</p>
-                        <p id="total-price">{{productForm.controls.totalPrice.value! | priceformat}}</p>
+                        <p id="total-price">{{productForm.controls.quantity.value! * productForm.controls.priceHt.value! | priceformat:1.2}}</p>
                     </div>
                     <button class="btn btn-third animated" type="submit"><span class="icon-add-cart"></span> Ajouter</button>
                 </div>
             </form>
+        </div>
+    </p-dialog>
+
+    <p-dialog [(visible)]="dialogLoginRequiredVisible" [modal]="true"
+    [contentStyle]="{'background': 'transparent', 'padding': '0 5px'}"
+    [closeOnEscape]="true" [dismissableMask]="true" [showHeader]="false" [closable]="true" [resizable]="false">
+        <div id="login-required" class="dialog-content">
+            <span (click)="dialogLoginRequiredVisible = false" id="close-dialog" class="icon-cross"></span>
+            <h2>Connexion requise</h2>
+            <p>Vous devez vous connecter pour ajouter des produits à votre panier</p>
+            <a class="btn btn-third animated" routerLink="/login">Se connecter</a>
+
         </div>
     </p-dialog>
     

@@ -18,6 +18,14 @@ export class TebexService {
     this.isLoadingCategory.next(true)
     return this.apiService.get(`tebex/listing?withPackages=${withPackages}`)
   }
+    
+  setSelectedCategory(category: TebexCategory | undefined) {
+    this.selectedCategory.next(category);
+  }
+
+  getSelectedCategory() {
+    return this.selectedCategory.asObservable();
+  }
 
   getLastSales() : Observable<TebexSale[]>{
     return this.apiService.get('tebex/last-sales')
@@ -26,12 +34,12 @@ export class TebexService {
   managePackageOnCart(packageId : number, quantity : number){
     return this.apiService.post('tebex/manage-package', {packageTebexId : packageId, quantity : quantity})
   }
-  
-  setSelectedCategory(category: TebexCategory | undefined) {
-    this.selectedCategory.next(category);
+
+  clearUserCart(){
+    return this.apiService.deleteAll("tebex/clear-cart")
   }
 
-  getSelectedCategory() {
-    return this.selectedCategory.asObservable();
+  getPaymentLink(){
+    return this.apiService.get("tebex/cart-link")
   }
 }

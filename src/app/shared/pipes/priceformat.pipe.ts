@@ -5,8 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PriceformatPipe implements PipeTransform {
 
-  transform(value: number): string {
-    return `${Math.round(value).toFixed(2)}€`
+  transform(value: number, taxes?: number): string {
+    if(!taxes){
+      taxes = 1
+    }
+    return `${((Math.round(value * taxes * 100) / 100) )}€`
   }
 
 }

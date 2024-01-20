@@ -13,28 +13,34 @@ import { PaginatorModule } from 'primeng/paginator';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { PanelModule } from 'primeng/panel';
 import { PriceformatPipe } from './pipes/priceformat.pipe';
+import { PagerComponent } from './pager/pager.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     TimeFormatPipe,
     LoaderComponent,
     PriceformatPipe,
+    PagerComponent,
+
     
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    DropdownModule,
+    ReactiveFormsModule
   ],
   exports: [
     TimeFormatPipe,
     PriceformatPipe,
     LoaderComponent,
+    PagerComponent,
 
     DialogModule,
     ToastModule,
     CardModule,
     OverlayPanelModule,
     DropdownModule,
-    PaginatorModule,
     InputNumberModule,
     PanelModule
     

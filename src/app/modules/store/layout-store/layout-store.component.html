@@ -22,12 +22,12 @@
                 <div class="header">
                     <a routerLink="/store/product/{{categoryName}}"><span class="icon-arrow"></span> Revenir à la boutique</a>
                 </div>
-                <div class="actions">
+                <div class="actions" *ngIf="isAuthenticated">
                     <p class="total-price">
                         <span>Total&nbsp;:</span>&nbsp;{{totalCartPrice | priceformat}}
                     </p>
-                    <button class="btn btn-third animated"><span class="icon-credit-card"></span> Paiement</button>
-                    <button class="btn btn-danger animated"><span class="icon-delete"></span> Vider le panier</button>
+                    <button class="btn btn-third animated" (click)="startPayment()" [disabled]="totalCartPrice == 0"><span class="icon-credit-card"></span> Paiement</button>
+                    <button class="btn btn-danger animated" (click)="clearCart()" [disabled]="totalCartPrice == 0"><span class="icon-delete"></span> Vider le panier</button>
                 </div>
             </div>
             <div class="lastSales" *ngIf="lastSales.length > 0">

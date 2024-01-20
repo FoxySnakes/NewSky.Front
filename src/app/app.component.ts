@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { ApiService } from './services/api.service';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { NotifierService } from 'angular-notifier';
@@ -13,10 +12,8 @@ import { User } from './models/UserModel';
 export class AppComponent implements OnInit{
   title = 'NewSky';
 
-  constructor(private apiService : ApiService,
-              private userService : UserService,
-              private authService : AuthService,
-              private notifyService : NotifierService)
+  constructor(private userService : UserService,
+              private authService : AuthService)
   {}
   
   ngOnInit(): void {

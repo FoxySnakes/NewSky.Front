@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Filter, PaginationResult } from 'src/app/models/FilterModel';
-import { User } from 'src/app/models/UserModel';
-import { ApiService } from 'src/app/services/api.service';
+import { User, UsersByCategories } from 'src/app/models/UserModel';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-userlist',
@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class UserlistComponent implements OnInit{
 
   userSearchForm = new FormGroup({
-    search : new FormControl('')
+    search : new FormControl<string>("")
   })
 
   sortByValues = [
@@ -21,28 +21,32 @@ export class UserlistComponent implements OnInit{
     {label: 'UUID', value: 'uuid'},
     {label: 'Role', value: "role"},
   ]
-
   sortByForm = new FormGroup({
     sortBy : new FormControl(this.sortByValues[0])
   })
-
   filter = new Filter("default", "asc")
 
-  usersResult = new PaginationResult<User>()
+  usersResult = new PaginationResult<UsersByCategories>()
 
+  loading = false
 
+  dialogUserModifyVisible = false
 
-  constructor(private apiService : ApiService){}
+  modifyUserRolePermissionForm = new FormGroup({
+    roles : new FormControl(''),
+    permissions : new FormControl('')
+  })
+
+  constructor(private userService : UserService){}
 
   ngOnInit(): void {
-    console.log()
     this.Filter()
   }
 
   Filter(){
-    this.apiService.getPaged('user',this.usersResult.pageSize, this.usersResult.pageNumber, this.filter).subscribe({
-      next: (users : User[]) => {
-        this.usersResult.items = users
+    this.userService.getAllUsersPaged(this.usersResult.pageSize, this.usersResult.pageNumber, this.filter, this.userSearchForm.controls.search.value!).subscribe({
+      next: (result) => {
+        this.usersResult = result
       }
     })
 

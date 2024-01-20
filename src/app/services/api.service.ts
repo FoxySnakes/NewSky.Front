@@ -15,8 +15,9 @@ export class ApiService {
     return this.httpClient.get<any>(`${environment.apiUrl}/${endpoints}`)
   }
 
-  getPaged(endpoints: string, pageSize : number, pageNumber : number, filter : Filter) {
+  getPaged(endpoints: string, pageSize : number, pageNumber : number, filter : Filter, search : string) {
     let params = new HttpParams()
+    .set('search', search)
     .set('pageNumber', pageNumber.toString())
     .set('pageSize', pageSize.toString())
     .set("filter",filter.name)
@@ -27,6 +28,10 @@ export class ApiService {
 
   post(endpoints: string, data: any) {
     return this.httpClient.post<any>(`${environment.apiUrl}/${endpoints}`,data)
+  }
+
+  deleteAll(endpoints: string){
+    return this.httpClient.delete<any>(`${environment.apiUrl}/${endpoints}`)
   }
 
 }

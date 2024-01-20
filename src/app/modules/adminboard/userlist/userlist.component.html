@@ -21,8 +21,9 @@
     </div>
     <div id="list-user">
         <div *ngFor="let user of usersResult.items">
-        {{user.userName}}
+        
         </div>
+        <app-loader *ngIf="loading"></app-loader>
     </div>
-    <p-paginator (onPageChange)="onPageChange($event)" [first]="usersResult.pageNumber" [rows]="usersResult.pageSize" [totalRecords]="usersResult.totalPageCount" [rowsPerPageOptions]="usersResult.pageSizeOptions"></p-paginator>
+    <app-pager [itemsCount]="150" [pageNumber]="3" [pageSize]="1000" [pageSizeOptions]="[5,25,400,1000]"></app-pager>
 </div>

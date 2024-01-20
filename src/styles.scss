@@ -129,7 +129,7 @@ h2{ //todo retirer tout les styles inutiles - faire meme chose pour h1
         background-color: var(--third-color);
         color: var(--white);
 
-        &.animated{
+        &.animated:not(:disabled){
             transition: all 0.3s;
             &:hover{
                 transform: scale(1.05);
@@ -141,7 +141,7 @@ h2{ //todo retirer tout les styles inutiles - faire meme chose pour h1
         background-color: var(--danger);
         color: var(--white);
 
-        &.animated{
+        &.animated:not(:disabled){
             transition: all 0.3s;
             &:hover{
                 transform: scale(1.05);
@@ -163,7 +163,7 @@ h2{ //todo retirer tout les styles inutiles - faire meme chose pour h1
         background-color: var(--discord-color);
         color: var(--white);
 
-        &.animated{
+        &.animated:not(:disabled){
             transition: all 0.3s;
             &:hover{
                 transform: scale(1.05);
@@ -176,7 +176,7 @@ h2{ //todo retirer tout les styles inutiles - faire meme chose pour h1
         background-color: var(--mail-color);
         color: var(--white);
 
-        &.animated{
+        &.animated:not(:disabled){
             transition: all 0.3s;
             &:hover{
                 transform: scale(1.05);

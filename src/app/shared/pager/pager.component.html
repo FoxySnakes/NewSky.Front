@@ -1,0 +1,37 @@
+<form class="pager-container" [formGroup]="pagerForm">
+    <div class="pager">
+        <div class="element-pager double-chevron">
+            <span class="icon-chevron-left"></span>
+            <span class="icon-chevron-left"></span>
+        </div>
+        <div class="element-pager">
+            <span class="icon-chevron-left"></span>
+        </div>
+        
+        <div class="element-pager">
+            <span class="pageNumber">{{pageNumber - 2}}</span>
+        </div>
+        <div class="element-pager">
+            <span class="pageNumber">{{pageNumber - 1}}</span>
+        </div>
+        <div class="element-pager">
+            <span class="pageNumber">{{pageNumber}}</span>
+        </div>
+        <div class="element-pager">
+            <span class="pageNumber">{{pageNumber + 1}}</span>
+        </div>
+        <div class="element-pager">
+            <span class="pageNumber">{{pageNumber + 2}}</span>
+        </div>
+
+        <div class="element-pager">
+            <span class="icon-chevron-right"></span>
+        </div>
+        <div class="element-pager double-chevron">
+            <span class="icon-chevron-right"></span>
+            <span class="icon-chevron-right"></span>
+        </div>
+
+    </div>
+    <p-dropdown formControlName="pageSize" [options]="pageSizeOptions"></p-dropdown>
+</form>

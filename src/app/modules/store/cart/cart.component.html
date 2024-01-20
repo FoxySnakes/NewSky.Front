@@ -1,29 +1,43 @@
 <div class="cart-container">
-    <div id="packages">
-        <div class="package" *ngFor="let package of cartPackages">
-            <div class="package-info">
-                <div class="picture">
-                    <img *ngIf="package.tebexPackage.imageUrl" src="{{package.tebexPackage.imageUrl}}" alt="">
-                    <img *ngIf="!package.tebexPackage.imageUrl" src="../../../../assets/pictures/image-not-found.png" alt="">
+    <div *ngIf="userLogged" id="packages">
+        <ng-container *ngIf="cartPackages.length > 0">
+            <div class="package" *ngFor="let package of cartPackages">
+                <div class="package-info">
+                    <div class="picture">
+                        <img *ngIf="package.tebexPackage.imageUrl" src="{{package.tebexPackage.imageUrl}}" alt="">
+                        <img *ngIf="!package.tebexPackage.imageUrl"
+                            src="../../../../assets/pictures/image-not-found.png" alt="">
+                    </div>
+                    <div class="text">
+                        <p class="name">{{package.tebexPackage.name}}</p>
+                        <p>Quantité&nbsp;: {{package.quantity}}</p>
+                        <p>Prix total&nbsp;: {{package.quantity * package.tebexPackage.priceHt | priceformat:1.2}}</p>
+                    </div>
                 </div>
-                <div class="text">
-                    <p class="name">{{package.tebexPackage.name}}</p>
-                    <p>Quantité : {{package.quantity}}</p>
-                    <p>Prix total : {{package.quantity * package.tebexPackage.totalPrice | priceformat}}</p>
-                </div>
-            </div>
-            <div class="package-actions">
-                <button class="btn btn-third animated" (click)="openModifyProductDialog(package.tebexPackage.id,package.quantity, package.tebexPackage.totalPrice)">
-                <span class="icon-edit"></span> Modifier</button>
+                <div class="package-actions">
+                    <button class="btn btn-third animated"
+                        (click)="openModifyProductDialog(package.tebexPackage.id,package.quantity, package.tebexPackage.priceHt)">
+                        <span class="icon-edit"></span> <span class="package-actions-text">Modifier</span></button>
 
-                <button class="btn btn-danger animated" (click)="deletePackage(package.tebexPackage.id)"><span class="icon-delete"></span> Supprimer</button>
+                    <button class="btn btn-danger animated" (click)="deletePackage(package.tebexPackage.id)"><span
+                            class="icon-delete"></span> <span class="package-actions-text">Supprimer</span></button>
+                </div>
             </div>
+        </ng-container>
+
+        <div id="no-package" *ngIf="cartPackages.length == 0">
+            <span class="icon-glass-not-found"></span>
+            <p>Aucun produit dans votre panier</p>
         </div>
+    </div>
+    <div *ngIf="!userLogged" id="no-user-logged">
+        <p>Veuillez vous connecter pour voir votre panier</p>
+        <a class="btn btn-third animated" routerLink="/login">Se Connecter</a>
     </div>
 </div>
 <p-dialog [(visible)]="dialogModifyPackageVisible" [modal]="true"
-[contentStyle]="{'background': 'transparent', 'padding': '0 5px'}"
-[closeOnEscape]="true" [dismissableMask]="true" [showHeader]="false" [closable]="true" [resizable]="false">
+    [contentStyle]="{'background': 'transparent', 'padding': '0 5px'}" [closeOnEscape]="true" [dismissableMask]="true"
+    [showHeader]="false" [closable]="true" [resizable]="false">
     <div id="add-product" class="dialog-content">
         <span (click)="dialogModifyPackageVisible = false" id="close-dialog" class="icon-cross"></span>
         <h2>Modifier l'article</h2>
@@ -31,15 +45,17 @@
             <div id="quantity-modify">
                 <div>
                     <p>Quantité&nbsp;:</p>
-                    <p-inputNumber formControlName="quantity" [showButtons]="true" buttonLayout="horizontal" [min]="1" [max]="100" [step]="1"
-                                   incrementButtonClass="increment-quantity" incrementButtonIcon="icon-add"
-                                   decrementButtonClass="decrement-quantity" decrementButtonIcon="icon-soustract"></p-inputNumber>
+                    <p-inputNumber formControlName="quantity" [showButtons]="true" buttonLayout="horizontal" [min]="1"
+                        [max]="100" [step]="1" incrementButtonClass="increment-quantity" incrementButtonIcon="icon-add"
+                        decrementButtonClass="decrement-quantity" decrementButtonIcon="icon-soustract"></p-inputNumber>
                 </div>
                 <div>
                     <p>Prix&nbsp;Total&nbsp;:</p>
-                    <p id="total-price">{{modifyProductForm.controls.quantity.value! * modifyProductForm.controls.priceUnit.value! | priceformat}}</p>
+                    <p id="total-price">{{modifyProductForm.controls.quantity.value! *
+                        modifyProductForm.controls.pricezHtUnit.value! | priceformat:1.2}}</p>
                 </div>
-                <button class="btn btn-third animated" type="submit">Sauvegarder <span class="icon-save"></span></button>
+                <button class="btn btn-third animated" type="submit">Sauvegarder <span
+                        class="icon-save"></span></button>
             </div>
         </form>
     </div>

@@ -16,10 +16,12 @@
         border-radius: 25px;
         gap: 20px;
         position: relative;
+        width: 225px;
 
         p {
             font-size: 22px;
             font-weight: var(--font-weight-medium);
+            text-align: center;
         }
 
         img {
@@ -184,6 +186,17 @@
                     }
                 }
             }
+        }
+    }
+
+    #login-required>#close-dialog {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 14px;
+
+        &:hover {
+            cursor: pointer;
         }
     }
 }

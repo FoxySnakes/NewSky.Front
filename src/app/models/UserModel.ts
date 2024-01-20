@@ -22,3 +22,31 @@ export class User{
     this.packages = packages;
   }
 }
+
+export interface UsersByCategories{
+  categoryName : string;
+  users : User[]
+}
+
+export interface AdminPanelPermissionDto {
+  // Access
+  accessToSalesOnAdminPanel: boolean;
+  accessToUsersOnAdminPanel: boolean;
+  accessToVotesOnAdminPanel: boolean;
+  accessToGeneralSettingsOnAdminPanel: boolean;
+
+  // Create
+  createRole: boolean;
+
+  // Update
+  updateUserPermissions: boolean;
+  updateUserUserName: boolean;
+  updateUserStatus: boolean;
+  manageUserCart: boolean;
+  updateGeneralSettings: boolean;
+  updateUserRole: boolean;
+  updateRole: boolean;
+
+  // Delete
+  deleteRole: boolean;
+}

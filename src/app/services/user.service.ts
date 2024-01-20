@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, defer, interval, map, take } from 'rxjs';
-import { User } from '../models/UserModel';
+import { AdminPanelPermissionDto, User } from '../models/UserModel';
 import { ApiService } from './api.service';
 import { NotifierService } from 'angular-notifier';
 import { PackageCart } from '../models/StoreModel';
+import { Filter } from '../models/FilterModel';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,8 @@ import { PackageCart } from '../models/StoreModel';
 export class UserService {
   private currentUserSubject$ = new BehaviorSubject<User | null>(null);
   private fetchingUserInformation = false
+
+  private currentUserAdminPanelPermission$ = new BehaviorSubject<AdminPanelPermissionDto | null>(null);
 
   constructor(private apiService : ApiService,
               private notifyService : NotifierService) { }
@@ -90,5 +93,22 @@ export class UserService {
 
   getHeadSkinUrl(size : number){
     return `https://minotar.net/helm/${this.currentUserSubject$.value?.uuid}/${size}.png`
+  }
+
+  getAllUsersPaged(pageSize : number, pageNumber : number, filter : Filter, search : string){
+    return this.apiService.getPaged('user',pageSize, pageNumber, filter, search)
+  }
+
+  setCurrentUserAdminPanelPermissions(){
+    this.apiService.get('user/permissions-admin-panel').subscribe({
+      next: (result : AdminPanelPermissionDto) => {
+        this.currentUserAdminPanelPermission$.next(result);
+      },
+      error: () => this.currentUserAdminPanelPermission$.next(null)
+    })
+  }
+
+  getCurrentUserAdminPanelPermissionsObservable(){
+    return this.currentUserAdminPanelPermission$.asObservable()
   }
 }

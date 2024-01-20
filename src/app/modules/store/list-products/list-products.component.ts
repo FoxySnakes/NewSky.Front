@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
+import { Subscription } from 'rxjs';
 import { TebexCategory, TebexPackage } from 'src/app/models/StoreModel';
+import { AuthService } from 'src/app/services/auth.service';
 import { TebexService } from 'src/app/services/tebex.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,55 +18,68 @@ export class ListProductsComponent implements OnInit {
   addProductLoading = false
 
   dialogAddProductVisible = false
+  dialogLoginRequiredVisible = false
 
   selectedProduct : TebexPackage | null = null
 
   productForm = new FormGroup({
     id : new FormControl<number>(0),
     name : new FormControl(""),
-    price : new FormControl<number>(0),
+    priceHt : new FormControl<number>(0),
     quantity : new FormControl<number>(1),
-    imageUrl : new FormControl(""),
-    totalPrice : new FormControl<number>(0)
+    imageUrl : new FormControl("")
   })
+
+  isAuthenticated = false
+
+  subs : Subscription[] = []
 
   constructor(private tebexService : TebexService,
               private userService : UserService,
-              private notifyService : NotifierService){}
+              private notifyService : NotifierService,
+              private authService : AuthService){}
 
   ngOnInit(): void {
-    this.tebexService.getSelectedCategory().subscribe({
-      next: (selectedCategory) => {
-        this.category = selectedCategory
-      }
-    })
-    this.tebexService.isLoadingCategory.subscribe({
-      next: (isLoading) => {
-        this.productLoading = isLoading
-      }
-    })
-    this.productForm.controls.quantity.valueChanges.subscribe({
-      next : () => {
-        var totalPrice = Math.round(this.productForm.controls.quantity.value! * this.productForm.controls.price.value! * 100) / 100
-        this.productForm.controls.totalPrice.setValue(totalPrice)
-      }
-    })
+    this.subs.push(...[
+      this.tebexService.getSelectedCategory().subscribe({
+        next: (selectedCategory) => {
+          this.category = selectedCategory
+        }
+      }),
+
+      this.tebexService.isLoadingCategory.subscribe({
+        next: (isLoading) => {
+          this.productLoading = isLoading
+        }
+      }),
+      
+      this.authService.isAuthenticatedObservable().subscribe({
+        next : (isAuthenticated) => {
+          this.isAuthenticated = isAuthenticated
+        }
+      })
+    ])
   }
 
   openDialogAddProduct(productId : number){
-    var product = this.category?.packages.find(x => x.id == productId)!
-    this.productForm.setValue({
-      id : product.id,
-      name : product.name,
-      price : product.totalPrice,
-      quantity : 1,
-      imageUrl : product.imageUrl == "" ? "../../../../assets/pictures/image-not-found.png" : product.imageUrl,
-      totalPrice : product.totalPrice
-    })
-    this.dialogAddProductVisible = true
+    if(this.isAuthenticated){
+      var product = this.category?.packages.find(x => x.id == productId)!
+      this.productForm.setValue({
+        id : product.id,
+        name : product.name,
+        priceHt : product.priceHt,
+        quantity : 1,
+        imageUrl : product.imageUrl == "" ? "../../../../assets/pictures/image-not-found.png" : product.imageUrl,
+      })
+      this.dialogAddProductVisible = true
+    }
+    else{
+      this.dialogLoginRequiredVisible = true
+    }
   }
 
   addProductToCart(){
+    console.log("3")
     this.tebexService.managePackageOnCart(this.productForm.controls.id.value!, this.productForm.controls.quantity.value!).subscribe({
       next: (response) => {
         if(response.result.success){
