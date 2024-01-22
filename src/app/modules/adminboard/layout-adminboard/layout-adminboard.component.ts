@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscribable, Subscription, filter } from 'rxjs';
-import { AdminPanelPermissionDto } from 'src/app/models/UserModel';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -13,8 +12,6 @@ import { UserService } from 'src/app/services/user.service';
 export class LayoutAdminboardComponent implements OnInit, OnDestroy{
 
   activeRouterLink = ""
-
-  adminPermissionDto : AdminPanelPermissionDto | null = null
   
   subs : Subscription[] = []
 
@@ -29,14 +26,9 @@ export class LayoutAdminboardComponent implements OnInit, OnDestroy{
       this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(
         (event : any) => {
           this.activeRouterLink = event.url
+          console.log(this.activeRouterLink)
         }
-      ),
-
-      this.userService.getCurrentUserAdminPanelPermissionsObservable().subscribe({
-        next: (permissions) => {
-          this.adminPermissionDto = permissions
-        }
-      })
+      )
     ])
   }
 

@@ -10,6 +10,7 @@ import { VotelistComponent } from './votelist/votelist.component';
 import { GlobalSettingsComponent } from './global-settings/global-settings.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ListModulesComponent } from './list-modules/list-modules.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserlistComponent,
     OrderlistComponent,
     VotelistComponent,
-    GlobalSettingsComponent
+    GlobalSettingsComponent,
+    ListModulesComponent
   ],
   imports: [
     CommonModule,

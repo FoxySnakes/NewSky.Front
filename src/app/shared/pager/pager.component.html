@@ -1,33 +1,33 @@
 <form class="pager-container" [formGroup]="pagerForm">
     <div class="pager">
-        <div class="element-pager double-chevron">
+        <div class="element-pager double-chevron" [class.disabled]="pageNumber == 1" (click)="changePageNumber(1)">
             <span class="icon-chevron-left"></span>
             <span class="icon-chevron-left"></span>
         </div>
-        <div class="element-pager">
+        <div class="element-pager chevron" [class.disabled]="pageNumber - 1 <= 0" (click)="changePageNumber(pageNumber - 1)">
             <span class="icon-chevron-left"></span>
         </div>
         
-        <div class="element-pager">
+        <div class="element-pager" [class.disabled]="pageNumber - 2 <= 0" (click)="changePageNumber(pageNumber - 2)">
             <span class="pageNumber">{{pageNumber - 2}}</span>
         </div>
-        <div class="element-pager">
+        <div class="element-pager" [class.disabled]="pageNumber - 1 <= 0" (click)="changePageNumber(pageNumber - 1)">
             <span class="pageNumber">{{pageNumber - 1}}</span>
         </div>
-        <div class="element-pager">
+        <div class="element-pager current">
             <span class="pageNumber">{{pageNumber}}</span>
         </div>
-        <div class="element-pager">
+        <div class="element-pager" [class.disabled]="pageNumber + 1 > lastPage" (click)="changePageNumber(pageNumber + 1)">
             <span class="pageNumber">{{pageNumber + 1}}</span>
         </div>
-        <div class="element-pager">
+        <div class="element-pager" [class.disabled]="pageNumber + 2 > lastPage" (click)="changePageNumber(pageNumber + 2)">
             <span class="pageNumber">{{pageNumber + 2}}</span>
         </div>
 
-        <div class="element-pager">
+        <div class="element-pager chevron" [class.disabled]="pageNumber + 1 > lastPage" (click)="changePageNumber(pageNumber + 1)">
             <span class="icon-chevron-right"></span>
         </div>
-        <div class="element-pager double-chevron">
+        <div class="element-pager double-chevron" [class.disabled]="lastPage == pageNumber" (click)="changePageNumber(lastPage)">
             <span class="icon-chevron-right"></span>
             <span class="icon-chevron-right"></span>
         </div>

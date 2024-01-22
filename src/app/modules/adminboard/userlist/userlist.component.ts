@@ -22,9 +22,9 @@ export class UserlistComponent implements OnInit{
     {label: 'Role', value: "role"},
   ]
   sortByForm = new FormGroup({
-    sortBy : new FormControl(this.sortByValues[0])
+    sortBy : new FormControl(this.sortByValues[1])
   })
-  filter = new Filter("default", "asc")
+  filter = new Filter("username", "asc")
 
   usersResult = new PaginationResult<UsersByCategories>()
 
@@ -41,12 +41,20 @@ export class UserlistComponent implements OnInit{
 
   ngOnInit(): void {
     this.Filter()
+
+    this.sortByForm.valueChanges.subscribe({
+      next: () => {
+        this.Filter()
+      }
+    })
   }
 
   Filter(){
+    console.log("start filtering")
     this.userService.getAllUsersPaged(this.usersResult.pageSize, this.usersResult.pageNumber, this.filter, this.userSearchForm.controls.search.value!).subscribe({
       next: (result) => {
         this.usersResult = result
+        console.log(this.usersResult.items)
       }
     })
 
@@ -57,7 +65,8 @@ export class UserlistComponent implements OnInit{
     })
   }
 
-  onPageChange(event : any){
-    console.log(event)
+  changeFilterDirection(){
+    this.filter.direction == 'asc' ? this.filter.direction = 'desc' : this.filter.direction = 'asc' 
+    this.Filter()
   }
 }

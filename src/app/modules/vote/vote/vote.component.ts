@@ -111,11 +111,11 @@ export class VoteComponent implements OnInit {
 
           if (result == true) {
             if (voteWebSite == VoteWebSite.Serveur_Prive)
-              this.vote1Status.timeLeft = this.FormatTimeLeft("00:00:00")
+              this.vote1Status.timeLeft = this.FormatTimeLeft("01:30:00")
             if (voteWebSite == VoteWebSite.ServeursMinecraft)
-              this.vote2Status.timeLeft = this.FormatTimeLeft("00:00:00")
+              this.vote2Status.timeLeft = this.FormatTimeLeft("24:00:00")
             if (voteWebSite == VoteWebSite.Top_Serveurs)
-              this.vote3Status.timeLeft = this.FormatTimeLeft("00:00:00")
+              this.vote3Status.timeLeft = this.FormatTimeLeft("02:00:00")
 
             this.notifService.notify('success', "Vote réussi, vos récompense vous attendent en jeu")
           }

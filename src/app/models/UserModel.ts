@@ -4,15 +4,15 @@ export class User{
   userName: string;
   uuid: string;
   email: string;
-  roles: string[];
-  permissions: string[];
+  roles: string[] = [];
+  permissions: Permission[] = [];
   packages : PackageCart[] = []
 
   constructor(userName: string, 
               uuid: string, 
               email: string, 
               roles: string[], 
-              permissions: string[],
+              permissions: Permission[],
               packages : PackageCart[]) {
     this.userName = userName;
     this.uuid = uuid;
@@ -28,25 +28,36 @@ export interface UsersByCategories{
   users : User[]
 }
 
-export interface AdminPanelPermissionDto {
+export interface Permission{
+  name: string;
+  hasPermission: boolean | null
+}
+
+export class PermissionName {
   // Access
-  accessToSalesOnAdminPanel: boolean;
-  accessToUsersOnAdminPanel: boolean;
-  accessToVotesOnAdminPanel: boolean;
-  accessToGeneralSettingsOnAdminPanel: boolean;
+
+  static AccessToAdminPanel = "access:admin-panel";
+  static AccessToDashboardOnAdminPanel = "access:admin-panel_dashboard";
+  static AccessToSalesOnAdminPanel = "access:admin-panel_sales";
+  static AccessToUsersOnAdminPanel = "access:admin-panel_users";
+  static AccessToVotesOnAdminPanel = "access:admin-panel_votes";
+  static AccessToGeneralSettingsOnAdminPanel = "access:admin-panel_general-settings";
 
   // Create
-  createRole: boolean;
+
+  static CreateRole = "create:role";
 
   // Update
-  updateUserPermissions: boolean;
-  updateUserUserName: boolean;
-  updateUserStatus: boolean;
-  manageUserCart: boolean;
-  updateGeneralSettings: boolean;
-  updateUserRole: boolean;
-  updateRole: boolean;
+
+  static UpdateUserPermissions = "update:user_permissions";
+  static UpdateUserUserName = "update:user_username";
+  static UpdateUserStatus = "update:user_status";
+  static ManageUserCart = "update:user_cart";
+  static UpdateGeneralSettings = "update:general-settings";
+  static UpdateUserRole = "update:user_role";
+  static UpdateRole = "update:role";
 
   // Delete
-  deleteRole: boolean;
+
+  static DeleteRole = "delete:role";
 }

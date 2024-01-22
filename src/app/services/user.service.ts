@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, defer, interval, map, take } from 'rxjs';
-import { AdminPanelPermissionDto, User } from '../models/UserModel';
 import { ApiService } from './api.service';
 import { NotifierService } from 'angular-notifier';
 import { PackageCart } from '../models/StoreModel';
 import { Filter } from '../models/FilterModel';
+import { Permission, User } from '../models/UserModel';
 
 @Injectable({
   providedIn: 'root'
@@ -13,21 +13,19 @@ export class UserService {
   private currentUserSubject$ = new BehaviorSubject<User | null>(null);
   private fetchingUserInformation = false
 
-  private currentUserAdminPanelPermission$ = new BehaviorSubject<AdminPanelPermissionDto | null>(null);
+  constructor(private apiService: ApiService,
+    private notifyService: NotifierService) { }
 
-  constructor(private apiService : ApiService,
-              private notifyService : NotifierService) { }
-
-  getCurrentUserObservable(){
+  getCurrentUserObservable() {
     return this.currentUserSubject$.asObservable();
   }
 
-  getUserInformation(){
+  getUserInformation() {
     this.fetchingUserInformation = true
     this.apiService.get('user/current').subscribe({
-      next: (response : User | null) => {
-       this.setCurrentUser(response)
-       this.fetchingUserInformation = false
+      next: (response: User | null) => {
+        this.setCurrentUser(response)
+        this.fetchingUserInformation = false
       },
       error: () => {
         this.fetchingUserInformation = false
@@ -36,11 +34,11 @@ export class UserService {
     })
   }
 
-  setCurrentUser(user : User | null){
+  setCurrentUser(user: User | null) {
     this.currentUserSubject$.next(user);
   }
 
-  updateUserPackages(packages : PackageCart[]){
+  updateUserPackages(packages: PackageCart[]) {
     this.currentUserSubject$.next(
       new User(
         this.currentUserSubject$.value!.userName,
@@ -87,28 +85,48 @@ export class UserService {
     });
   }
 
-  getUserBodySkinUrl(size : number){
+  getUserBodySkinUrl(size: number) {
     return `https://minotar.net/armor/body/${this.currentUserSubject$.value?.uuid}/${size}.png`
   }
 
-  getHeadSkinUrl(size : number){
+  getHeadSkinUrl(size: number) {
     return `https://minotar.net/helm/${this.currentUserSubject$.value?.uuid}/${size}.png`
   }
 
-  getAllUsersPaged(pageSize : number, pageNumber : number, filter : Filter, search : string){
-    return this.apiService.getPaged('user',pageSize, pageNumber, filter, search)
+  getAllUsersPaged(pageSize: number, pageNumber: number, filter: Filter, search: string) {
+    return this.apiService.getPaged('user', pageSize, pageNumber, filter, search)
   }
 
-  setCurrentUserAdminPanelPermissions(){
-    this.apiService.get('user/permissions-admin-panel').subscribe({
-      next: (result : AdminPanelPermissionDto) => {
-        this.currentUserAdminPanelPermission$.next(result);
-      },
-      error: () => this.currentUserAdminPanelPermission$.next(null)
+  hasPermission(permissionName: string) {
+    this.waitUserInformation()
+
+    var userPermissions = this.currentUserSubject$.value?.permissions.filter((x: Permission) => x.name == permissionName)
+    var hasPermission = false
+    var hasPermissionRefused = false
+
+    userPermissions?.forEach((permission: Permission) => {
+      if (permission.hasPermission == false) {
+        hasPermissionRefused = false
+      }
     })
+
+    if (!hasPermissionRefused) {
+      userPermissions?.forEach((permission: Permission) => {
+        if (permission.hasPermission == true) {
+          hasPermission = true
+        }
+      })
+    }
+
+    return hasPermission;
   }
 
-  getCurrentUserAdminPanelPermissionsObservable(){
-    return this.currentUserAdminPanelPermission$.asObservable()
+  private waitUserInformation(){
+    console.log(this.currentUserSubject$)
+    if(this.fetchingUserInformation == true || (this.currentUserSubject$ && this.currentUserSubject$.value == null)){
+      setTimeout(this.waitUserInformation,500)
+    }
+
+    return
   }
 }

@@ -6,17 +6,44 @@ import { VotelistComponent } from './votelist/votelist.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { OrderlistComponent } from './orderlist/orderlist.component';
 import { GlobalSettingsComponent } from './global-settings/global-settings.component';
+import { PermissionName } from 'src/app/models/UserModel';
+import { PermissionGuard } from 'src/app/guards/permission.guard';
+import { ListModulesComponent } from './list-modules/list-modules.component';
 
 const routes: Routes = [
-  { path: "", component: LayoutAdminboardComponent,
-    children : [
-      { path: "dashboard", component: DashboardComponent},
-      { path: "", redirectTo: "dashboard", pathMatch: "full"},
-      { path: "votes", component: VotelistComponent},
-      { path: "users", component: UserlistComponent},
-      { path: "orders", component: OrderlistComponent},
-      { path: "global-settings", component: GlobalSettingsComponent}
-    ]}
+  {
+    path: "", component: LayoutAdminboardComponent,
+    children: [
+      { path: "", component: ListModulesComponent},
+
+      {
+        path: "votes", component: VotelistComponent,
+        canActivate: [PermissionGuard],
+        data : { permissionRequired : PermissionName.AccessToVotesOnAdminPanel} 
+      },
+      {
+        path: "dashboard", component: DashboardComponent,
+        canActivate: [PermissionGuard],
+        data: { permissionRequired: PermissionName.AccessToDashboardOnAdminPanel }
+      },
+      {
+        path: "users", component: UserlistComponent,
+        canActivate: [PermissionGuard],
+        data : { permissionRequired : PermissionName.AccessToUsersOnAdminPanel} 
+      },
+      {
+        path: "orders", component: OrderlistComponent,
+        canActivate: [PermissionGuard],
+        data : { permissionRequired : PermissionName.AccessToSalesOnAdminPanel} 
+      },
+      {
+        path: "global-settings", component: GlobalSettingsComponent,
+        canActivate: [PermissionGuard],
+        data : { permissionRequired : PermissionName.AccessToGeneralSettingsOnAdminPanel} 
+      },
+      { path: '**', redirectTo: '' }
+    ]
+  }
 ];
 
 @NgModule({

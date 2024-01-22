@@ -2,15 +2,15 @@ export class PaginationResult<T> {
     pageSize : number;
     pageNumber : number;
     pageSizeOptions : number[]
-    totalPageCount : number
+    totalCount : number
     items : T[]
 
-    constructor(totalPageCount? : number, 
+    constructor(totalCount? : number, 
                 items? : T[],
                 pageSizeOptions? : number[],
                 pageNumber? : number, 
                 pageSize? : number){
-        totalPageCount? this.totalPageCount = totalPageCount : this.totalPageCount = 0
+        totalCount? this.totalCount = totalCount : this.totalCount = 0
         items ? this.items = items : this.items = []
         pageSizeOptions ? this.pageSizeOptions = pageSizeOptions : this.pageSizeOptions = [5,10,25,50,100]
         pageNumber ? this.pageNumber = pageNumber : this.pageNumber = 1

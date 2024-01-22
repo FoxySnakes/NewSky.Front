@@ -15,15 +15,34 @@
             </form>
             <div [class.asc]="filter.direction == 'asc'"
                  [class.desc]="filter.direction == 'desc'"
-                 (click)="filter.direction == 'asc' ? filter.direction = 'desc' : filter.direction = 'asc' ">
+                 (click)="changeFilterDirection()">
                  <span class="icon-arrow"></span></div>
         </div>
     </div>
     <div id="list-user">
-        <div *ngFor="let user of usersResult.items">
-        
+        <div class="categories" *ngFor="let userByCategories of usersResult.items">
+            <p>{{userByCategories.categoryName.toUpperCase()}}</p>
+            <div class="users">
+                <div class="user" *ngFor="let user of userByCategories.users">
+                    <div class="user-picture">
+                        <img src="https://minotar.net/armor/body/{{user.userName}}/80.png" alt="">
+                    </div>
+                    <div class="user-informations">
+                        <div class="informations">
+                            <p><span>Pseudo&nbsp;:</span> {{user.userName}}</p>
+                            <p><span>UUID&nbsp;:</span> {{user.uuid}}</p>
+                            <p><span>Roles&nbsp;:</span> <ng-container *ngFor="let role of user.roles"> {{role}}</ng-container></p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn btn-third animated">Gérer les rôles</button>
+                            <button class="btn btn-danger animated">Appliquer une sanction</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <app-loader *ngIf="loading"></app-loader>
     </div>
-    <app-pager [itemsCount]="150" [pageNumber]="3" [pageSize]="1000" [pageSizeOptions]="[5,25,400,1000]"></app-pager>
+    <app-pager (onPageChange)="Filter()" [itemsCount]="usersResult.totalCount" [pageNumber]="usersResult.pageNumber" 
+               [pageSize]="usersResult.pageSize"></app-pager>
 </div>
