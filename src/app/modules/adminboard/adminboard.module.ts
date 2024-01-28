@@ -11,6 +11,7 @@ import { GlobalSettingsComponent } from './global-settings/global-settings.compo
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ListModulesComponent } from './list-modules/list-modules.component';
+import { RolelistComponent } from './rolelist/rolelist.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ListModulesComponent } from './list-modules/list-modules.component';
     OrderlistComponent,
     VotelistComponent,
     GlobalSettingsComponent,
-    ListModulesComponent
+    ListModulesComponent,
+    RolelistComponent
   ],
   imports: [
     CommonModule,

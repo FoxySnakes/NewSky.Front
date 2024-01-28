@@ -9,18 +9,13 @@ import { GlobalSettingsComponent } from './global-settings/global-settings.compo
 import { PermissionName } from 'src/app/models/UserModel';
 import { PermissionGuard } from 'src/app/guards/permission.guard';
 import { ListModulesComponent } from './list-modules/list-modules.component';
+import { RolelistComponent } from './rolelist/rolelist.component';
 
 const routes: Routes = [
   {
     path: "", component: LayoutAdminboardComponent,
     children: [
       { path: "", component: ListModulesComponent},
-
-      {
-        path: "votes", component: VotelistComponent,
-        canActivate: [PermissionGuard],
-        data : { permissionRequired : PermissionName.AccessToVotesOnAdminPanel} 
-      },
       {
         path: "dashboard", component: DashboardComponent,
         canActivate: [PermissionGuard],
@@ -30,6 +25,16 @@ const routes: Routes = [
         path: "users", component: UserlistComponent,
         canActivate: [PermissionGuard],
         data : { permissionRequired : PermissionName.AccessToUsersOnAdminPanel} ,
+      },
+      {
+        path: "roles", component: RolelistComponent,
+        canActivate: [PermissionGuard],
+        data : { permissionRequired : PermissionName.AccessToRolesOnAdminPanel} 
+      },
+      {
+        path: "votes", component: VotelistComponent,
+        canActivate: [PermissionGuard],
+        data : { permissionRequired : PermissionName.AccessToVotesOnAdminPanel} 
       },
       {
         path: "orders", component: OrderlistComponent,

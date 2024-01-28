@@ -46,6 +46,7 @@ export class PermissionName {
   static AccessToDashboardOnAdminPanel = "access:admin-panel_dashboard";
   static AccessToSalesOnAdminPanel = "access:admin-panel_sales";
   static AccessToUsersOnAdminPanel = "access:admin-panel_users";
+  static AccessToRolesOnAdminPanel = "access:admin-panel_roles";
   static AccessToVotesOnAdminPanel = "access:admin-panel_votes";
   static AccessToGeneralSettingsOnAdminPanel = "access:admin-panel_general-settings";
 
