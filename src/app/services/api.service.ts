@@ -11,8 +11,13 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  get(endpoints: string) {
-    return this.httpClient.get<any>(`${environment.apiUrl}/${endpoints}`)
+  get(endpoints: string, params : HttpParams | null = null) {
+    if(params != null){
+      return this.httpClient.get<any>(`${environment.apiUrl}/${endpoints}`, {params})
+    }
+    else{
+      return this.httpClient.get<any>(`${environment.apiUrl}/${endpoints}`)
+    }
   }
 
   getPaged(endpoints: string, pageSize : number, pageNumber : number, filter : Filter, search : string) {

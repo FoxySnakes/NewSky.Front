@@ -98,6 +98,7 @@ h2{ //todo retirer tout les styles inutiles - faire meme chose pour h1
     --black : #000000 !important;
     --grey : #ffffff80 !important;
     --grey-light: #ffffff50 !important;
+    --grey-dark: #ffffffAA !important;
 
     --danger : #F94E4E !important;
     --success: #32b439 !important;
@@ -198,6 +199,7 @@ p-dialog .dialog-content{
     h2 {
         color: var(--third-color);
         text-decoration: none;
+        text-align: center;
     }
     
     .form-button {

@@ -3,6 +3,7 @@ import { TebexCategory, TebexSale} from '../models/StoreModel';
 import { ApiService } from './api.service';
 import { NotifierService } from 'angular-notifier';
 import { BehaviorSubject, Observable} from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,16 @@ export class TebexService {
 
   getLastSales() : Observable<TebexSale[]>{
     return this.apiService.get('tebex/last-sales')
+  }
+
+  getSales(pageNumber : number, refresh : boolean = false){
+    let params = new HttpParams()
+    .set('pageNumber', pageNumber)
+
+    if(refresh){
+      params.set('refresh', refresh)
+    }
+    return this.apiService.get('tebex/sales', params )
   }
 
   managePackageOnCart(packageId : number, quantity : number){

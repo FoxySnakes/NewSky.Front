@@ -6,20 +6,26 @@ export class User{
   email: string;
   roles: string[] = [];
   permissions: Permission[] = [];
-  packages : PackageCart[] = []
+  packages : PackageCart[] = [];
+  banishmentEnd : Date | null = null
+  lockoutEnd : Date | null = null
 
   constructor(userName: string, 
               uuid: string, 
               email: string, 
               roles: string[], 
               permissions: Permission[],
-              packages : PackageCart[]) {
+              packages : PackageCart[],
+              banishmentEnd : Date | null,
+              lockoutEnd : Date | null) {
     this.userName = userName;
     this.uuid = uuid;
     this.email = email;
     this.roles = roles;
     this.permissions = permissions;
     this.packages = packages;
+    this.banishmentEnd = banishmentEnd
+    this.lockoutEnd = lockoutEnd
   }
 }
 
@@ -49,10 +55,8 @@ export class PermissionName {
 
   // Update
 
-  static UpdateUserPermissions = "update:user_permissions";
-  static UpdateUserUserName = "update:user_username";
-  static UpdateUserStatus = "update:user_status";
-  static ManageUserCart = "update:user_cart";
+  static UpdateUserInformations = "update:user_informations";
+  static UpdateUserPunishment = "update:user_punishment";
   static UpdateGeneralSettings = "update:general-settings";
   static UpdateUserRole = "update:user_role";
   static UpdateRole = "update:role";

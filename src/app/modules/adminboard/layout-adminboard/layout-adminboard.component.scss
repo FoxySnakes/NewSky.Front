@@ -1,6 +1,7 @@
 #layout-container{
     display: flex;
     min-height: 100vh;
+    position: relative;
     
     >input[type=checkbox]{
         display: none;
@@ -8,7 +9,7 @@
         &:checked+#layout-left{
             width: 80px;
 
-            label[for=button-layout-left]{
+            label#menu-toggle-dekstop{
                 transform:translateX(50%) rotate(180deg) !important;
             }
 
@@ -25,6 +26,7 @@
         border-right: solid 1px var(--grey-light);
         position: relative;
         transition: all 0.5s;
+        background-color: var(--primary-color);
 
         #logo{
             height: 80px;
@@ -39,7 +41,7 @@
                 transition: all 0.5s;
             }
 
-            label{
+            #menu-toggle-dekstop{
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -51,7 +53,6 @@
                 transform: translateX(50%);
                 width: 30px;
                 height: 30px;
-                z-index: 10;
                 cursor: pointer;
                 transition: all 0.5s;
 
@@ -59,6 +60,11 @@
                     transform: translateX(-1px);
                     font-size: 16px !important;
                 }
+
+            }
+
+            #menu-toggle-mobile{
+                display: none;
             }
         }
 
@@ -67,7 +73,7 @@
             flex-direction: column;
             padding-inline: 15px;
             gap: 40px;
-            margin-top: 50px;
+            margin: 50px 0;
 
             .group{
                 display: flex;
@@ -104,7 +110,6 @@
             padding: 15px;
             position: absolute;
             bottom: 0;
-            z-index: 10;
             background-color: var(--primary-color);
             width: 100%;
             
@@ -152,7 +157,14 @@
             justify-content: end;
             padding-inline: 30px;
             gap: 5px;
+            position: relative;
 
+            label{
+                font-size: 25px;
+                position: absolute;
+                left: 20px;
+                display: none;
+            }
 
             button{
                 height: 40px;
@@ -168,8 +180,7 @@
                 }
 
                 &:hover{
-                    border: solid 3px var(--secondary-variant-color);
-                    background-color: var(--primary-color);
+                    background-color: var(--third-color);
                 }
             }
         }
@@ -179,6 +190,73 @@
             width: 100%;
             height: calc(100vh - 80px);
             overflow-y: auto;
+        }
+    }
+}
+
+@media screen and (max-width: 700px){
+    #layout-container{
+        >input[type=checkbox]:checked+#layout-left{
+                width: 100vw !important;
+                left: 0 !important;
+    
+                #logo>img{
+                    height: 60px;
+                }
+            }
+    }
+
+    #layout-right>#header>label{
+        display: initial !important;
+    }
+
+    #layout-left{
+        position: absolute !important;
+        left: -100vw;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 100;
+        border: none !important;
+
+        #logo{
+            border: none !important;
+
+            #menu-toggle-dekstop{
+                display: none !important;
+            }
+
+            #menu-toggle-mobile{
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                right: 0;
+                width: 30px;
+                height: 30px;
+                right: 25px;
+            }
+        }
+
+        #links{
+            align-items: center;
+
+            .group{
+                align-items: center;
+
+                a{
+                    width: min-content;
+                }
+            }
+        }
+
+        #logout{
+            display: flex;
+            justify-content: center;
+            position: initial !important;
+
+            button{
+                width: initial !important;
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './list-products.component.html',
   styleUrls: ['./list-products.component.scss']
 })
-export class ListProductsComponent implements OnInit {
+export class ListProductsComponent implements OnInit, OnDestroy {
   category : TebexCategory | undefined
   productLoading = false
   addProductLoading = false
@@ -59,6 +59,10 @@ export class ListProductsComponent implements OnInit {
         }
       })
     ])
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(x => x.unsubscribe())
   }
 
   openDialogAddProduct(productId : number){

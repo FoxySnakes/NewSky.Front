@@ -58,8 +58,39 @@
     }
 
     ::ng-deep p-dropdown{
+
         .p-dropdown{
+            background-color: var(--secondary-variant-color);
+            border: none;
+            padding: 10px;
             width: 90px;
+    
+             &.p-focus{
+                 box-shadow: none;
+                 outline: solid 2px var(--third-color);
+             }
+        }
+    
+        .p-dropdown-item{
+            background-color: var(--secondary-variant-color);
+            padding: 5px;
+    
+            &:hover{
+                background-color: #2B2C39CC
+            }
+        }
+    
+        .p-dropdown-panel{
+            border-radius: 0px !important;
+        }
+    
+        .p-dropdown-trigger{
+            width: auto;
+            padding-left: 10px;
+        }
+    
+        p-overlay>.p-overlay{
+            transform: translateY(2px);
         }
     }
 }

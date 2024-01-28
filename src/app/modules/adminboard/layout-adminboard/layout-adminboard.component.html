@@ -3,29 +3,42 @@
     <div id="layout-left">
         <div id="logo">
             <img src="../../../../assets/pictures/logo-short.png" alt="">
-            <label for="button-layout-left">
+            <label id="menu-toggle-dekstop" for="button-layout-left">
                 <span class="icon-chevron-left"></span>
+            </label>
+            <label id="menu-toggle-mobile" for="button-layout-left">
+                <span class="icon-cross"></span>
             </label>
         </div>
         <div id="links">
             <div class="group">
-                <a routerLink="dashboard" routerLinkActive="selected"><span class="icon-dashboard"></span><span>DashBoard</span></a>
+                <a routerLink="dashboard" routerLinkActive="selected"><span
+                        class="icon-dashboard"></span><span>DashBoard</span></a>
             </div>
             <div class="group">
-                <a routerLink="users" routerLinkActive="selected"><span class="icon-user"></span><span>Utilisateurs</span></a>
-                <a routerLink="orders" routerLinkActive="selected"><span class="icon-package"></span><span>Commandes</span></a>
-                <a routerLink="votes" routerLinkActive="selected"><span class="icon-ballot-box"></span><span>Commandes</span></a>
+                <a routerLink="users" routerLinkActive="selected"><span
+                        class="icon-user"></span><span>Utilisateurs</span></a>
+                <a routerLink="orders" routerLinkActive="selected"><span
+                        class="icon-package"></span><span>Commandes</span></a>
+                <a routerLink="votes" routerLinkActive="selected"><span
+                        class="icon-ballot-box"></span><span>Commandes</span></a>
             </div>
             <div class="group">
-                <a routerLink="global-settings" routerLinkActive="selected"><span class="icon-setting"></span><span>Paramètres</span></a>
+                <a routerLink="global-settings" routerLinkActive="selected"><span
+                        class="icon-setting"></span><span>Paramètres</span></a>
             </div>
         </div>
         <div id="logout">
             <button (click)="logout()"><span class="icon-logout"></span><span>Deconnexion</span></button>
         </div>
     </div>
+
     <div id="layout-right">
         <div id="header">
+            <label for="button-layout-left">
+                <span class="icon-menu"></span>
+            </label>
+
             <p-overlayPanel #help>
             </p-overlayPanel>
             <button (click)="help.toggle($event)"><span class="icon-question"></span></button>

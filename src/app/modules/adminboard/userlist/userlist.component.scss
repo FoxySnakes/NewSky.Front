@@ -4,6 +4,7 @@
     #filter{
         display: flex;
         justify-content: space-between;
+        gap: 15px;
 
         #search{
             position: relative;
@@ -19,10 +20,25 @@
                 color: var(--white);
             }
 
-            span{
+            #search-button{
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 position: absolute;
-                left: 15px;
-                font-size: 20px;
+                transition: all 0.3s;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                
+                span{
+                    font-size: 20px;
+                }
+
+                &:hover{
+                    background-color: var(--third-color);
+                    cursor: pointer;
+                }
             }
 
         }
@@ -84,7 +100,7 @@
 
             .users{
                 display: grid;
-                grid-template-columns: repeat(2, 50%);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 25px;
 
                 .user{
@@ -108,14 +124,23 @@
                             display: flex;
                             flex-direction: column;
 
+                            p{
+                                word-break: break-word;
+                                font-size: 14px;
+                                color: var(--grey-dark);
+                            }
+                            
                             span{
                                 text-decoration: underline;
+                                color: var(--white);
+                                font-size: 16px;
                             }
                         }
 
                         .user-actions{
                             display: flex;
                             justify-content: space-evenly;
+                            gap: 10px;
                         }
                     }
                 }
@@ -124,6 +149,119 @@
     }
 }
 
+p-dialog{
+
+    #user-modify-informations{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        div{
+            display: flex;
+            gap: 10px;
+
+            label{
+                color: var(--white);
+            }
+
+            input{
+                background-color: var(--secondary-variant-color);
+                border: none;
+                border-radius: 5px;
+                padding: 5px;
+                width: 150px;
+                color: var(--white);
+            }
+        }
+    }
+
+    #user-modify-state{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        #date-end{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+
+            p{
+                text-align: center;
+                color: var(--danger);
+
+                span{
+                    color: var(--danger);
+                    text-decoration: underline;
+                    font-weight: var(--font-weight-bold);
+                }
+            }
+        }
+
+        #actions{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 25px 0;
+
+            >div{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 25px;
+                border: solid 1px var(--grey);
+                border-radius: 5px;
+                padding: 10px;
+                width: 100%;
+
+                .add{
+                    display: flex;
+                    align-items: center;
+                    gap : 10px
+                }
+            }
+        }
+    }
+}
+
+::ng-deep p-multiselect{
+
+    .p-multiselect-header, .p-multiselect-close{
+        display: none;
+    }
+
+    .p-inputwrapper{
+        width: 150px;
+        background-color: var(--secondary-variant-color);
+        border: none;
+        height: 30px;
+        padding-inline: 5px;
+        color: var(--white);
+
+        &.p-focus{
+            box-shadow: none;
+            outline: solid 2px var(--third-color);
+        }
+    }
+
+    .p-multiselect-item{
+        background-color: var(--secondary-variant-color);
+        padding: 5px;
+
+        &:hover{
+            background-color: #2B2C39CC
+        }
+    }
+
+    .p-checkbox{
+        margin-right: 5px;
+    }
+
+    p-overlay>.p-overlay{
+        transform: translateY(2px);
+    }
+}
 
 ::ng-deep p-dropdown{
 
@@ -159,5 +297,25 @@
 
     p-overlay>.p-overlay{
         transform: translateY(2px);
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .users{
+        grid-template-columns: repeat(1, 100%) !important;
+    }
+
+    #filter{
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width:600px) {
+    #content-container{
+        padding: 15px;
+    }
+
+    .user{
+        flex-direction: column;
     }
 }

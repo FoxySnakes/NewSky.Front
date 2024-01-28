@@ -26,7 +26,9 @@ export class LayoutAdminboardComponent implements OnInit, OnDestroy{
       this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(
         (event : any) => {
           this.activeRouterLink = event.url
-          console.log(this.activeRouterLink)
+          var checboxLeftLayout = document.getElementById("button-layout-left") as any
+          console.dir(checboxLeftLayout)
+          checboxLeftLayout.checked = false
         }
       )
     ])

@@ -29,12 +29,6 @@ export class PagerComponent  implements OnInit, OnDestroy, OnChanges{
   }
 
   ngOnInit(): void {
-    console.log(this.pageNumber)
-    console.log(this.pageSize)
-    console.log(this.itemsCount)
-    console.log(this.pageSizeOptions)
-
-
     this.lastPage = Math.ceil(this.itemsCount / this.pageSize) == 0 ? 1 : Math.ceil(this.itemsCount / this.pageSize)
     this.pagerForm.setValue({
       pageNumber : this.pageNumber,

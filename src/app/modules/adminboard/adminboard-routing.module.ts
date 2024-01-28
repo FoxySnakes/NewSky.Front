@@ -29,7 +29,7 @@ const routes: Routes = [
       {
         path: "users", component: UserlistComponent,
         canActivate: [PermissionGuard],
-        data : { permissionRequired : PermissionName.AccessToUsersOnAdminPanel} 
+        data : { permissionRequired : PermissionName.AccessToUsersOnAdminPanel} ,
       },
       {
         path: "orders", component: OrderlistComponent,
@@ -41,7 +41,7 @@ const routes: Routes = [
         canActivate: [PermissionGuard],
         data : { permissionRequired : PermissionName.AccessToGeneralSettingsOnAdminPanel} 
       },
-      { path: '**', redirectTo: '' }
+      //{ path: '**', redirectTo: '' }
     ]
   }
 ];

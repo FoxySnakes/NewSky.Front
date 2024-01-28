@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { StoreRoutingModule } from './store-routing.module';
 import { ListProductsComponent } from './list-products/list-products.component';
 import { CartComponent } from './cart/cart.component';
-import { PaymentConfirmationComponent } from './payment-confirmation/payment-confirmation.component';
 import { LayoutStoreComponent } from './layout-store/layout-store.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,7 +13,6 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     ListProductsComponent,
     CartComponent,
-    PaymentConfirmationComponent,
     LayoutStoreComponent
   ],
   imports: [

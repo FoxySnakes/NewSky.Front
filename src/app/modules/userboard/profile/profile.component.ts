@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -9,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   userBodySkinUrl! : string 
 
   changeEmailForm = new FormGroup({
@@ -24,6 +25,7 @@ export class ProfileComponent implements OnInit {
     email : new FormControl('',[Validators.required]),
   })
 
+  subs : Subscription[] = []
 
   constructor(private userSevice : UserService){
 
@@ -31,7 +33,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.form.disable()
-    this.userSevice.getCurrentUserObservable().subscribe({
+
+    this.subs.push(...[
+          this.userSevice.getCurrentUserObservable().subscribe({
       next: (user) => {
         console.log(user)
         if(user != null){
@@ -41,6 +45,11 @@ export class ProfileComponent implements OnInit {
         }
       }
     })
+    ])
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(x => x.unsubscribe())
   }
 
   onChangeEmail(){

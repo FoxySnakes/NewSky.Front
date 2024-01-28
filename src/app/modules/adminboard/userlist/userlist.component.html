@@ -1,11 +1,13 @@
 <div id="content-container">
     <div id="filter">
         <div id="search">
-            <form [formGroup]="userSearchForm">
+            <form [formGroup]="userSearchForm" (ngSubmit)="Filter()">
                 <input type="text" name="userSearch" id="userSearch" formControlName="search"
                     placeholder="Rechercher un joueur">
             </form>
-            <span class="icon-search"></span>
+            <div id="search-button" (click)="Filter()">
+                <span class="icon-search"></span>
+            </div>
         </div>
         <div id="sort">
             <form [formGroup]="sortByForm">
@@ -13,15 +15,15 @@
                 <p-dropdown formControlName="sortBy" [options]="sortByValues" optionLabel="label"
                     [autoDisplayFirst]="true"></p-dropdown>
             </form>
-            <div [class.asc]="filter.direction == 'asc'"
-                 [class.desc]="filter.direction == 'desc'"
-                 (click)="changeFilterDirection()">
-                 <span class="icon-arrow"></span></div>
+            <div [class.asc]="filter.direction == 'asc'" [class.desc]="filter.direction == 'desc'"
+                (click)="changeFilterDirection()">
+                <span class="icon-arrow"></span>
+            </div>
         </div>
     </div>
     <div id="list-user">
         <div class="categories" *ngFor="let userByCategories of usersResult.items">
-            <p>{{userByCategories.categoryName.toUpperCase()}}</p>
+            <p>{{userByCategories.categoryName.charAt(0).toUpperCase() + userByCategories.categoryName.slice(1)}}</p>
             <div class="users">
                 <div class="user" *ngFor="let user of userByCategories.users">
                     <div class="user-picture">
@@ -31,11 +33,14 @@
                         <div class="informations">
                             <p><span>Pseudo&nbsp;:</span> {{user.userName}}</p>
                             <p><span>UUID&nbsp;:</span> {{user.uuid}}</p>
-                            <p><span>Roles&nbsp;:</span> <ng-container *ngFor="let role of user.roles"> {{role}}</ng-container></p>
+                            <p><span>Roles&nbsp;:</span> <ng-container *ngFor="let role of user.roles; let last = last">
+                                    {{role}}<ng-container *ngIf="!last">,</ng-container> </ng-container></p>
                         </div>
-                        <div class="user-actions">
-                            <button class="btn btn-third animated">Gérer les rôles</button>
-                            <button class="btn btn-danger animated">Appliquer une sanction</button>
+                        <div class="user-actions" *ngIf="currentUserUserName != user.userName">
+                            <button *ngIf="canModifyUserRoles" class="btn btn-third animated"
+                                (click)="OpenModifyUserInformationsDialog(user)">Gérer l'utilisateur</button>
+                            <button *ngIf="canModifyUserPunishment" class="btn btn-danger animated"
+                                (click)="OpenModifyUserPunishmentDialog(user)">Sanctions</button>
                         </div>
                     </div>
                 </div>
@@ -43,6 +48,81 @@
         </div>
         <app-loader *ngIf="loading"></app-loader>
     </div>
-    <app-pager (onPageChange)="Filter()" [itemsCount]="usersResult.totalCount" [pageNumber]="usersResult.pageNumber" 
-               [pageSize]="usersResult.pageSize"></app-pager>
+    <app-pager (onPageChange)="onPageChange($event)" [itemsCount]="usersResult.totalCount"
+        [pageNumber]="usersResult.pageNumber" [pageSize]="usersResult.pageSize"></app-pager>
 </div>
+
+<p-dialog [(visible)]="dialogModifyUserInformationsVisible" [modal]="true"
+    [contentStyle]="{'background': 'transparent', 'max-width': '90vw', 'overflow-y': 'initial',}" [closeOnEscape]="true"
+    [dismissableMask]="true" [showHeader]="false" [closable]="true">
+    <div class="dialog-content" id="modify-user-informations-dialog">
+        <h2>Modifier l'utilisateur</h2>
+        <form [formGroup]="modifyUserInformationsForm" (ngSubmit)="ModifyUserInformations()">
+            <div id="user-modify-informations">
+                <div>
+                    <label for="username">Nom d'utilisateur&nbsp;:</label>
+                    <input type="text" name="username" id="username" formControlName="username">
+                </div>
+                <div>
+                    <label for="roles">Rôles&nbsp;:</label>
+                    <p-multiSelect [options]="existingRoles" [filter]="false" [showToggleAll]="false"
+                        formControlName="roles"></p-multiSelect>
+                </div>
+            </div>
+            <div class="form-button">
+                <button (click)="dialogModifyUserInformationsVisible = false" class="btn btn-danger animated"
+                    type="button">Annuler</button>
+                <div>
+                    <button class="btn btn-third animated" type="submit">Confirmer</button>
+                </div>
+            </div>
+        </form>
+        <app-loader *ngIf="loading" radius="25"></app-loader>
+    </div>
+</p-dialog>
+
+
+<p-dialog [(visible)]="dialogModifyUserPunishmentVisible" [modal]="true"
+    [contentStyle]="{'background': 'transparent', 'max-width': '90vw', 'width': '600px', 'overflow-y': 'initial'}"
+    [closeOnEscape]="true" [dismissableMask]="true" [showHeader]="false" [closable]="true">
+    <div class="dialog-content" id="modify-user-state-dialog">
+        <h2>Gérer les sanctions</h2>
+        <form [formGroup]="modifyUserPunishmentForm" (ngSubmit)="ModifyUserPunishment()">
+            <div id="user-modify-state">
+                <div id="date-end">
+                    <p id="banishment-text" *ngIf="modifyUserPunishmentForm.controls.banishmentEnd.value != null">
+                        Banni jusqu'au <span>{{"" + modifyUserPunishmentForm.controls.banishmentEnd.value | date:'EEEE d MMMM yyyy à HH:mm'}}</span></p>
+                    <p id="lockout-text" *ngIf="modifyUserPunishmentForm.controls.lockoutEnd.value != null">
+                        Verouillé jusqu'au <span>{{"" + modifyUserPunishmentForm.controls.lockoutEnd.value | date:'EEEE d MMMM yyyy à HH:mm'}}</span></p>
+                </div>
+                <div id="actions">
+                    <div id="banishment">
+                        <p>Banissement</p>
+                        <div class="add">
+                            <p>Ajouter&nbsp;: </p>
+                            <button type="button" class="btn btn-danger animated" (click)="AddDurationToPunishment('banishment',1)">1h</button>
+                            <button type="button" class="btn btn-danger animated" (click)="AddDurationToPunishment('banishment',12)">12h</button>
+                            <button type="button" class="btn btn-danger animated" (click)="AddDurationToPunishment('banishment',24)">1j</button>
+                            <button type="button" class="btn btn-danger animated" (click)="AddDurationToPunishment('banishment',168)">7j</button>
+                            <button type="button" class="btn btn-danger animated" (click)="AddDurationToPunishment('banishment',-1)">Définitif</button>
+                        </div>
+                        <button (click)="DeletePunishment('banishment')" type="button" *ngIf="modifyUserPunishmentForm.controls.banishmentEnd.value != null" class="btn btn-third animated">Supprimer le banissement</button>
+                    </div>
+
+                    <div id="lockout">
+                        <p>Verouillage</p>
+                        <button (click)="DeletePunishment('lockout')"  type="button" *ngIf="modifyUserPunishmentForm.controls.lockoutEnd.value != null" class="btn btn-third animated">Supprimer le verouillage</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-button">
+                <button (click)="dialogModifyUserPunishmentVisible = false" class="btn btn-danger animated"
+                    type="button">Annuler</button>
+                <div>
+                    <button class="btn btn-third animated" type="submit">Confirmer</button>
+                </div>
+            </div>
+        </form>
+        <app-loader *ngIf="loading" radius="25"></app-loader>
+    </div>
+</p-dialog>

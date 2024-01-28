@@ -25,10 +25,16 @@ export interface TebexBuyer {
 export interface TebexSale {
     id: number;
     price: number;
-    status: number;
+    status: string;
     date: Date;
-    packages: TebexPackage[];
+    packages: TebexSalePackage[];
     buyer: TebexBuyer;
+}
+
+export class TebexSalePackage {
+    name!: string;
+    imageUrl!: string | null;
+    quantity!: number;
 }
 
 export class PackageCart{

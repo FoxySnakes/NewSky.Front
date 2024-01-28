@@ -84,6 +84,10 @@ export class LayoutStoreComponent implements OnInit, OnDestroy {
     ])
   }
 
+  ngOnDestroy(): void {
+    this.subs.forEach(x => x.unsubscribe())
+  }
+
   checkCategory() {
     if(this.router.url.startsWith("/store/product")){
       this.categoryName = this.router.url.replace('/store', '').replace('/product/', '');
@@ -153,9 +157,5 @@ export class LayoutStoreComponent implements OnInit, OnDestroy {
     else{
       this.notifyService.notify("warning", "Votre panier est vide")
     }
-  }
-
-  ngOnDestroy(): void {
-    this.subs.forEach(x => x.unsubscribe())
   }
 }

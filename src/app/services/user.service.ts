@@ -46,7 +46,9 @@ export class UserService {
         this.currentUserSubject$.value!.email,
         this.currentUserSubject$.value!.roles,
         this.currentUserSubject$.value!.permissions,
-        packages
+        packages,
+        this.currentUserSubject$.value!.banishmentEnd,
+        this.currentUserSubject$.value!.lockoutEnd
       )
     )
   }
@@ -65,7 +67,9 @@ export class UserService {
                 email,
                 this.currentUserSubject$.value!.roles,
                 this.currentUserSubject$.value!.permissions,
-                this.currentUserSubject$.value!.packages
+                this.currentUserSubject$.value!.packages,
+                this.currentUserSubject$.value!.banishmentEnd,
+                this.currentUserSubject$.value!.lockoutEnd
               )
             )
             observer.next(true);
@@ -99,11 +103,10 @@ export class UserService {
 
   hasPermission(permissionName: string) {
     this.waitUserInformation()
-
+    //console.log(this.currentUserSubject$.value?.permissions)
     var userPermissions = this.currentUserSubject$.value?.permissions.filter((x: Permission) => x.name == permissionName)
     var hasPermission = false
     var hasPermissionRefused = false
-
     userPermissions?.forEach((permission: Permission) => {
       if (permission.hasPermission == false) {
         hasPermissionRefused = false
@@ -122,11 +125,28 @@ export class UserService {
   }
 
   private waitUserInformation(){
-    console.log(this.currentUserSubject$)
     if(this.fetchingUserInformation == true || (this.currentUserSubject$ && this.currentUserSubject$.value == null)){
       setTimeout(this.waitUserInformation,500)
     }
 
     return
+  }
+
+  updateUserInformations(username : string | null = null, uuid : string, roles : string[] = []){
+    var data = {
+      username : username,
+      uuid : uuid,
+      roles : roles
+    }
+    return this.apiService.post("user/update-informations",data)
+  }
+
+  updateUserPunishments(username : string, banishmentEnd : Date | null, lockoutEnd : Date | null){
+    var data = {
+      banishmentEnd : banishmentEnd,
+      username : username,
+      lockoutEnd : lockoutEnd
+    }
+    return this.apiService.post("user/update-punishments", data)
   }
 }

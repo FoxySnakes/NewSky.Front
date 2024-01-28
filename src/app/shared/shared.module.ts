@@ -15,6 +15,7 @@ import { PanelModule } from 'primeng/panel';
 import { PriceformatPipe } from './pipes/priceformat.pipe';
 import { PagerComponent } from './pager/pager.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     OverlayPanelModule,
     DropdownModule,
     InputNumberModule,
-    PanelModule
+    PanelModule,
+    MultiSelectModule
     
   ],
   providers: [
