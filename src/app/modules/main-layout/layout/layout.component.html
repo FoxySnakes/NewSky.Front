@@ -1,5 +1,12 @@
-<app-navigation></app-navigation>
+<ng-container *ngIf="!isLoading">
+    <app-navigation></app-navigation>
     <div id="main-container">
         <router-outlet></router-outlet>
     </div>
-<app-footer></app-footer>
+    <app-footer></app-footer>
+</ng-container>
+
+<div id="main-loader" *ngIf="isLoading">
+    <img src="../../../../assets/pictures/logo.png" alt="">
+    <p>Chargement des données<span>.</span><span>.</span><span>.</span></p>
+</div>

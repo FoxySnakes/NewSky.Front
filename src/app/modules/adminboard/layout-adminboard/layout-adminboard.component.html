@@ -2,7 +2,7 @@
     <input type="checkbox" id="button-layout-left">
     <div id="layout-left">
         <div id="logo">
-            <img src="../../../../assets/pictures/logo-short.png" alt="">
+            <img src="../../../../assets/pictures/logo-short.png" alt="" routerLink="/">
             <label id="menu-toggle-dekstop" for="button-layout-left">
                 <span class="icon-chevron-left"></span>
             </label>
@@ -11,10 +11,10 @@
             </label>
         </div>
         <div id="links">
-            <div class="group">
+            <!-- <div class="group">
                 <a routerLink="dashboard" routerLinkActive="selected"><span
                         class="icon-dashboard"></span><span>DashBoard</span></a>
-            </div>
+            </div> -->
             <div class="group">
                 <a routerLink="users" routerLinkActive="selected"><span
                         class="icon-user"></span><span>Utilisateurs</span></a>
@@ -43,13 +43,13 @@
                 <span class="icon-menu"></span>
             </label>
 
-            <p-overlayPanel #help>
+            <!-- <p-overlayPanel #help>
             </p-overlayPanel>
             <button (click)="help.toggle($event)"><span class="icon-question"></span></button>
             <p-overlayPanel #notif>
 
             </p-overlayPanel>
-            <button (click)="notif.toggle($event)"><span class="icon-bell"></span></button>
+            <button (click)="notif.toggle($event)"><span class="icon-bell"></span></button> -->
         </div>
         <div id="content">
             <router-outlet></router-outlet>

@@ -1,1 +1,75 @@
-<p>votelist works!</p>
+<div id="votes-container">
+    <div id="votes-tabs">
+        <div id="monthly-votes">
+            <div class="pager">
+                <div>
+                    <span class="icon-chevron-left"></span>
+                </div>
+                <p>{{getDateName()}}</p>
+                <div>
+                    <span class="icon-chevron-right"></span>
+                </div>
+            </div>
+            <table *ngIf="monthVotesPagined.items.length > 0">
+                <tr *ngFor="let userVotes of monthVotesPagined.items">
+                    <td><img src="https://minotar.net/helm/{{userVotes.username}}/25.png" alt=""></td>
+                    <td>{{userVotes.username}}</td>
+                    <td>{{userVotes.monthlyVotes}}</td>
+                </tr>
+            </table>
+            <p *ngIf="monthVotesPagined.items.length == 0 && !loadingMonth">Aucun vote réalisé</p>
+            <app-pager [pageNumber]="monthVotesPagined.pageNumber" [pageSize]="monthVotesPagined.pageSize"
+                [itemsCount]="monthVotesPagined.totalCount" [pageSizeOptions]="[]"
+                (onPageChange)="MoveToPage($event.pageNumber, $event.pageSize,'month')"></app-pager>
+            <app-loader *ngIf="loadingMonth" radius="25"></app-loader>
+        </div>
+        <div id="total-votes">
+            <div class="title">
+                <p>Total</p>
+            </div>
+            <table *ngIf="totalVotesPagined.items.length > 0">
+                <tr *ngFor="let userVotes of totalVotesPagined.items">
+                    <td><img src="https://minotar.net/helm/{{userVotes.username}}/25.png" alt=""></td>
+                    <td>{{userVotes.username}}</td>
+                    <td>{{userVotes.totalVotes}}</td>
+                </tr>
+            </table>
+            <p *ngIf="totalVotesPagined.items.length == 0 && !loadingTotal">Aucun vote réalisé</p>
+            <app-pager [pageNumber]="totalVotesPagined.pageNumber" [pageSize]="totalVotesPagined.pageSize"
+                [itemsCount]="totalVotesPagined.totalCount" [pageSizeOptions]="[]"
+                (onPageChange)="MoveToPage($event.pageNumber, $event.pageSize,'total')"></app-pager>
+            <app-loader *ngIf="loadingTotal" radius="25"></app-loader>
+        </div>
+    </div>
+    <form id="rewards-tab" [formGroup]="voteRewardsForm" (ngSubmit)="SaveSettings()">
+        <h2>Récompenses des votes</h2>
+        <table *ngIf="voteRewardsControlName.length > 0">
+            <thead>
+                <th>Position</th>
+                <th>Récompense</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let controlName of voteRewardsControlName; index as i; let last">
+                    <td>{{i + 1}}</td>
+                    <td>
+                        <input type="text" [formControlName]="controlName">
+                        <button class="add" type="button" (click)="AddLine(i+2)"><span class="icon-add"></span></button>
+                    </td>
+                    <td>
+                        <button class="remove" type="button" (click)="RemoveLine(i + 1)"><span class="icon-delete"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="no-reward" *ngIf="voteRewardsControlName.length == 0">
+            <p>Aucune récompense définie</p>
+            <button type="button" class="btn btn-third animated" (click)="AddLine(1)"><span class="icon-add"></span> Ajouter une récompense</button>
+        </div>
+        <div class="button">
+            <button class="btn btn-third animated" type="submit" *ngIf="voteRewardsChange"><span
+                    class="icon-save"></span> Sauvegarder</button>
+        </div>
+        <app-loader *ngIf="loadingRewards" radius="25"></app-loader>
+    </form>
+</div>

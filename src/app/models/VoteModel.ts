@@ -36,8 +36,11 @@ export class UserVoteNumber{
 }
 
 export class VoteReward{
-    position!: string;
-    reward!: number;
+    position: string;
+    reward: string;
 
-    constructor(){}
+    constructor(position: string | number, reward : string){
+        this.position = position.toString()
+        this.reward = reward
+    }
 }

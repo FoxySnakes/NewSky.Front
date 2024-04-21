@@ -1,1 +1,84 @@
-<p>rolelist works!</p>
+<div id="content-container">
+    <div id="filter-bar">
+        <div id="filter">
+            <div id="search">
+                <form [formGroup]="roleSearchForm" (ngSubmit)="Filter()">
+                    <input type="text" name="search" id="search" formControlName="search"
+                        placeholder="Rechercher un rôle">
+                </form>
+                <div id="search-button" (click)="Filter()">
+                    <span class="icon-search"></span>
+                </div>
+            </div>
+            <div id="sort">
+                <div [class.asc]="filter.direction == 'asc'" [class.desc]="filter.direction == 'desc'"
+                    (click)="ChangeFilterDirection()">
+                    <span class="icon-arrow"></span>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-third animated" (click)="OpenCreateDialog()"><span class="icon-add"></span>Nouveau</button>
+    </div>
+    <div id="list-role">
+        <div class="role" *ngFor="let role of rolesResult.items">
+            <div class="content">
+                <p class="name" [style.color]="role.color + '!important'">{{role.name}}</p>
+                <div>
+                    <p class="description">{{role.description}}</p>
+                </div>
+            </div>
+            <ng-container *ngIf="!role.isDefault">
+                <button class="edit" type="button" (click)="OpenEditDialog(role, role.isDefault)"><span class="icon-edit"></span></button>
+                <button class="delete" type="button" (click)="DeleteRole(role.name, role.isDefault)"><span class="icon-delete"></span></button>
+            </ng-container>
+            <ng-container *ngIf="role.isDefault">
+                <button class="info btn btn-third" type="button" [pTooltip]="info_base_role" tooltipPosition="top"><span class="icon-info"></span></button>
+                <ng-template #info_base_role>
+                    <div style="padding: 5px;">
+                        <p>Les rôles basiques ne peuvent être modifié ou supprimé.</p>
+                    </div>
+                    </ng-template>
+            </ng-container>
+        </div>
+        <app-loader *ngIf="loading"></app-loader>
+    </div>
+    <app-pager (onPageChange)="onPageChange($event)" [itemsCount]="rolesResult.totalCount"
+        [pageNumber]="rolesResult.pageNumber" [pageSize]="rolesResult.pageSize"></app-pager>
+</div>
+
+<p-dialog [(visible)]="dialogRoleVisible" [modal]="true"
+    [contentStyle]="{'background': 'transparent', 'max-width': '90vw', 'overflow-y': 'initial','width':'500px'}" [closeOnEscape]="true"
+    [dismissableMask]="true" [showHeader]="false" [closable]="true">
+    <div class="dialog-content" id="modify-user-informations-dialog">
+        <h2 *ngIf="actionType == 'edit'">Modifier un role</h2>
+        <h2 *ngIf="actionType == 'create'">Créer un role</h2>
+        <form [formGroup]="roleForm" (ngSubmit)="actionType == 'edit' ? UpdateRole() : CreateRole()">
+            <div id="modify-role">
+                <div id="name-field">
+                    <label for="name">Nom</label>
+                    <div id="name">
+                        <input type="text" id="name" formControlName="rolename" [style.color]="roleForm.controls.color.value">
+                        <p-colorPicker formControlName="color"></p-colorPicker>
+                    </div>
+                </div>
+                <div id="description">
+                    <label for="description">Description</label>
+                    <textarea rows="5" type="" id="description" formControlName="description"></textarea>
+                </div>
+                <div id="permissions">
+                    <label for="">Permissions</label>
+                    <p-multiSelect [options]="permissionsDescription" optionLabel="description" [filter]="false" [showToggleAll]="false"
+                        formControlName="permissions" placeholder="Séléctionner les rôles"></p-multiSelect>
+                </div>
+            </div>
+            <div class="form-button">
+                <button (click)="dialogRoleVisible = false" class="btn btn-danger animated"
+                    type="button">Annuler</button>
+                <div>
+                    <button class="btn btn-third animated" type="submit">Confirmer</button>
+                </div>
+            </div>
+        </form>
+        <app-loader *ngIf="loading" radius="25"></app-loader>
+    </div>
+</p-dialog>

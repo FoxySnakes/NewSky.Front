@@ -40,6 +40,7 @@ export interface Permission{
 }
 
 export class PermissionName {
+  [key: string]: string;
   // Access
 
   static AccessToAdminPanel = "access:admin-panel";
@@ -65,4 +66,27 @@ export class PermissionName {
   // Delete
 
   static DeleteRole = "delete:role";
+
+  // Description
+
+  static permissionDescriptions: Record<string, string> = {
+    [PermissionName.AccessToAdminPanel]: "Accéder au pannel d'administration",
+    [PermissionName.AccessToDashboardOnAdminPanel]: "Accéder au tableau de bord dans le panneau d'administration",
+    [PermissionName.AccessToSalesOnAdminPanel]: "Accéder aux ventes dans le panneau d'administration",
+    [PermissionName.AccessToUsersOnAdminPanel]: "Accéder aux utilisateurs dans le panneau d'administration",
+    [PermissionName.AccessToRolesOnAdminPanel]: "Accéder aux rôles dans le panneau d'administration",
+    [PermissionName.AccessToVotesOnAdminPanel]: "Accéder aux votes dans le panneau d'administration",
+    [PermissionName.AccessToGeneralSettingsOnAdminPanel]: "Accéder aux paramètres généraux dans le panneau d'administration",
+    [PermissionName.CreateRole]: "Créer un rôle",
+    [PermissionName.UpdateUserInformations]: "Mettre à jour les informations de l'utilisateur",
+    [PermissionName.UpdateUserPunishment]: "Mettre à jour les sanctions de l'utilisateur",
+    [PermissionName.UpdateGeneralSettings]: "Mettre à jour les paramètres généraux",
+    [PermissionName.UpdateUserRole]: "Mettre à jour le rôle de l'utilisateur",
+    [PermissionName.UpdateRole]: "Mettre à jour le rôle",
+    [PermissionName.DeleteRole]: "Supprimer le rôle"
+};
+
+static getDescription(permission: string): string {
+    return this.permissionDescriptions[permission] || '';
+}
 }

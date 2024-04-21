@@ -68,7 +68,7 @@ export class UserlistComponent implements OnInit, OnDestroy {
       registerLocaleData(localeFr);
     }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.subs.push(...[
       this.sortByForm.valueChanges.subscribe({
         next: () => {
@@ -104,8 +104,8 @@ export class UserlistComponent implements OnInit, OnDestroy {
         }
       })
     ])
-    this.canModifyUserRoles = this.userService.hasPermission(PermissionName.UpdateUserRole)
-    this.canModifyUserPunishment = this.userService.hasPermission(PermissionName.UpdateUserPunishment)
+    this.canModifyUserRoles = await this.userService.hasPermission(PermissionName.UpdateUserRole)
+    this.canModifyUserPunishment = await this.userService.hasPermission(PermissionName.UpdateUserPunishment)
 
   }
 

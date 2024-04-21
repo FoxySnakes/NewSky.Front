@@ -64,30 +64,81 @@
             }
         }
         >#auth-connected{
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.2s;
-            cursor: pointer;
-            padding-inline: 20px;
             height: 100%;
 
-            >* {
-                font-weight: 600;
-                color: var(--white);
+            #toggle-global-menu{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                transition: all 0.2s;
+                cursor: pointer;
+                padding-inline: 20px;
+                height: 100%;
+    
+                >* {
+                    font-weight: 600;
+                    color: var(--white);
+                }
+    
+                img{
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 100%;
+                    border: solid 1px var(--white);
+                }
+    
+                &:hover{
+                    background-color: #2E3342;
+                }
             }
 
-            img{
-                width: 30px;
-                height: 30px;
-                border-radius: 100%;
-                border: solid 1px var(--white);
-            }
+            ::ng-deep p-menu{
+                li{
+                    background: var(--secondary-color) !important;
 
-            &:hover{
-                background-color: #2E3342;
+                    &[role="menuitem"] a{
+                        padding: 10px 20px;
+                        width: 100%;
+
+                        button{
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            width: 100%;
+                            padding: 5px 15px;
+                            border-radius: 10px;
+                            border: solid 1px var(--danger);
+                            background-color: var(--secondary-color);
+
+                            span{
+                                color: var(--danger);
+                            }
+
+                            &:hover{
+                                background-color: var(--danger);
+                                
+                                span{
+                                    color: var(--white);
+                                }
+                            }
+                        }
+                    }
+                    &[role="none"]{
+                        padding: 10px 10px 0 10px;
+                    }
+                }
+
+                .p-menuitem-content{
+                    display: flex;
+                    background: var(--secondary-color) !important;
+                    
+                    &:hover{
+                        background-color: var(--secondary-variant-color) !important;
+                    }
+                }
             }
         }
+
     }
     >#picture {
         max-height: 300px;

@@ -19,6 +19,8 @@ export class OrderlistComponent implements OnInit, OnDestroy{
     username : new FormControl('')
   })
 
+  loading = false
+
   subs : Subscription[] = []
 
   constructor(private tebexService : TebexService){
@@ -37,12 +39,15 @@ export class OrderlistComponent implements OnInit, OnDestroy{
   }
 
   getSales(refresh : boolean = false){
+    this.loading = true
     this.tebexService.getSales(this.salesPagined.pageNumber, refresh).subscribe({
       next: (result) => { 
         this.salesPagined.totalCount = result.totalCount
         this.salesPagined.items = result.sales
         console.log(this.salesPagined.items[0])
-      }
+        this.loading = false
+      },
+      error: () => this.loading = false
     })
   }
 

@@ -11,7 +11,7 @@ import { Permission, User } from '../models/UserModel';
 })
 export class UserService {
   private currentUserSubject$ = new BehaviorSubject<User | null>(null);
-  private fetchingUserInformation = false
+  public fetchingUserInformation = false
 
   constructor(private apiService: ApiService,
     private notifyService: NotifierService) { }
@@ -25,6 +25,7 @@ export class UserService {
     this.apiService.get('user/current').subscribe({
       next: (response: User | null) => {
         this.setCurrentUser(response)
+        console.log(response?.permissions)
         this.fetchingUserInformation = false
       },
       error: () => {
@@ -101,9 +102,12 @@ export class UserService {
     return this.apiService.getPaged('user', pageSize, pageNumber, filter, search)
   }
 
-  hasPermission(permissionName: string) {
-    this.waitUserInformation()
-    //console.log(this.currentUserSubject$.value?.permissions)
+  async hasPermission(permissionName: string) {
+    while (this.fetchingUserInformation) {
+      await new Promise(resolve => setTimeout(resolve, 500)); // Adjust the time interval as needed
+    }
+  
+
     var userPermissions = this.currentUserSubject$.value?.permissions.filter((x: Permission) => x.name == permissionName)
     var hasPermission = false
     var hasPermissionRefused = false
@@ -122,15 +126,7 @@ export class UserService {
     }
 
     return hasPermission;
-  }
-
-  private waitUserInformation(){
-    if(this.fetchingUserInformation == true || (this.currentUserSubject$ && this.currentUserSubject$.value == null)){
-      setTimeout(this.waitUserInformation,500)
-    }
-
-    return
-  }
+  }  
 
   updateUserInformations(username : string | null = null, uuid : string, roles : string[] = []){
     var data = {

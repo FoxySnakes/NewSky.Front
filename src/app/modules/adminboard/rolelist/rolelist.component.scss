@@ -1,0 +1,264 @@
+#content-container{
+    padding: 50px;
+
+    #filter-bar{
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+
+        #filter{
+            display: flex;
+            gap: 15px;
+    
+            #search{
+                position: relative;
+                display: flex;
+                align-items: center;
+    
+                input{
+                    background-color: var(--secondary-variant-color);
+                    border: none;
+                    border-radius: 5px;
+                    padding: 10px 15px 10px 50px;
+                    width: 300px;
+                    color: var(--white);
+                }
+    
+                #search-button{
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    transition: all 0.3s;
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    
+                    span{
+                        font-size: 20px;
+                    }
+    
+                    &:hover{
+                        background-color: var(--third-color);
+                        cursor: pointer;
+                    }
+                }
+    
+            }
+    
+            #sort{
+                display: flex;
+                gap: 15px;
+    
+                form{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+    
+                div{
+                    border-radius: 5px;
+                    border: solid 1px var(--grey-light);
+                    width: 44px;
+                    height: 44px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: all 0.3s;
+    
+                    &.asc{
+                        transform: rotate(-90deg);
+                    }
+                    &.desc{
+                        transform: rotate(90deg);
+                    }
+    
+                    &:hover{
+                        background-color: var(--third-color);
+                        border-color: var(--third-color);
+                    }
+                }
+            }
+        }
+    }
+
+    #list-role{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 25px 0;
+
+        .role{
+            display: flex;
+            border-radius: 25px;
+            align-items: center;
+            background-color: var(--secondary-color);
+            padding: 10px;
+            gap: 10px;
+
+            .content{
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                width: 100%;
+                padding: 10px;
+
+                .name{
+                    font-size: 20px;
+                }
+
+                .description{
+                    color: var(--grey-light);
+                }
+            }
+
+            button:not(.info){
+                height: auto;
+                border-radius: 15px;
+                padding: 15px;
+
+                &.edit{
+                    background-color: var(--third-color);
+
+                    &:not(:disabled){
+                        transition: all 0.3s;
+                        &:hover{
+                            transform: scale(1.05);
+                            box-shadow: 0 0 25px var(--third-color);
+                        }
+                    }
+                }
+
+                &.delete{
+                    background-color: var(--danger);
+
+                    &:not(:disabled){
+                        transition: all 0.3s;
+                        &:hover{
+                            transform: scale(1.05);
+                            box-shadow: 0 0 25px var(--danger);
+                        }
+                    }
+                }
+            }
+
+            .info{
+                min-width: 40px;
+                min-height: 40px;
+                max-height: 40px;
+                max-width: 40px;   
+                padding: 0 !important;  
+                justify-content: center;          
+            }
+        }
+    }
+}
+
+p-dialog{
+    form{
+        width: 100%;
+
+        #modify-role{
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+    
+            label{
+                color: var(--white);
+    
+            }
+    
+            #name{
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                background-color: var(--secondary-variant-color);
+                border-radius: 5px;
+                padding: 5px;
+    
+                input{
+                    border: none;
+                    background-color: transparent;
+                    padding: 5px;
+                    width: 100%;
+                    color: var(--white);
+                    outline: none;
+                }
+            }
+    
+            #description{
+                display: flex;
+                flex-direction: column;
+
+                textarea{
+                    background-color: var(--secondary-variant-color);
+                    border-radius: 5px;
+                    padding: 10px;
+                    resize: none;
+                    color: var(--white);
+                    border: none;
+                    outline: none;
+                }
+            }
+
+            #permissions{
+                display: flex;
+                gap: 15px;
+            }
+        }
+    }
+}
+
+::ng-deep p-multiselect{
+
+    .p-multiselect-header, .p-multiselect-close{
+        display: none;
+    }
+
+    .p-inputwrapper{
+        width: 150px;
+        background-color: var(--secondary-variant-color);
+        border: none;
+        height: 30px;
+        padding-inline: 5px;
+        color: var(--white);
+
+        &.p-focus{
+            box-shadow: none;
+            outline: solid 2px var(--third-color);
+        }
+    }
+
+    .p-multiselect-item{
+        background-color: var(--secondary-variant-color);
+        padding: 5px;
+
+        &:hover{
+            background-color: #2B2C39CC
+        }
+    }
+
+    .p-checkbox{
+        margin-right: 5px;
+    }
+
+    p-overlay>.p-overlay{
+        transform: translateY(2px);
+    }
+}
+
+
+
+@media screen and (max-width:900px) {
+    #filter-bar{
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width:600px) {
+    #content-container{
+        padding: 15px;
+    }
+}

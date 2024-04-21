@@ -33,5 +33,5 @@
         </div>
 
     </div>
-    <p-dropdown formControlName="pageSize" [options]="pageSizeOptions"></p-dropdown>
+    <p-dropdown *ngIf="pageSizeOptions.length > 1" formControlName="pageSize" [options]="pageSizeOptions"></p-dropdown>
 </form>

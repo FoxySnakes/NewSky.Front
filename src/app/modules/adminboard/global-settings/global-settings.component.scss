@@ -1,0 +1,122 @@
+#global-settings-container{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 75px;
+    position: relative;
+
+    #save-settings{
+        position: absolute;
+        top: 15px;
+        right: 15px
+    }
+
+    h2{
+        margin-bottom: 25px;
+    }
+
+    .categories{
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        padding-left: 15px;
+
+        .content{
+            div{
+                display: flex;
+                border-radius: 25px;
+                overflow: hidden;
+                background-color: var(--secondary-variant-color);
+                color: var(--white);
+                height: 40px;
+    
+                p{
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 175px;
+                    background-color: var(--secondary-color);
+    
+    
+                    span:nth-child(1){
+                        font-size: 20px;
+                    }
+    
+                    span:nth-child(2){
+                        margin-left: 5px;
+                        font-size: 14px;
+                        font-weight: var(--font-weight-semibold);
+                    }
+    
+                    &#discord{
+                        background-color: var(--discord-color);
+                    }
+    
+                    &#youtube {
+                        background-color: #FF0000;
+                    }
+    
+                    &#instagram {
+                        padding-inline: 7px;
+                        background: radial-gradient(circle farthest-corner at 32% 106%, rgb(255, 225, 125) 0%, rgb(255, 205, 105) 10%, rgb(250, 145, 55) 28%, rgb(235, 65, 65) 42%, transparent 82%), linear-gradient(135deg, rgb(35, 75, 215) 12%, rgb(195, 60, 190) 58%);
+                        >img{
+                            width: 27px;
+                            height: 27px;
+                        }
+                    }
+    
+                    &#tiktok {
+                        background-color: var(--black);
+                    }
+    
+                    &#twitter {
+                        background-color: #229af0;
+                    }
+                }
+    
+                input{
+                    border: none;
+                    background: none;
+                    outline: none;
+                    color: var(--white);
+                    width: 100%;
+                    padding-inline: 15px;
+                }
+            }
+
+            .tips{
+                font-size: 14px;
+                color: var(--grey);
+
+                .icon-info{
+                    margin-right: 5px;
+                    font-weight: var(font-weight-semibold);
+                }
+            }
+        }
+    }
+}
+
+.no-content{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+@media screen and (max-width:600px) {
+    #content-container{
+        padding: 15px;
+    }
+
+    .content p{
+        width: 50px !important;
+
+        
+        span:nth-child(2){
+            display: none;
+        }
+
+
+    }
+}

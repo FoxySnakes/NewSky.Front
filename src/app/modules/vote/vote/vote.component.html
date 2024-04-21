@@ -103,7 +103,7 @@
                 <div id="rewards">
                     <div class="reward" *ngFor="let reward of rewards">
                         <p>{{reward.position}}{{reward.position == "1" ? "ère place" : "ème place"}}</p>
-                        <p>{{reward.reward}} crédits</p>
+                        <p>{{reward.reward}}</p>
                     </div>
                     <div class="reward" *ngIf="rewards.length == 0">
                         <p class="no-reward">Aucune récompense ce mois-ci</p>

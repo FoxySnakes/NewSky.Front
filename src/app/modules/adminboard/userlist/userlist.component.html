@@ -109,9 +109,9 @@
                         <button (click)="DeletePunishment('banishment')" type="button" *ngIf="modifyUserPunishmentForm.controls.banishmentEnd.value != null" class="btn btn-third animated">Supprimer le banissement</button>
                     </div>
 
-                    <div id="lockout">
+                    <div id="lockout" *ngIf="modifyUserPunishmentForm.controls.lockoutEnd.value != null">
                         <p>Verouillage</p>
-                        <button (click)="DeletePunishment('lockout')"  type="button" *ngIf="modifyUserPunishmentForm.controls.lockoutEnd.value != null" class="btn btn-third animated">Supprimer le verouillage</button>
+                        <button (click)="DeletePunishment('lockout')"  type="button" class="btn btn-third animated">Supprimer le verouillage</button>
                     </div>
                 </div>
             </div>

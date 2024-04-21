@@ -16,11 +16,11 @@ const routes: Routes = [
     path: "", component: LayoutAdminboardComponent,
     children: [
       { path: "", component: ListModulesComponent},
-      {
-        path: "dashboard", component: DashboardComponent,
-        canActivate: [PermissionGuard],
-        data: { permissionRequired: PermissionName.AccessToDashboardOnAdminPanel }
-      },
+      // {
+      //   path: "dashboard", component: DashboardComponent,
+      //   canActivate: [PermissionGuard],
+      //   data: { permissionRequired: PermissionName.AccessToDashboardOnAdminPanel }
+      // },
       {
         path: "users", component: UserlistComponent,
         canActivate: [PermissionGuard],

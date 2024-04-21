@@ -24,7 +24,6 @@ export class AppComponent implements OnInit{
 
   @HostListener('window:beforeunload')
   beforeUnloadHandler() {
-    alert(this.authService.keepConnection())
     if(!this.authService.keepConnection()){
       this.authService.removeLocalStorageInfo()
     }

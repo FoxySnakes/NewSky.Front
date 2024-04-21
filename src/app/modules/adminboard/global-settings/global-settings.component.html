@@ -1,1 +1,71 @@
-<p>global-settings works!</p>
+<form id="global-settings-container" [formGroup]="appSettingsForm" *ngIf="isLoaded" (ngSubmit)="UpdateSettings()">
+    <button id="save-settings" type="submit" class="btn btn-third animated" *ngIf="hasChanges"><span class="icon-save"></span>Sauvegarder</button>
+    <div id="social-medias">
+        <h2>Réseaux Sociaux</h2>
+        <div class="categories">
+            <div class="content">
+                <div>
+                    <p id="discord"><span class="icon-discord"></span><span>Discord</span></p>
+                    <input type="text" placeholder="Aucune url définie" formControlName="discordUrl">
+                </div>
+            </div>
+            <div class="content">
+                <div>
+                    <p id="instagram"><span class="icon-instagram"></span><span>Instagram</span></p>
+                    <input type="text" placeholder="Aucune url définie" formControlName="instagramUrl">
+                </div>
+            </div>
+            <div class="content">
+                <div>
+                    <p id="youtube"><span class="icon-youtube"></span><span>Youtube</span></p>
+                    <input type="text" placeholder="Aucune url définie"  formControlName="youtubeUrl">
+                </div>
+            </div>
+            <div class="content">
+                <div>
+                    <p id="twitter"><span class="icon-twitter"></span><span>Twitter</span></p>
+                    <input type="text" placeholder="Aucune url définie" formControlName="twitterUrl">
+                </div>
+            </div>
+            <div class="content">
+                <div>
+                    <p id="tiktok"><span class="icon-tik-tok"></span><span>TikTok</span></p>
+                    <input type="text" placeholder="Aucune url définie" formControlName="tikTokUrl">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="tebex">
+        <h2>Clés Tebex</h2>
+        <div class="categories">
+            <div class="content">
+                <div>
+                    <p id="public-token"><span class="icon-key"></span><span>Clé publique</span></p>
+                    <input type="text" placeholder="Aucune clé définie" formControlName="webStoreIdentifier">
+                </div>
+                <span class="tips"><span class="icon-info"></span>Vous pourrez retrouver cette clé en suivant ce chemin <br> <span>Integrations</span> > <span>Api&nbsp;Keys</span> > <span>Public&nbsp;Token</span></span>
+            </div>
+            <div class="content">
+                <div>
+                    <p id="secret-token"><span class="icon-key"></span><span>Clé secrète</span></p>
+                    <input type="text" placeholder="Aucune clé définie" formControlName="xTebexSecret">
+                </div>
+                <span class="tips"><span class="icon-info"></span>Vous pourrez retrouver cette clé en suivant ce chemin <br> <span>Integrations</span> > <span>Game&nbsp;Servers</span> > <span>Edit</span> > <span>Show&nbsp;Secret&nbsp;Key</span></span>
+            </div>
+        </div>
+    </div>
+    <div id="server">
+        <h2>Serveur</h2>
+        <div class="categories">
+            <div class="content">
+                <div>
+                    <p id="server-ip"><span class="icon-ip-location"></span><span>Ip du Serveur</span></p>
+                    <input type="text" placeholder="Aucune ip définie" formControlName="serverIp">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="no-content" *ngIf="!isLoaded && loading">
+    <app-loader></app-loader>
+</div>

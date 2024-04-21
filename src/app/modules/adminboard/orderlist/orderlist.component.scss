@@ -97,12 +97,28 @@
                     }
                 }
 
-                >p>span{
-                    color: var(--third-color);
-                    font-weight: var(--font-weight-bold);
-                    text-decoration: underline;
-                    font-size: 20px;
+                >p{
+                    >span:nth-child(1){
+                        font-weight: var(--font-weight-bold);
+                        text-decoration: underline;
+                        font-size: 18px;
+                    }
+                    >span:nth-child(2){
+                        font-weight: var(--font-weight-bold);
+                        color: var(--third-color);
+                        font-size: 24px;
+                    }
                 }
+            }
+        }
+
+        .no-sales{
+            background-color: var(--secondary-variant-color);
+            border-radius: 25px;
+            padding: 25px;
+
+            p{
+                text-align: center;
             }
         }
     }

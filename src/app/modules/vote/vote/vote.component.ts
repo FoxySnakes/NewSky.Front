@@ -7,6 +7,7 @@ import { User } from 'src/app/models/UserModel';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { VoteService } from 'src/app/services/vote.service';
 
 @Component({
   selector: 'app-vote',
@@ -36,7 +37,8 @@ export class VoteComponent implements OnInit {
   constructor(private apiService: ApiService,
     private userService: UserService,
     private notifService: NotifierService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private voteService: VoteService) { }
 
   ngOnInit() {
     this.userService.getCurrentUserObservable().subscribe({
@@ -53,14 +55,14 @@ export class VoteComponent implements OnInit {
     }
     })
 
-    this.apiService.get("vote/server-ranking?limit=10").subscribe({
+    this.voteService.getServerRanking().subscribe({
       next: (response) => {
         this.ranking = response;
       },
       error: () => this.notifService.notify('error', "Impossible de joindre l'API")
     })
 
-    this.apiService.get("vote/rewards").subscribe({
+    this.voteService.getVoteRewards().subscribe({
       next: (rewards) => {
         this.ChangeRewardsToDisplay(rewards)
       },
@@ -83,11 +85,11 @@ export class VoteComponent implements OnInit {
   UpdatePlayerData(){
 
     if(this.username != null){
-      this.apiService.get(`vote/user-ranking?username=${this.username}`).subscribe({
+      this.voteService.updateUserRanking(this.username).subscribe({
         next: (userRanking) => this.userRanking = userRanking
       })
   
-      this.apiService.get(`vote/status?username=${this.username}`).subscribe({
+      this.voteService.updateUserVoteStatus(this.username).subscribe({
         next: (statusList: [any]) => {
           var voteStatus1 = statusList.find(x => x.voteWebSite == VoteWebSite.Serveur_Prive)
           this.vote1Status.timeLeft = this.FormatTimeLeft(voteStatus1.timeLeft)
@@ -106,7 +108,7 @@ export class VoteComponent implements OnInit {
   TryVote(voteWebSite: number) {
     if (this.loading == false) {
       this.loading = true
-      this.apiService.get(`vote/${voteWebSite}?username=${this.username}`).subscribe({
+      this.voteService.tryVote(voteWebSite,this.username!).subscribe({
         next: (result: boolean) => {
 
           if (result == true) {

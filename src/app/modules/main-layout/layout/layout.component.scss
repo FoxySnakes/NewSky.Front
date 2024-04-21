@@ -1,3 +1,97 @@
 #main-container{
     background-color: var(--primary-color);
 }
+
+#main-loader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    gap: 25px;
+    
+    img{
+        width: 35%;
+        animation: 1s ease-in-out infinite alternate flying;
+    }
+
+    p{
+        font-size: 18px;
+        transition: all 0.1s;
+
+        span{
+            opacity: 0;
+            font-weight: var(--font-weight-medium);
+            font-size: 30px;
+
+            &:nth-child(1){
+                animation: 1s linear infinite points1;
+            }
+            &:nth-child(2){
+                animation: 1s linear infinite points2;
+            }
+            &:nth-child(3){
+                animation: 1s linear infinite points3;
+            }
+        }
+    }
+}
+
+@keyframes flying {
+    from {
+        
+        transform: translateY(-8px);
+    }
+
+    to {
+        transform: translateY(8px);
+    }
+}
+
+@keyframes points1 {
+    0% {
+        opacity: 1;
+    }
+    33% {
+        opacity: 1;
+    }
+    66% {
+        opacity: 1;
+    }
+    85%{
+        opacity: 0;
+    }
+}
+
+@keyframes points2 {
+    0% {
+        opacity: 0;
+    }
+    33% {
+        opacity: 1;
+    }
+    66% {
+        opacity: 1;
+    }
+    90%{
+        opacity: 0;
+    }
+
+}
+
+@keyframes points3 {
+    0% {
+        opacity: 0;
+    }
+    33% {
+        opacity: 0;
+    }
+    66% {
+        opacity: 1;
+    }
+    95%{
+        opacity: 0;
+    }
+
+}

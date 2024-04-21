@@ -1,33 +1,40 @@
 <div id="content-container">
     <div id="list-sales">
-        <div class="sales" *ngFor="let sale of salesPagined.items">
-            <p>Commande n° {{sale.id}}</p>
-            <div class="sales-content">
-                <div class="buyer">
-                    <img src="https://minotar.net/armor/body/{{sale.buyer.userName}}/50.png" alt="">
-                    <p>{{sale.buyer.userName}}</p>
-                </div>
-                <hr>
-                <div class="packages">
-                    <div class="package-header">
-                        <p>Quantité</p>
-                        <p>Nom</p>
+        <ng-container *ngIf="salesPagined.items.length > 0">
+            <div class="sales" *ngFor="let sale of salesPagined.items">
+                <p>Commande n° {{sale.id}}</p>
+                <div class="sales-content">
+                    <div class="buyer">
+                        <img src="https://minotar.net/armor/body/{{sale.buyer.userName}}/50.png" alt="">
+                        <p>{{sale.buyer.userName}}</p>
                     </div>
-                    <div class="package-content" *ngFor="let package of sale.packages">
-                        <p>{{package.quantity}}</p>
-                        <p>{{package.name}}</p>
+                    <hr>
+                    <div class="packages">
+                        <div class="package-header">
+                            <p>Quantité</p>
+                            <p>Nom</p>
+                        </div>
+                        <div class="package-content" *ngFor="let package of sale.packages">
+                            <p>{{package.quantity}}</p>
+                            <p>{{package.name}}</p>
+                        </div>
                     </div>
+    
                 </div>
-
-            </div>
-            <div class="package-resume">
-                <div>
-                    <p>Status&nbsp;: <span [class.success]="sale.status == 'Complete'">{{sale.status}}</span></p>
-                    <p>Date&nbsp;: {{sale.date | date:'dd/MM/YYYY'}}</p>
+                <div class="package-resume">
+                    <div>
+                        <p>Status&nbsp;: <span [class.success]="sale.status == 'Complete'">{{sale.status}}</span></p>
+                        <p>Date&nbsp;: {{sale.date | date:'dd/MM/YYYY'}}</p>
+                    </div>
+                    <p><span>Total&nbsp;:</span>&nbsp;<span>{{sale.price | priceformat}}</span></p>
                 </div>
-                <p><span>Total&nbsp;:</span> {{sale.price | priceformat}}</p>
             </div>
+        </ng-container>
+        
+        <div class="no-sales" *ngIf="!loading && salesPagined.items.length == 0">
+            <p>Aucune commande trouvée</p>
         </div>
+        <app-loader *ngIf="loading"></app-loader>
     </div>
     <app-pager (onPageChange)="onPageChange($event)" [itemsCount]="salesPagined.totalCount"
         [pageNumber]="salesPagined.pageNumber" [pageSize]="salesPagined.pageSize" [pageSizeOptions]="salesPagined.pageSizeOptions"></app-pager>

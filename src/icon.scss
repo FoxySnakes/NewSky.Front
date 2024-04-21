@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('assets/fonts/icomoon/icomoon.eot?192624');
-  src:  url('assets/fonts/icomoon/icomoon.eot?192624#iefix') format('embedded-opentype'),
-    url('assets/fonts/icomoon/icomoon.ttf?192624') format('truetype'),
-    url('assets/fonts/icomoon/icomoon.woff?192624') format('woff'),
-    url('assets/fonts/icomoon/icomoon.svg?192624#icomoon') format('svg');
+  src:  url('assets/fonts/icomoon/icomoon.eot?v16szo');
+  src:  url('assets/fonts/icomoon/icomoon.eot?v16szo#iefix') format('embedded-opentype'),
+    url('assets/fonts/icomoon/icomoon.ttf?v16szo') format('truetype'),
+    url('assets/fonts/icomoon/icomoon.woff?v16szo') format('woff'),
+    url('assets/fonts/icomoon/icomoon.svg?v16szo#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -26,16 +26,25 @@
 }
 
 .icon-role:before {
-  content: "\e925";
+  content: "\e928";
 }
-.icon-credit-card:before {
+.icon-key:before {
+  content: "\e926";
+}
+.icon-ip-location:before {
+  content: "\e927";
+}
+.icon-instagram:before {
   content: "\e920";
 }
-.icon-soustract:before {
+.icon-twitter:before {
+  content: "\e91c";
+}
+.icon-youtube:before {
   content: "\e91d";
 }
-.icon-glass-not-found:before {
-  content: "\e91c";
+.icon-tik-tok:before {
+  content: "\e925";
 }
 .icon-search:before {
   content: "\e911";

@@ -20,14 +20,18 @@ export class ApiService {
     }
   }
 
-  getPaged(endpoints: string, pageSize : number, pageNumber : number, filter : Filter, search : string) {
+  getPaged(endpoints: string, pageSize : number, pageNumber : number, filter : Filter | null, search : string | null) {
     let params = new HttpParams()
-    .set('search', search)
     .set('pageNumber', pageNumber.toString())
     .set('pageSize', pageSize.toString())
-    .set("filter",filter.name)
-    .set("direction", filter.direction)
+    if(search != null){
+      params = params.set('search', search)
+    }
 
+    if(filter != null){
+      params = params.set("filter",filter.name)
+      .set("direction", filter.direction)
+    }
     return this.httpClient.get<any>(`${environment.apiUrl}/${endpoints}`,  { params });
   }
 

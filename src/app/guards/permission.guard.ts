@@ -10,11 +10,11 @@ export class PermissionGuard implements CanActivate {
   constructor(private router: Router,
               private userService : UserService){}
 
-  canActivate(
+  async canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot) : boolean {
+    state: RouterStateSnapshot) : Promise<boolean> {
       var permissionRequired = next.data['permissionRequired']
-      var hasPermission = this.userService.hasPermission(permissionRequired)
+      var hasPermission = await this.userService.hasPermission(permissionRequired)
       if(hasPermission){
         return true;
       }

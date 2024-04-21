@@ -1,0 +1,46 @@
+#list-modules-container{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 50px;
+    gap: 25px;
+
+    .modules{
+        width: 200px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        border-radius: 25px;
+        background-color: var(--secondary-color);
+        gap:25px;
+        transition: all 0.3s;
+        border: solid 5px transparent;
+        text-decoration: none;
+
+        span{
+            font-size: 40px;
+        }
+
+        p{
+            font-size: 24px;
+            font-weight: var(--font-weight-semibold);
+        }
+
+        &:hover{
+            transform: scale(1.15);
+            border: solid 5px var(--third-color);
+            box-shadow: 0 0 35px var(--third-color);
+        }
+
+        &:not(:hover){
+            opacity: 0.7;
+        }
+    }
+}
+
+@media screen and (max-width:600px) {
+    #list-modules-container{
+        padding: 15px;
+    }
+}
