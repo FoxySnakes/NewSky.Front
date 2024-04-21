@@ -46,7 +46,7 @@ const routes: Routes = [
         canActivate: [PermissionGuard],
         data : { permissionRequired : PermissionName.AccessToGeneralSettingsOnAdminPanel} 
       },
-      //{ path: '**', redirectTo: '' }
+      { path: '**', redirectTo: '' }
     ]
   }
 ];
