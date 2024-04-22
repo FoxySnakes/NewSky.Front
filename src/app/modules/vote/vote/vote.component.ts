@@ -8,6 +8,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { VoteService } from 'src/app/services/vote.service';
+import { AppSettingService } from 'src/app/services/appsetting.service';
+import { AppSettingsPublicValues } from 'src/app/models/AppSettingModel';
 
 @Component({
   selector: 'app-vote',
@@ -34,11 +36,14 @@ export class VoteComponent implements OnInit {
 
   rewards: VoteReward[] = []
 
+  appSettingsPublicValues : AppSettingsPublicValues = new AppSettingsPublicValues;
+
   constructor(private apiService: ApiService,
     private userService: UserService,
     private notifService: NotifierService,
     private authService: AuthService,
-    private voteService: VoteService) { }
+    private voteService: VoteService,
+    private appSettingsService : AppSettingService) { }
 
   ngOnInit() {
     this.userService.getCurrentUserObservable().subscribe({
@@ -46,13 +51,6 @@ export class VoteComponent implements OnInit {
         this.username = user == null ? null : user.userName
         this.UpdatePlayerData()
       }
-    })
-
-    this.authService.isAuthenticatedObservable().subscribe({
-      next: (isAuthenticated) => {
-        if(isAuthenticated){
-      }
-    }
     })
 
     this.voteService.getServerRanking().subscribe({
@@ -67,6 +65,12 @@ export class VoteComponent implements OnInit {
         this.ChangeRewardsToDisplay(rewards)
       },
       error: () => this.notifService.notify('error', "Impossible de joindre l'API")
+    })
+
+    this.appSettingsService.getAppSettingsPublicObservable().subscribe({
+      next: (result) => {
+        this.appSettingsPublicValues = result;
+      }
     })
 
     this.timerSubscription = interval(1000).subscribe({

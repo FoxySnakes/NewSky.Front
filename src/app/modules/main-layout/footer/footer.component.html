@@ -8,38 +8,37 @@
             <div class="links-column">
                 <p>Liens utiles</p>
                 <div class="links">
-                    <a>Accueil</a>
-                    <a>Voter</a>
-                    <a>Boutique</a>
-                    <a>Wiki</a>
+                    <a routerLink="/">Accueil</a>
+                    <a routerLink="/vote">Voter</a>
+                    <a routerLink="/store">Boutique</a>
                 </div>
             </div>
             <div class="links-column">
                 <p>Nous rejoindre</p>
                 <div class="links">
-                    <a>Discord</a>
-                    <a>Instagram</a>
-                    <a>Twitter</a>
-                    <a>TikTok</a>
+                    <a [href]="appSettingsPublicValues.discordUrl" target="_blank">Discord</a>
+                    <a [href]="appSettingsPublicValues.instagramUrl" target="_blank">Instagram</a>
+                    <a [href]="appSettingsPublicValues.twitterUrl" target="_blank">Twitter</a>
+                    <a [href]="appSettingsPublicValues.tikTokUrl" target="_blank">TikTok</a>
                 </div>
             </div>
             <div class="links-column">
                 <p>Nous contacter</p>
                 <div id="contact">
-                    <button id="discord">
+                    <a class="btn btn-third" id="discord"  [attr.href]="appSettingsPublicValues.discordUrl" target="_blank">
                         <span class="icon-discord"></span>
                         <p>Ouvrir un ticket</p>
-                    </button>
+                    </a>
                     <p>OU</p>
-                    <button id="mail">
+                    <a class="btn btn-mail animated" id="mail" href="mailto:contact@newsky.mc">
                         <span class="icon-mail"></span>
                         <p>Envoyez un mail</p>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
     <div id="legal-mentions">
-        <p>Copyright @ 2023 NewSky - Tous droits réservés - <a href="">CGU / CGV</a></p>
+        <p>Copyright @ 2023 NewSky - Tous droits réservés</p>
     </div>
 </div>

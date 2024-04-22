@@ -1,5 +1,4 @@
-export class AppSettingValues
-{
+export class AppSettingsPublicValues{
     // Social Medias
     discordUrl : string = "";
     instagramUrl : string = "";
@@ -7,12 +6,15 @@ export class AppSettingValues
     twitterUrl : string = "";
     tikTokUrl : string = "";
 
-    // Key Tebex
-    webStoreIdentifier : string = "";
-    xTebexSecret : string = "";
-
     // Server
     serverIp : string = "";
 
     [key: string]: string;
+}
+
+export class AppSettingValues extends AppSettingsPublicValues
+{
+    // Key Tebex
+    webStoreIdentifier : string = "";
+    xTebexSecret : string = "";
 }

@@ -9,12 +9,12 @@
             <div id="join-buttons">
                 <button id="server">
                     <img src="./../../../assets/pictures/minecraft-icon.png" alt="" width="30" height="30">
-                    <p>IP : play.newsky.fun</p>
+                    <p>IP : {{appSettingsPublicValues.serverIp}}</p>
                 </button>
-                <button id="discord">
+                <a class="btn btn-discord animated" id="discord" [attr.href]="appSettingsPublicValues.discordUrl" target="_blank">
                     <span class="icon-discord"></span>
                     <p>Rejoindre le discord</p>
-                </button>
+                </a>
             </div>
         </div>
         <div id="picture">
@@ -45,10 +45,10 @@
                 <div id="details-3">
                     <h4>Rejoignez le discord</h4>
                     <p>Rejoignez le discord pour vous tenir au courant de toutes les modifications, nouveautés ou encore pour discuter avec d’autres joueurs</p>
-                    <button>
+                    <a class="btn btn-discord animated" [attr.href]="appSettingsPublicValues.discordUrl" target="_blank">
                         <span class="icon-discord"></span>
                         <p>Rejoindre le discord</p>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -56,12 +56,8 @@
         <div id="issue">
             <h3>Un soucis&nbsp;? Des problèmes pour rejoindre&nbsp;?</h3>
             <div>
-                <p>Vous pouvez nous contacter par mail à l’adresse suivante :</p>
-                <a href="">contact.newsky@gmail.com</a>
-            </div>
-            <div>
-                <p>Ou envoyer un message au fondateur en rejoignant le discord grâce au lien suivant :</p>
-                <a href="">https://discord.gg/eMFCoGrV</a>
+                <p>Envoyer un message au fondateur en rejoignant le discord grâce au lien suivant :</p>
+                <a [href]="appSettingsPublicValues.discordUrl" target="_blank">{{appSettingsPublicValues.discordUrl}}</a>
             </div>
         </div>
     </div>

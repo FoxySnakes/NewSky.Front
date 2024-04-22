@@ -51,6 +51,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.appSettingService.updateAppSettings(appSettings).subscribe({
       next: (result) => {
         if(result){
+          this.appSettingService.fetchAppSettingsPublic();
           this.notifyService.notify("success", "Modifications sauvegardées")
           this.hasChanges = false
         }

@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from "@angular/core";
 import { ApiService } from "./api.service";
-import { AppSettingValues } from "../models/AppSettingModel";
+import { AppSettingValues, AppSettingsPublicValues } from "../models/AppSettingModel";
 import { BehaviorSubject } from "rxjs";
 import { DomSanitizer } from "@angular/platform-browser";
 
@@ -10,16 +10,27 @@ import { DomSanitizer } from "@angular/platform-browser";
   })
 export class AppSettingService implements OnInit{
 
+    private appSettingsPublic$ = new BehaviorSubject<AppSettingsPublicValues>(new AppSettingsPublicValues);
+
     constructor(private apiService : ApiService) {}
 
     ngOnInit(): void {
         
     }
 
-    getAppSettings(onlyPublic : boolean = false){
-        if(onlyPublic)
-            return this.apiService.get("appsetting/public")
+    fetchAppSettingsPublic(){
+        this.apiService.get("appsetting/public").subscribe({
+            next : (result) => {
+                this.appSettingsPublic$.next(result)
+            }
+        })
+    }
 
+    getAppSettingsPublicObservable(){
+        return this.appSettingsPublic$.asObservable();
+    }
+
+    getAppSettings(){
         return this.apiService.get("appsetting")
     }
 

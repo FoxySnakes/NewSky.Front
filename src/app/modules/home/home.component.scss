@@ -61,11 +61,6 @@
 
                     &#server {
                         background-color: var(--third-color);
-
-                        &:hover{
-                            box-shadow: 0 0 25px var(--third-color);
-                            transform: scale(1.05);
-                        }
                     }
 
                     &#discord {

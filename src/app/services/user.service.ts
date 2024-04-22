@@ -104,7 +104,7 @@ export class UserService {
 
   async hasPermission(permissionName: string) {
     while (this.fetchingUserInformation) {
-      await new Promise(resolve => setTimeout(resolve, 500)); // Adjust the time interval as needed
+      await new Promise(resolve => setTimeout(resolve, 500));
     }
   
 
