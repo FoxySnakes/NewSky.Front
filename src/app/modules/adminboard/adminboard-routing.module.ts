@@ -10,6 +10,7 @@ import { PermissionName } from 'src/app/models/UserModel';
 import { PermissionGuard } from 'src/app/guards/permission.guard';
 import { ListModulesComponent } from './list-modules/list-modules.component';
 import { RolelistComponent } from './rolelist/rolelist.component';
+import { TokenInvalidComponent } from './token-invalid/token-invalid.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,9 @@ const routes: Routes = [
         path: "global-settings", component: GlobalSettingsComponent,
         canActivate: [PermissionGuard],
         data : { permissionRequired : PermissionName.AccessToGeneralSettingsOnAdminPanel} 
+      },
+      {
+        path: "token-invalid", component: TokenInvalidComponent,
       },
       { path: '**', redirectTo: '' }
     ]

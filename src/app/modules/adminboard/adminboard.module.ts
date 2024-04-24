@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ListModulesComponent } from './list-modules/list-modules.component';
 import { RolelistComponent } from './rolelist/rolelist.component';
+import { TokenInvalidComponent } from './token-invalid/token-invalid.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { RolelistComponent } from './rolelist/rolelist.component';
     VotelistComponent,
     GlobalSettingsComponent,
     ListModulesComponent,
-    RolelistComponent
+    RolelistComponent,
+    TokenInvalidComponent
   ],
   imports: [
     CommonModule,

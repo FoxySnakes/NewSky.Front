@@ -1,0 +1,19 @@
+<div id="content-container">
+    <div>
+        <h2>Ajouter un token invalide</h2>
+        <div class="add-token" [formGroup]="tokenForm">
+            <textarea formControlName="tokenValue" rows="4"></textarea>
+            <button class="btn btn-third animated" (click)="CreateToken()"><span class="icon-add"></span> Ajouter</button>
+        </div>
+    </div>
+    <div>
+        <h2>Tokens invalides</h2>
+
+        <div class="token-list">
+            <div class="token" *ngFor="let token of tokenList">
+                <textarea rows="4" disabled>{{token}}</textarea>
+                <button class="btn btn-danger animated" (click)="DeleletToken(token)"><span class="icon-delete"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
